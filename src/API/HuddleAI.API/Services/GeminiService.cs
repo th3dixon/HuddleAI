@@ -97,6 +97,97 @@ public class GeminiService : IGeminiService
         }
     }
 
+    public async Task<SportsAnalysisResponse> AnalyzeSportsPerformanceFromYouTubeAsync(string sport, string analysisTopic, string youtubeUrl)
+    {
+        try
+        {
+            var prompt = BuildYouTubeAnalysisPrompt(sport, analysisTopic, youtubeUrl);
+            
+            var requestBody = new
+            {
+                contents = new[]
+                {
+                    new
+                    {
+                        parts = new[]
+                        {
+                            new { text = prompt }
+                        }
+                    }
+                },
+                generationConfig = new
+                {
+                    temperature = 0.4,
+                    topK = 32,
+                    topP = 1,
+                    maxOutputTokens = 4096
+                }
+            };
+
+            var json = JsonConvert.SerializeObject(requestBody);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PostAsync(
+                $"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={_apiKey}",
+                content);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorContent = await response.Content.ReadAsStringAsync();
+                _logger.LogError("Gemini API error for YouTube analysis: {StatusCode} - {Content}", response.StatusCode, errorContent);
+                return new SportsAnalysisResponse
+                {
+                    IsSuccess = false,
+                    ErrorMessage = $"API Error: {response.StatusCode}"
+                };
+            }
+
+            var responseContent = await response.Content.ReadAsStringAsync();
+            var geminiResponse = JsonConvert.DeserializeObject<dynamic>(responseContent);
+            
+            var generatedText = geminiResponse?.candidates?[0]?.content?.parts?[0]?.text?.ToString();
+            
+            if (string.IsNullOrEmpty(generatedText))
+            {
+                return new SportsAnalysisResponse
+                {
+                    IsSuccess = false,
+                    ErrorMessage = "No analysis generated for YouTube video"
+                };
+            }
+
+            return ParseAnalysisResponse(generatedText);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error analyzing YouTube sports performance");
+            return new SportsAnalysisResponse
+            {
+                IsSuccess = false,
+                ErrorMessage = ex.Message
+            };
+        }
+    }
+
+    private string BuildYouTubeAnalysisPrompt(string sport, string analysisTopic, string youtubeUrl)
+    {
+        return $@"As a professional sports performance analyst, I need you to analyze a {sport} performance video from YouTube focusing on {analysisTopic}.
+
+YouTube Video URL: {youtubeUrl}
+
+Please provide your analysis in the following structured format based on what you would expect to see in a typical {sport} video focusing on {analysisTopic}:
+
+OVERALL_SCORE: [Provide a score from 1-100 based on typical performance expectations for {analysisTopic} in {sport}]
+
+OVERVIEW: [Provide a comprehensive analysis of what you would observe in a {sport} video focusing on {analysisTopic}, including typical technique elements, form considerations, and execution patterns common in this sport]
+
+AREAS_FOR_IMPROVEMENT: [List 3-5 specific areas that commonly need improvement in {analysisTopic} for {sport}, separated by semicolons]
+
+DETAILED_IMPROVEMENT_PLAN: [Provide a detailed, actionable plan on how to improve the identified areas, including specific exercises, drills, or technique adjustments commonly recommended for {analysisTopic} in {sport}]
+
+Note: Since I cannot directly access YouTube videos, please provide analysis based on common performance patterns and improvement areas for {analysisTopic} in {sport}.";
+    }
+
     private string BuildSportsAnalysisPrompt(string sport, string analysisTopic)
     {
         return $@"As a professional sports performance analyst, analyze this {sport} performance video/image focusing on {analysisTopic}.

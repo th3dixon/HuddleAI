@@ -29,9 +29,25 @@ public class SportsAnalysisController : ControllerBase
         
         try
         {
-            if (string.IsNullOrEmpty(request.Sport) || string.IsNullOrEmpty(request.AnalysisTopic) || string.IsNullOrEmpty(request.FileBase64))
+            if (string.IsNullOrEmpty(request.Sport) || string.IsNullOrEmpty(request.AnalysisTopic))
             {
-                return BadRequest("Sport, AnalysisTopic, and FileBase64 are required.");
+                return BadRequest("Sport and AnalysisTopic are required.");
+            }
+
+            // Validate media source
+            if (request.MediaType == "youtube")
+            {
+                if (string.IsNullOrEmpty(request.YoutubeUrl))
+                {
+                    return BadRequest("YouTube URL is required when MediaType is 'youtube'.");
+                }
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(request.FileBase64))
+                {
+                    return BadRequest("FileBase64 is required when MediaType is 'file'.");
+                }
             }
 
             // Create the analysis request entity
@@ -39,9 +55,11 @@ public class SportsAnalysisController : ControllerBase
             {
                 Sport = request.Sport,
                 AnalysisTopic = request.AnalysisTopic,
-                FileName = request.FileName,
-                FileType = request.FileType,
-                FilePath = $"temp/{Guid.NewGuid()}_{request.FileName}",
+                MediaType = request.MediaType,
+                FileName = request.MediaType == "youtube" ? "YouTube Video" : request.FileName,
+                FileType = request.MediaType == "youtube" ? "video" : request.FileType,
+                FilePath = request.MediaType == "youtube" ? request.YoutubeUrl : $"temp/{Guid.NewGuid()}_{request.FileName}",
+                YoutubeUrl = request.MediaType == "youtube" ? request.YoutubeUrl : null,
                 CreatedAt = DateTime.UtcNow,
                 IsProcessed = false
             };
@@ -54,11 +72,21 @@ public class SportsAnalysisController : ControllerBase
             SportsAnalysisResponse response;
             try
             {
-                response = await _geminiService.AnalyzeSportsPerformanceAsync(
-                    request.Sport, 
-                    request.AnalysisTopic, 
-                    request.FileBase64, 
-                    request.FileType);
+                if (request.MediaType == "youtube")
+                {
+                    response = await _geminiService.AnalyzeSportsPerformanceFromYouTubeAsync(
+                        request.Sport, 
+                        request.AnalysisTopic, 
+                        request.YoutubeUrl);
+                }
+                else
+                {
+                    response = await _geminiService.AnalyzeSportsPerformanceAsync(
+                        request.Sport, 
+                        request.AnalysisTopic, 
+                        request.FileBase64, 
+                        request.FileType);
+                }
                 
                 // Update the entity with successful analysis results
                 analysisRequest.OverallScore = response.OverallScore;

@@ -139,43 +139,106 @@
                             required>
                     </div>
 
-                    <!-- File Upload -->
+                    <!-- Media Source Selection -->
                     <div>
-                        <label for="file" class="block text-sm font-medium text-gray-700 mb-2">
-                            <i class="fas fa-upload text-accent mr-2"></i>Upload Video or Image
+                        <label class="block text-sm font-medium text-gray-700 mb-4">
+                            <i class="fas fa-video text-accent mr-2"></i>Choose Media Source
                         </label>
-                        <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center transition-colors"
-                             :class="{ 'border-primary bg-blue-50': isDragOver }"
-                             @@dragover.prevent="isDragOver = true"
-                             @@dragleave.prevent="isDragOver = false"
-                             @@drop.prevent="handleFileDrop($event)">
-                            
-                            <div x-show="!selectedFile">
-                                <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-4"></i>
-                                <p class="text-lg text-gray-600 mb-2">Drag and drop your file here, or</p>
-                                <button type="button" 
-                                        @@click="$refs.fileInput.click()" 
-                                        class="bg-primary text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors">
-                                    Choose File
-                                </button>
-                                <p class="text-sm text-gray-500 mt-2">Supports MP4, AVI, MOV, JPG, PNG (Max 50MB)</p>
-                            </div>
+                        
+                        <!-- Source Type Tabs -->
+                        <div class="flex mb-4 bg-gray-100 p-1 rounded-lg">
+                            <button type="button" 
+                                    @@click="mediaSource = 'file'"
+                                    :class="mediaSource === 'file' ? 'bg-white shadow-sm text-primary' : 'text-gray-600'"
+                                    class="flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors">
+                                <i class="fas fa-upload mr-2"></i>Upload File
+                            </button>
+                            <button type="button" 
+                                    @@click="mediaSource = 'youtube'"
+                                    :class="mediaSource === 'youtube' ? 'bg-white shadow-sm text-primary' : 'text-gray-600'"
+                                    class="flex-1 py-2 px-4 rounded-md text-sm font-medium transition-colors">
+                                <i class="fab fa-youtube mr-2"></i>YouTube URL
+                            </button>
+                        </div>
 
-                            <div x-show="selectedFile" class="text-green-600">
-                                <i class="fas fa-check-circle text-2xl mb-2"></i>
-                                <p x-text="selectedFile?.name"></p>
-                                <button type="button" 
-                                        @@click="removeFile()" 
-                                        class="text-red-600 hover:text-red-800 mt-2">
-                                    <i class="fas fa-times mr-1"></i>Remove
-                                </button>
-                            </div>
+                        <!-- File Upload Section -->
+                        <div x-show="mediaSource === 'file'" class="transition-all duration-300">
+                            <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center transition-colors"
+                                 :class="{ 'border-primary bg-blue-50': isDragOver }"
+                                 @@dragover.prevent="isDragOver = true"
+                                 @@dragleave.prevent="isDragOver = false"
+                                 @@drop.prevent="handleFileDrop($event)">
+                                
+                                <div x-show="!selectedFile">
+                                    <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-4"></i>
+                                    <p class="text-lg text-gray-600 mb-2">Drag and drop your file here, or</p>
+                                    <button type="button" 
+                                            @@click="$refs.fileInput.click()" 
+                                            class="bg-primary text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+                                        Choose File
+                                    </button>
+                                    <p class="text-sm text-gray-500 mt-2">Supports MP4, AVI, MOV, JPG, PNG (Max 50MB)</p>
+                                </div>
 
-                            <input type="file" 
-                                   x-ref="fileInput" 
-                                   @@change="handleFileSelect($event)" 
-                                   accept="video/*,image/*" 
-                                   class="hidden">
+                                <div x-show="selectedFile" class="text-green-600">
+                                    <i class="fas fa-check-circle text-2xl mb-2"></i>
+                                    <p x-text="selectedFile?.name"></p>
+                                    <button type="button" 
+                                            @@click="removeFile()" 
+                                            class="text-red-600 hover:text-red-800 mt-2">
+                                        <i class="fas fa-times mr-1"></i>Remove
+                                    </button>
+                                </div>
+
+                                <input type="file" 
+                                       x-ref="fileInput" 
+                                       @@change="handleFileSelect($event)" 
+                                       accept="video/*,image/*" 
+                                       class="hidden">
+                            </div>
+                        </div>
+
+                        <!-- YouTube URL Section -->
+                        <div x-show="mediaSource === 'youtube'" class="transition-all duration-300">
+                            <div class="border-2 border-gray-300 rounded-lg p-6">
+                                <div class="flex items-center mb-4">
+                                    <i class="fab fa-youtube text-red-500 text-2xl mr-3"></i>
+                                    <div>
+                                        <h4 class="font-medium text-gray-900">YouTube Video URL</h4>
+                                        <p class="text-sm text-gray-600">Enter the URL of the YouTube video you want to analyze</p>
+                                    </div>
+                                </div>
+                                
+                                <input type="url" 
+                                       x-model="youtubeUrl"
+                                       @@input="validateYouTubeUrl()"
+                                       placeholder="https://www.youtube.com/watch?v=..."
+                                       class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent">
+                                
+                                <div x-show="youtubeUrl && isValidYouTubeUrl" class="mt-3 flex items-center text-green-600">
+                                    <i class="fas fa-check-circle mr-2"></i>
+                                    <span class="text-sm">Valid YouTube URL detected</span>
+                                </div>
+                                
+                                <div x-show="youtubeUrl && !isValidYouTubeUrl && youtubeUrl.length > 10" class="mt-3 flex items-center text-red-600">
+                                    <i class="fas fa-exclamation-triangle mr-2"></i>
+                                    <span class="text-sm">Please enter a valid YouTube URL (youtube.com or youtu.be)</span>
+                                </div>
+
+                                <div class="mt-4 p-3 bg-yellow-50 rounded-lg border border-yellow-200">
+                                    <div class="flex items-start">
+                                        <i class="fas fa-info-circle text-yellow-600 mt-0.5 mr-2"></i>
+                                        <div class="text-sm text-yellow-800">
+                                            <p class="font-medium mb-1">YouTube Analysis Tips:</p>
+                                            <ul class="list-disc list-inside space-y-1 text-xs">
+                                                <li>Make sure the video is public or unlisted</li>
+                                                <li>Sports technique videos work best</li>
+                                                <li>Clear, well-lit footage provides better analysis</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -376,6 +439,9 @@
                     file: null
                 },
                 selectedFile: null,
+                mediaSource: 'file', // 'file' or 'youtube'
+                youtubeUrl: '',
+                isValidYouTubeUrl: false,
                 isDragOver: false,
                 isUploading: false,
                 isAnalyzing: false,
@@ -385,7 +451,23 @@
                 errorMessage: '',
 
                 get canSubmit() {
-                    return this.formData.sport && this.formData.analysisTopic && this.selectedFile && !this.isAnalyzing && !this.isUploading;
+                    const hasMedia = this.mediaSource === 'file' ? this.selectedFile : (this.youtubeUrl && this.isValidYouTubeUrl);
+                    return this.formData.sport && this.formData.analysisTopic && hasMedia && !this.isAnalyzing && !this.isUploading;
+                },
+
+                validateYouTubeUrl() {
+                    if (!this.youtubeUrl) {
+                        this.isValidYouTubeUrl = false;
+                        return;
+                    }
+                    
+                    // YouTube URL validation regex
+                    const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com\/(watch\?v=|embed\/|v\/)|youtu\.be\/)[\w-]+/;
+                    this.isValidYouTubeUrl = youtubeRegex.test(this.youtubeUrl);
+                    
+                    if (this.isValidYouTubeUrl) {
+                        this.errorMessage = '';
+                    }
                 },
 
                 handleFileSelect(event) {
@@ -435,35 +517,54 @@
 
                     this.isUploading = true;
                     this.analysisProgress = 0;
-                    this.progressMessage = 'Preparing file...';
                     this.errorMessage = '';
                     this.analysisResult = null;
 
                     try {
-                        // Step 1: Convert file to base64
-                        this.progressMessage = 'Processing file...';
-                        this.analysisProgress = 10;
+                        let requestData;
 
-                        const fileBase64 = await this.fileToBase64(this.formData.file);
-                        
-                        this.analysisProgress = 30;
-                        this.progressMessage = 'Uploading to AI service...';
+                        if (this.mediaSource === 'youtube') {
+                            // YouTube URL analysis
+                            this.progressMessage = 'Processing YouTube URL...';
+                            this.analysisProgress = 20;
 
-                        // Step 2: Prepare request
-                        const requestData = {
-                            sport: this.formData.sport,
-                            analysisTopic: this.formData.analysisTopic,
-                            fileBase64: fileBase64.split(',')[1], // Remove data:image/png;base64, prefix
-                            fileName: this.selectedFile.name,
-                            fileType: this.selectedFile.name.split('.').pop()
-                        };
+                            requestData = {
+                                sport: this.formData.sport,
+                                analysisTopic: this.formData.analysisTopic,
+                                youtubeUrl: this.youtubeUrl,
+                                mediaType: 'youtube'
+                            };
+
+                            this.analysisProgress = 40;
+                            this.progressMessage = 'Connecting to YouTube...';
+                        } else {
+                            // File upload analysis
+                            this.progressMessage = 'Processing file...';
+                            this.analysisProgress = 10;
+
+                            const fileBase64 = await this.fileToBase64(this.formData.file);
+                            
+                            this.analysisProgress = 30;
+                            this.progressMessage = 'Uploading to AI service...';
+
+                            requestData = {
+                                sport: this.formData.sport,
+                                analysisTopic: this.formData.analysisTopic,
+                                fileBase64: fileBase64.split(',')[1], // Remove data:image/png;base64, prefix
+                                fileName: this.selectedFile.name,
+                                fileType: this.selectedFile.name.split('.').pop(),
+                                mediaType: 'file'
+                            };
+                        }
 
                         this.isUploading = false;
                         this.isAnalyzing = true;
                         this.analysisProgress = 50;
-                        this.progressMessage = 'AI is analyzing your performance...';
+                        this.progressMessage = this.mediaSource === 'youtube' 
+                            ? 'AI is analyzing your YouTube video...' 
+                            : 'AI is analyzing your performance...';
 
-                        // Step 3: Call API (try both local dev and production URLs)
+                        // Call API (try both local dev and production URLs)
                         const apiUrl = window.location.hostname === 'localhost' 
                             ? 'https://localhost:7010/api/SportsAnalysis/analyze'
                             : '/api/SportsAnalysis/analyze';
@@ -531,6 +632,9 @@
                     this.formData.sport = '';
                     this.formData.analysisTopic = '';
                     this.removeFile();
+                    this.youtubeUrl = '';
+                    this.isValidYouTubeUrl = false;
+                    this.mediaSource = 'file';
                     this.analysisResult = null;
                     this.errorMessage = '';
                 }
