@@ -371,3 +371,7 @@ FodyWeavers.xsd
 # JetBrains Rider
 .idea/
 *.sln.iml
+
+# Claude Code working directory and Windows Zone.Identifier files
+.claude/
+*:Zone.Identifier
