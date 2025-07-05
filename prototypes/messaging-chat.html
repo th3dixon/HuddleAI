@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages - HuddleAI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-gray-50" x-data="{ activeChat: 'sarah', showProfile: false }">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-8">
+                    <div class="text-2xl font-bold text-blue-600">HuddleAI</div>
+                    <div class="hidden md:flex space-x-6">
+                        <a href="#" class="text-gray-700 hover:text-blue-600">Dashboard</a>
+                        <a href="#" class="text-gray-700 hover:text-blue-600">Analytics</a>
+                        <a href="#" class="text-gray-700 hover:text-blue-600">Community</a>
+                        <a href="#" class="text-blue-600 font-medium">Messages</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="text-gray-400 hover:text-gray-600">
+                        <i class="fas fa-bell"></i>
+                    </button>
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&h=32&fit=crop&crop=face" 
+                         alt="Profile" class="w-8 h-8 rounded-full">
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto h-screen flex">
+        <!-- Sidebar - Conversation List -->
+        <div class="w-80 bg-white border-r flex flex-col">
+            <!-- Header -->
+            <div class="p-4 border-b">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-xl font-semibold">Messages</h2>
+                    <button class="bg-blue-600 text-white p-2 rounded-lg hover:bg-blue-700">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                <div class="relative">
+                    <input type="text" placeholder="Search conversations..." 
+                           class="w-full pl-10 pr-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                </div>
+            </div>
+
+            <!-- Conversations -->
+            <div class="flex-1 overflow-y-auto">
+                <!-- Sarah Williams -->
+                <div @click="activeChat = 'sarah'" 
+                     :class="activeChat === 'sarah' ? 'bg-blue-50 border-r-2 border-blue-500' : 'hover:bg-gray-50'"
+                     class="p-4 border-b cursor-pointer">
+                    <div class="flex items-center space-x-3">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1494790108755-2616b332c5d2?w=48&h=48&fit=crop&crop=face" 
+                                 alt="Sarah Williams" class="w-12 h-12 rounded-full">
+                            <div class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex justify-between items-center">
+                                <h3 class="font-semibold truncate">Sarah Williams</h3>
+                                <span class="text-xs text-gray-500">2m</span>
+                            </div>
+                            <p class="text-sm text-gray-600 truncate">Great job on your sprint today! Your form...</p>
+                            <div class="flex items-center mt-1">
+                                <span class="bg-blue-500 text-white text-xs px-1.5 py-0.5 rounded-full">2</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mike Chen -->
+                <div @click="activeChat = 'mike'" 
+                     :class="activeChat === 'mike' ? 'bg-blue-50 border-r-2 border-blue-500' : 'hover:bg-gray-50'"
+                     class="p-4 border-b cursor-pointer">
+                    <div class="flex items-center space-x-3">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=48&h=48&fit=crop&crop=face" 
+                                 alt="Mike Chen" class="w-12 h-12 rounded-full">
+                            <div class="absolute bottom-0 right-0 w-3 h-3 bg-gray-400 rounded-full border-2 border-white"></div>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex justify-between items-center">
+                                <h3 class="font-semibold truncate">Mike Chen</h3>
+                                <span class="text-xs text-gray-500">1h</span>
+                            </div>
+                            <p class="text-sm text-gray-600 truncate">Thanks for the shot put technique advice!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Team Group Chat -->
+                <div @click="activeChat = 'team'" 
+                     :class="activeChat === 'team' ? 'bg-blue-50 border-r-2 border-blue-500' : 'hover:bg-gray-50'"
+                     class="p-4 border-b cursor-pointer">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                            <i class="fas fa-users text-purple-600"></i>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex justify-between items-center">
+                                <h3 class="font-semibold truncate">LA Track Club Elite</h3>
+                                <span class="text-xs text-gray-500">3h</span>
+                            </div>
+                            <p class="text-sm text-gray-600 truncate">Coach Thompson: Training session at 4 PM</p>
+                            <div class="flex items-center mt-1">
+                                <span class="bg-purple-500 text-white text-xs px-1.5 py-0.5 rounded-full">5</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Coach Thompson -->
+                <div @click="activeChat = 'coach'" 
+                     :class="activeChat === 'coach' ? 'bg-blue-50 border-r-2 border-blue-500' : 'hover:bg-gray-50'"
+                     class="p-4 border-b cursor-pointer">
+                    <div class="flex items-center space-x-3">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1556474835-b0f3ac40d4d1?w=48&h=48&fit=crop&crop=face" 
+                                 alt="Coach Thompson" class="w-12 h-12 rounded-full">
+                            <div class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>
+                        </div>
+                        <div class="flex-1 min-w-0">
+                            <div class="flex justify-between items-center">
+                                <h3 class="font-semibold truncate">Coach Thompson</h3>
+                                <span class="text-xs text-gray-500">5h</span>
+                            </div>
+                            <p class="text-sm text-gray-600 truncate">Let's schedule a 1-on-1 session to work on...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Chat Area -->
+        <div class="flex-1 flex flex-col">
+            <!-- Chat with Sarah Williams -->
+            <div x-show="activeChat === 'sarah'" class="flex flex-col h-full">
+                <!-- Chat Header -->
+                <div class="bg-white border-b p-4 flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <img src="https://images.unsplash.com/photo-1494790108755-2616b332c5d2?w=40&h=40&fit=crop&crop=face" 
+                             alt="Sarah Williams" class="w-10 h-10 rounded-full">
+                        <div>
+                            <h3 class="font-semibold">Sarah Williams</h3>
+                            <p class="text-sm text-green-600">Online</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <button class="p-2 text-gray-400 hover:text-gray-600 rounded-lg">
+                            <i class="fas fa-video"></i>
+                        </button>
+                        <button class="p-2 text-gray-400 hover:text-gray-600 rounded-lg">
+                            <i class="fas fa-phone"></i>
+                        </button>
+                        <button @click="showProfile = !showProfile" class="p-2 text-gray-400 hover:text-gray-600 rounded-lg">
+                            <i class="fas fa-info-circle"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Messages -->
+                <div class="flex-1 overflow-y-auto p-4 space-y-4">
+                    <!-- Received Message -->
+                    <div class="flex items-start space-x-3">
+                        <img src="https://images.unsplash.com/photo-1494790108755-2616b332c5d2?w=32&h=32&fit=crop&crop=face" 
+                             alt="Sarah" class="w-8 h-8 rounded-full">
+                        <div class="flex-1 max-w-md">
+                            <div class="bg-gray-100 rounded-lg px-4 py-2">
+                                <p class="text-gray-800">Hey Marcus! I saw your sprint analysis video - that 94% AI score is incredible! 🏃‍♂️</p>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1">2:30 PM</p>
+                        </div>
+                    </div>
+
+                    <!-- Sent Message -->
+                    <div class="flex items-start space-x-3 justify-end">
+                        <div class="flex-1 max-w-md">
+                            <div class="bg-blue-600 text-white rounded-lg px-4 py-2 ml-auto">
+                                <p>Thanks Sarah! Been working really hard on my technique. Your long jump PB yesterday was amazing too! 6.85m is huge! 🔥</p>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1 text-right">2:32 PM</p>
+                        </div>
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&h=32&fit=crop&crop=face" 
+                             alt="You" class="w-8 h-8 rounded-full">
+                    </div>
+
+                    <!-- Received Message with Performance Stats -->
+                    <div class="flex items-start space-x-3">
+                        <img src="https://images.unsplash.com/photo-1494790108755-2616b332c5d2?w=32&h=32&fit=crop&crop=face" 
+                             alt="Sarah" class="w-8 h-8 rounded-full">
+                        <div class="flex-1 max-w-md">
+                            <div class="bg-gray-100 rounded-lg px-4 py-2">
+                                <p class="text-gray-800">Thank you! I'd love to train together sometime. We could work on our different events and share tips!</p>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1">2:35 PM</p>
+                        </div>
+                    </div>
+
+                    <!-- Performance Sharing Card -->
+                    <div class="flex items-start space-x-3">
+                        <img src="https://images.unsplash.com/photo-1494790108755-2616b332c5d2?w=32&h=32&fit=crop&crop=face" 
+                             alt="Sarah" class="w-8 h-8 rounded-full">
+                        <div class="flex-1 max-w-md">
+                            <div class="bg-white border rounded-lg p-4">
+                                <div class="flex items-center space-x-3 mb-3">
+                                    <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-chart-line text-green-600 text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <p class="font-medium text-sm">Training Session Analysis</p>
+                                        <p class="text-xs text-gray-500">Long Jump Practice</p>
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-2 gap-3 text-sm">
+                                    <div class="text-center bg-blue-50 rounded p-2">
+                                        <div class="font-bold text-blue-600">6.85m</div>
+                                        <div class="text-xs text-gray-500">Distance</div>
+                                    </div>
+                                    <div class="text-center bg-green-50 rounded p-2">
+                                        <div class="font-bold text-green-600">91</div>
+                                        <div class="text-xs text-gray-500">AI Score</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1">2:37 PM</p>
+                        </div>
+                    </div>
+
+                    <!-- Sent Message -->
+                    <div class="flex items-start space-x-3 justify-end">
+                        <div class="flex-1 max-w-md">
+                            <div class="bg-blue-600 text-white rounded-lg px-4 py-2 ml-auto">
+                                <p>That sounds great! I'm free this weekend. Maybe we can do some speed drills and you can help me with my approach technique?</p>
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1 text-right">2:40 PM</p>
+                        </div>
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&h=32&fit=crop&crop=face" 
+                             alt="You" class="w-8 h-8 rounded-full">
+                    </div>
+
+                    <!-- Typing Indicator -->
+                    <div class="flex items-start space-x-3">
+                        <img src="https://images.unsplash.com/photo-1494790108755-2616b332c5d2?w=32&h=32&fit=crop&crop=face" 
+                             alt="Sarah" class="w-8 h-8 rounded-full">
+                        <div class="bg-gray-100 rounded-lg px-4 py-2">
+                            <div class="flex items-center space-x-1">
+                                <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
+                                <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.1s"></div>
+                                <div class="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Message Input -->
+                <div class="bg-white border-t p-4">
+                    <div class="flex items-center space-x-3">
+                        <button class="p-2 text-gray-400 hover:text-gray-600 rounded-lg">
+                            <i class="fas fa-paperclip"></i>
+                        </button>
+                        <button class="p-2 text-gray-400 hover:text-gray-600 rounded-lg">
+                            <i class="fas fa-image"></i>
+                        </button>
+                        <button class="p-2 text-gray-400 hover:text-gray-600 rounded-lg">
+                            <i class="fas fa-chart-bar"></i>
+                        </button>
+                        <div class="flex-1">
+                            <input type="text" placeholder="Type a message..." 
+                                   class="w-full px-4 py-2 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        <button class="bg-blue-600 text-white p-2 rounded-full hover:bg-blue-700">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other chat conversations would follow similar patterns -->
+            <div x-show="activeChat === 'mike'" class="flex flex-col h-full">
+                <div class="bg-white border-b p-4 flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face" 
+                             alt="Mike Chen" class="w-10 h-10 rounded-full">
+                        <div>
+                            <h3 class="font-semibold">Mike Chen</h3>
+                            <p class="text-sm text-gray-500">Last seen 30m ago</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-1 flex items-center justify-center text-gray-500">
+                    <p>Chat with Mike Chen would be displayed here...</p>
+                </div>
+            </div>
+
+            <div x-show="activeChat === 'team'" class="flex flex-col h-full">
+                <div class="bg-white border-b p-4 flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
+                            <i class="fas fa-users text-purple-600"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold">LA Track Club Elite</h3>
+                            <p class="text-sm text-gray-500">47 members</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-1 flex items-center justify-center text-gray-500">
+                    <p>Team group chat would be displayed here...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Sidebar -->
+        <div x-show="showProfile" class="w-80 bg-white border-l">
+            <div class="p-6">
+                <div class="text-center mb-6">
+                    <img src="https://images.unsplash.com/photo-1494790108755-2616b332c5d2?w=80&h=80&fit=crop&crop=face" 
+                         alt="Sarah Williams" class="w-20 h-20 rounded-full mx-auto mb-3">
+                    <h3 class="font-semibold text-lg">Sarah Williams</h3>
+                    <p class="text-gray-500">Long Jump • Elite Athlete</p>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <h4 class="font-medium mb-2">Recent Performance</h4>
+                        <div class="text-2xl font-bold text-green-600">6.85m</div>
+                        <div class="text-sm text-gray-500">Personal Best</div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <button class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700">
+                            View Profile
+                        </button>
+                        <button class="w-full bg-gray-100 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-200">
+                            Compare Performance
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

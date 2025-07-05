@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboards & Rankings - HuddleAI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-gray-50" x-data="{ activeCategory: 'overall' }">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-8">
+                    <div class="text-2xl font-bold text-blue-600">HuddleAI</div>
+                    <div class="hidden md:flex space-x-6">
+                        <a href="#" class="text-gray-700 hover:text-blue-600">Dashboard</a>
+                        <a href="#" class="text-gray-700 hover:text-blue-600">Analytics</a>
+                        <a href="#" class="text-blue-600 font-medium">Leaderboards</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="text-gray-400 hover:text-gray-600">
+                        <i class="fas fa-bell"></i>
+                    </button>
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&h=32&fit=crop&crop=face" 
+                         alt="Profile" class="w-8 h-8 rounded-full">
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-6 py-8">
+        <!-- Header -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">Leaderboards & Rankings</h1>
+            <p class="text-gray-600">Compete with athletes worldwide and track your rankings</p>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="bg-white rounded-xl shadow-sm border mb-8">
+            <div class="px-6">
+                <nav class="flex space-x-8">
+                    <button @click="activeCategory = 'overall'" 
+                            :class="activeCategory === 'overall' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700'"
+                            class="py-4 px-1 border-b-2 font-medium text-sm">
+                        Overall Rankings
+                    </button>
+                    <button @click="activeCategory = 'sprints'" 
+                            :class="activeCategory === 'sprints' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700'"
+                            class="py-4 px-1 border-b-2 font-medium text-sm">
+                        Sprint Events
+                    </button>
+                    <button @click="activeCategory = 'distance'" 
+                            :class="activeCategory === 'distance' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700'"
+                            class="py-4 px-1 border-b-2 font-medium text-sm">
+                        Distance Events
+                    </button>
+                    <button @click="activeCategory = 'field'" 
+                            :class="activeCategory === 'field' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700'"
+                            class="py-4 px-1 border-b-2 font-medium text-sm">
+                        Field Events
+                    </button>
+                    <button @click="activeCategory = 'ai'" 
+                            :class="activeCategory === 'ai' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700'"
+                            class="py-4 px-1 border-b-2 font-medium text-sm">
+                        AI Performance
+                    </button>
+                </nav>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <!-- Main Leaderboard -->
+            <div class="lg:col-span-3">
+                <!-- Overall Rankings -->
+                <div x-show="activeCategory === 'overall'" class="bg-white rounded-xl shadow-sm border">
+                    <div class="p-6 border-b">
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-lg font-semibold">Overall Performance Rankings</h3>
+                            <div class="flex space-x-2">
+                                <select class="px-3 py-1 border rounded text-sm">
+                                    <option>Global</option>
+                                    <option>Regional</option>
+                                    <option>National</option>
+                                </select>
+                                <select class="px-3 py-1 border rounded text-sm">
+                                    <option>All Time</option>
+                                    <option>This Year</option>
+                                    <option>This Month</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="space-y-4">
+                            <!-- Podium Top 3 -->
+                            <div class="grid grid-cols-3 gap-4 mb-6">
+                                <!-- 2nd Place -->
+                                <div class="text-center">
+                                    <div class="relative">
+                                        <img src="https://images.unsplash.com/photo-1494790108755-2616b332c5d2?w=80&h=80&fit=crop&crop=face" 
+                                             alt="Sarah Williams" class="w-20 h-20 rounded-full mx-auto mb-2 border-4 border-gray-300">
+                                        <div class="absolute -top-1 -right-1 w-8 h-8 bg-gray-400 rounded-full flex items-center justify-center text-white font-bold text-sm">2</div>
+                                    </div>
+                                    <div class="font-semibold">Sarah Williams</div>
+                                    <div class="text-sm text-gray-500">Long Jump</div>
+                                    <div class="text-lg font-bold text-gray-600">2,847 pts</div>
+                                </div>
+
+                                <!-- 1st Place -->
+                                <div class="text-center">
+                                    <div class="relative">
+                                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=90&h=90&fit=crop&crop=face" 
+                                             alt="Marcus Johnson" class="w-24 h-24 rounded-full mx-auto mb-2 border-4 border-yellow-400">
+                                        <div class="absolute -top-1 -right-1 w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center text-white font-bold">1</div>
+                                        <div class="absolute -top-2 left-1/2 transform -translate-x-1/2">
+                                            <i class="fas fa-crown text-yellow-500 text-xl"></i>
+                                        </div>
+                                    </div>
+                                    <div class="font-semibold">Marcus Johnson</div>
+                                    <div class="text-sm text-gray-500">400m Sprint</div>
+                                    <div class="text-xl font-bold text-yellow-600">3,152 pts</div>
+                                </div>
+
+                                <!-- 3rd Place -->
+                                <div class="text-center">
+                                    <div class="relative">
+                                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=80&h=80&fit=crop&crop=face" 
+                                             alt="Mike Chen" class="w-20 h-20 rounded-full mx-auto mb-2 border-4 border-orange-400">
+                                        <div class="absolute -top-1 -right-1 w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold text-sm">3</div>
+                                    </div>
+                                    <div class="font-semibold">Mike Chen</div>
+                                    <div class="text-sm text-gray-500">Shot Put</div>
+                                    <div class="text-lg font-bold text-orange-600">2,634 pts</div>
+                                </div>
+                            </div>
+
+                            <!-- Remaining Rankings -->
+                            <div class="space-y-3">
+                                <div class="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
+                                    <div class="w-8 text-center font-bold text-gray-600">4</div>
+                                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face" 
+                                         alt="Emma Rodriguez" class="w-10 h-10 rounded-full">
+                                    <div class="flex-1">
+                                        <div class="font-medium">Emma Rodriguez</div>
+                                        <div class="text-sm text-gray-500">Marathon</div>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="font-bold">2,489 pts</div>
+                                        <div class="text-sm text-green-600">+45 this week</div>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-center space-x-4 p-4 hover:bg-gray-50 rounded-lg">
+                                    <div class="w-8 text-center font-bold text-gray-600">5</div>
+                                    <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=40&h=40&fit=crop&crop=face" 
+                                         alt="James Wilson" class="w-10 h-10 rounded-full">
+                                    <div class="flex-1">
+                                        <div class="font-medium">James Wilson</div>
+                                        <div class="text-sm text-gray-500">400m Sprint</div>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="font-bold">2,367 pts</div>
+                                        <div class="text-sm text-red-600">-12 this week</div>
+                                    </div>
+                                </div>
+
+                                <!-- You (Current User) -->
+                                <div class="flex items-center space-x-4 p-4 bg-blue-50 border-2 border-blue-200 rounded-lg">
+                                    <div class="w-8 text-center font-bold text-blue-600">12</div>
+                                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face" 
+                                         alt="You" class="w-10 h-10 rounded-full border-2 border-blue-400">
+                                    <div class="flex-1">
+                                        <div class="font-medium text-blue-800">You (Marcus Johnson)</div>
+                                        <div class="text-sm text-blue-600">400m Sprint</div>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="font-bold text-blue-800">1,947 pts</div>
+                                        <div class="text-sm text-green-600">+78 this week</div>
+                                    </div>
+                                </div>
+
+                                <!-- Continue with more rankings -->
+                                <div class="text-center py-4">
+                                    <button class="text-blue-600 hover:text-blue-700 font-medium">View Full Rankings</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sprint Events -->
+                <div x-show="activeCategory === 'sprints'" class="bg-white rounded-xl shadow-sm border">
+                    <div class="p-6 border-b">
+                        <h3 class="text-lg font-semibold">Sprint Events Leaderboard</h3>
+                    </div>
+                    <div class="p-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- 100m Rankings -->
+                            <div>
+                                <h4 class="font-semibold mb-3 text-blue-600">100m Sprint</h4>
+                                <div class="space-y-2">
+                                    <div class="flex justify-between items-center p-2 bg-yellow-50 rounded">
+                                        <div class="flex items-center space-x-2">
+                                            <span class="text-yellow-600 font-bold">1.</span>
+                                            <span class="font-medium">Alex Thompson</span>
+                                        </div>
+                                        <span class="font-bold">9.87s</span>
+                                    </div>
+                                    <div class="flex justify-between items-center p-2 bg-gray-50 rounded">
+                                        <div class="flex items-center space-x-2">
+                                            <span class="text-gray-600 font-bold">2.</span>
+                                            <span class="font-medium">David Kim</span>
+                                        </div>
+                                        <span class="font-bold">9.94s</span>
+                                    </div>
+                                    <div class="flex justify-between items-center p-2 bg-orange-50 rounded">
+                                        <div class="flex items-center space-x-2">
+                                            <span class="text-orange-600 font-bold">3.</span>
+                                            <span class="font-medium">Ryan Clark</span>
+                                        </div>
+                                        <span class="font-bold">10.01s</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 400m Rankings -->
+                            <div>
+                                <h4 class="font-semibold mb-3 text-green-600">400m Sprint</h4>
+                                <div class="space-y-2">
+                                    <div class="flex justify-between items-center p-2 bg-yellow-50 rounded">
+                                        <div class="flex items-center space-x-2">
+                                            <span class="text-yellow-600 font-bold">1.</span>
+                                            <span class="font-medium">Marcus Johnson (You)</span>
+                                        </div>
+                                        <span class="font-bold">49.23s</span>
+                                    </div>
+                                    <div class="flex justify-between items-center p-2 bg-gray-50 rounded">
+                                        <div class="flex items-center space-x-2">
+                                            <span class="text-gray-600 font-bold">2.</span>
+                                            <span class="font-medium">James Wilson</span>
+                                        </div>
+                                        <span class="font-bold">49.67s</span>
+                                    </div>
+                                    <div class="flex justify-between items-center p-2 bg-orange-50 rounded">
+                                        <div class="flex items-center space-x-2">
+                                            <span class="text-orange-600 font-bold">3.</span>
+                                            <span class="font-medium">Carlos Martinez</span>
+                                        </div>
+                                        <span class="font-bold">49.89s</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Other categories would follow similar patterns -->
+                <div x-show="activeCategory === 'ai'" class="bg-white rounded-xl shadow-sm border">
+                    <div class="p-6 border-b">
+                        <h3 class="text-lg font-semibold">AI Performance Score Rankings</h3>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-600 mb-4">Rankings based on AI-analyzed form and technique scores</p>
+                        <!-- AI rankings content would go here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="space-y-6">
+                <!-- Your Current Rankings -->
+                <div class="bg-white rounded-xl shadow-sm border">
+                    <div class="p-6 border-b">
+                        <h3 class="text-lg font-semibold">Your Rankings</h3>
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <div class="text-center p-4 bg-blue-50 rounded-lg">
+                            <div class="text-2xl font-bold text-blue-600">#12</div>
+                            <div class="text-sm text-gray-600">Overall Ranking</div>
+                            <div class="text-xs text-green-600">↑ 3 positions</div>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">400m Sprint</span>
+                                <span class="font-semibold text-green-600">#1</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">AI Form Score</span>
+                                <span class="font-semibold text-blue-600">#5</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Regional (CA)</span>
+                                <span class="font-semibold text-purple-600">#3</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Achievements -->
+                <div class="bg-white rounded-xl shadow-sm border">
+                    <div class="p-6 border-b">
+                        <h3 class="text-lg font-semibold">Recent Achievements</h3>
+                    </div>
+                    <div class="p-6 space-y-3">
+                        <div class="flex items-center space-x-3 p-3 bg-yellow-50 rounded-lg">
+                            <div class="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-trophy text-yellow-600 text-sm"></i>
+                            </div>
+                            <div>
+                                <div class="font-medium text-sm">Top 10 Overall</div>
+                                <div class="text-xs text-gray-500">Earned today</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3 p-3 bg-blue-50 rounded-lg">
+                            <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-medal text-blue-600 text-sm"></i>
+                            </div>
+                            <div>
+                                <div class="font-medium text-sm">400m Champion</div>
+                                <div class="text-xs text-gray-500">Regional level</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3 p-3 bg-green-50 rounded-lg">
+                            <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-chart-line text-green-600 text-sm"></i>
+                            </div>
+                            <div>
+                                <div class="font-medium text-sm">Rising Star</div>
+                                <div class="text-xs text-gray-500">+10 positions</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Competition Schedule -->
+                <div class="bg-white rounded-xl shadow-sm border">
+                    <div class="p-6 border-b">
+                        <h3 class="text-lg font-semibold">Upcoming Competitions</h3>
+                    </div>
+                    <div class="p-6 space-y-3">
+                        <div class="p-3 border-l-4 border-blue-500 bg-blue-50">
+                            <div class="font-medium text-sm">Regional Championships</div>
+                            <div class="text-xs text-gray-500">March 25, 2024</div>
+                            <div class="text-xs text-blue-600">Qualifying event</div>
+                        </div>
+                        <div class="p-3 border-l-4 border-green-500 bg-green-50">
+                            <div class="font-medium text-sm">State Meet</div>
+                            <div class="text-xs text-gray-500">April 15, 2024</div>
+                            <div class="text-xs text-green-600">Points opportunity</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Points System -->
+                <div class="bg-white rounded-xl shadow-sm border">
+                    <div class="p-6 border-b">
+                        <h3 class="text-lg font-semibold">Points System</h3>
+                    </div>
+                    <div class="p-6 text-sm">
+                        <div class="space-y-2">
+                            <div class="flex justify-between">
+                                <span>Personal Best</span>
+                                <span class="font-medium">+100 pts</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Competition Win</span>
+                                <span class="font-medium">+50 pts</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>AI Score 90+</span>
+                                <span class="font-medium">+25 pts</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Training Consistency</span>
+                                <span class="font-medium">+10 pts/day</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

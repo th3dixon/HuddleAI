@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HuddleAI - Sports Analytics Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'dashboard-dark': '#0f172a',
+                        'dashboard-card': '#1e293b',
+                        'dashboard-border': '#334155',
+                        'data-blue': '#2563eb',
+                        'data-purple': '#7c3aed',
+                        'data-teal': '#0d9488',
+                        'data-indigo': '#4f46e5',
+                        'data-cyan': '#0891b2',
+                        'chart-primary': '#3b82f6',
+                        'chart-secondary': '#8b5cf6',
+                        'chart-accent': '#06b6d4',
+                        'chart-success': '#10b981',
+                        'chart-warning': '#f59e0b',
+                        'chart-danger': '#ef4444'
+                    },
+                    fontFamily: {
+                        'data': ['Inter', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            min-height: 100vh;
+        }
+        
+        @media (max-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                display: none;
+            }
+        }
+        
+        .metric-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .data-visualization {
+            animation: fadeInUp 0.6s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 300px;
+        }
+        
+        .status-indicator {
+            animation: pulse 2s infinite;
+        }
+        
+        .filter-active {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+        }
+    </style>
+</head>
+<body class="font-data bg-slate-50">
+    <div class="dashboard-grid">
+        <!-- Sidebar -->
+        <aside class="sidebar bg-dashboard-dark text-white p-6 overflow-y-auto">
+            <div class="flex items-center space-x-3 mb-8">
+                <div class="w-10 h-10 bg-gradient-to-r from-data-blue to-data-purple rounded-lg flex items-center justify-center">
+                    <i class="fas fa-chart-line text-white text-lg"></i>
+                </div>
+                <span class="text-xl font-bold">HuddleAI</span>
+            </div>
+            
+            <nav class="space-y-2">
+                <a href="#overview" class="flex items-center space-x-3 p-3 rounded-lg bg-data-blue text-white">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Overview</span>
+                </a>
+                <a href="#performance" class="flex items-center space-x-3 p-3 rounded-lg text-slate-300 hover:bg-dashboard-card transition-colors">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Performance</span>
+                </a>
+                <a href="#predictions" class="flex items-center space-x-3 p-3 rounded-lg text-slate-300 hover:bg-dashboard-card transition-colors">
+                    <i class="fas fa-brain"></i>
+                    <span>Predictions</span>
+                </a>
+                <a href="#analytics" class="flex items-center space-x-3 p-3 rounded-lg text-slate-300 hover:bg-dashboard-card transition-colors">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>Analytics</span>
+                </a>
+                <a href="#reports" class="flex items-center space-x-3 p-3 rounded-lg text-slate-300 hover:bg-dashboard-card transition-colors">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Reports</span>
+                </a>
+            </nav>
+            
+            <div class="mt-8 p-4 bg-dashboard-card rounded-lg">
+                <h4 class="font-semibold mb-2">Quick Actions</h4>
+                <div class="space-y-2">
+                    <button class="w-full text-left p-2 text-sm text-slate-300 hover:text-white transition-colors">
+                        <i class="fas fa-download mr-2"></i>Export Data
+                    </button>
+                    <button class="w-full text-left p-2 text-sm text-slate-300 hover:text-white transition-colors">
+                        <i class="fas fa-share mr-2"></i>Share Dashboard
+                    </button>
+                    <button class="w-full text-left p-2 text-sm text-slate-300 hover:text-white transition-colors">
+                        <i class="fas fa-cog mr-2"></i>Settings
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 overflow-y-auto">
+            <!-- Header -->
+            <header class="bg-white border-b border-slate-200 p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h1 class="text-2xl font-bold text-slate-900">Sports Analytics Dashboard</h1>
+                        <p class="text-slate-600 mt-1">Real-time insights and performance metrics</p>
+                    </div>
+                    
+                    <div class="flex items-center space-x-4">
+                        <div class="flex items-center space-x-2 bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm">
+                            <div class="w-2 h-2 bg-green-500 rounded-full status-indicator"></div>
+                            <span>Live Data</span>
+                        </div>
+                        
+                        <button class="flex items-center space-x-2 bg-data-blue text-white px-4 py-2 rounded-lg hover:bg-data-blue/90 transition-colors">
+                            <i class="fas fa-sync-alt"></i>
+                            <span>Refresh</span>
+                        </button>
+                        
+                        <div class="flex items-center space-x-2">
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face&auto=format" 
+                                 alt="User" class="w-8 h-8 rounded-full">
+                            <span class="text-sm font-medium text-slate-700">David Chen</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Filters and Controls -->
+            <section class="bg-white border-b border-slate-200 p-6">
+                <div class="flex flex-wrap items-center justify-between gap-4">
+                    <div class="flex items-center space-x-4">
+                        <div class="flex items-center space-x-2">
+                            <label class="text-sm font-medium text-slate-700">Sport:</label>
+                            <select class="bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-data-blue">
+                                <option>All Sports</option>
+                                <option selected>Football</option>
+                                <option>Basketball</option>
+                                <option>Baseball</option>
+                                <option>Soccer</option>
+                            </select>
+                        </div>
+                        
+                        <div class="flex items-center space-x-2">
+                            <label class="text-sm font-medium text-slate-700">League:</label>
+                            <select class="bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-data-blue">
+                                <option>All Leagues</option>
+                                <option selected>NFL</option>
+                                <option>NBA</option>
+                                <option>MLB</option>
+                                <option>MLS</option>
+                            </select>
+                        </div>
+                        
+                        <div class="flex items-center space-x-2">
+                            <label class="text-sm font-medium text-slate-700">Season:</label>
+                            <select class="bg-white border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-data-blue">
+                                <option>2023-24</option>
+                                <option selected>2024-25</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center space-x-3">
+                        <button class="filter-active px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                            <i class="fas fa-calendar-day mr-2"></i>Today
+                        </button>
+                        <button class="bg-slate-100 text-slate-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-slate-200 transition-colors">
+                            <i class="fas fa-calendar-week mr-2"></i>This Week
+                        </button>
+                        <button class="bg-slate-100 text-slate-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-slate-200 transition-colors">
+                            <i class="fas fa-calendar-alt mr-2"></i>This Month
+                        </button>
+                        
+                        <div class="h-6 w-px bg-slate-300"></div>
+                        
+                        <button class="flex items-center space-x-2 bg-slate-100 text-slate-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-slate-200 transition-colors">
+                            <i class="fas fa-download"></i>
+                            <span>Export</span>
+                        </button>
+                        
+                        <button class="flex items-center space-x-2 bg-slate-100 text-slate-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-slate-200 transition-colors">
+                            <i class="fas fa-share-alt"></i>
+                            <span>Share</span>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Key Metrics -->
+            <section class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 data-visualization">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 bg-data-blue/10 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-trophy text-data-blue text-xl"></i>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-2xl font-bold text-slate-900">78.5%</div>
+                                <div class="text-sm text-green-600 flex items-center">
+                                    <i class="fas fa-arrow-up mr-1"></i>
+                                    +5.2%
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="font-semibold text-slate-900 mb-1">Win Rate</h3>
+                        <p class="text-sm text-slate-600">Current season performance</p>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 data-visualization" style="animation-delay: 0.1s;">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 bg-data-purple/10 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-bullseye text-data-purple text-xl"></i>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-2xl font-bold text-slate-900">94.2%</div>
+                                <div class="text-sm text-green-600 flex items-center">
+                                    <i class="fas fa-arrow-up mr-1"></i>
+                                    +2.1%
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="font-semibold text-slate-900 mb-1">Prediction Accuracy</h3>
+                        <p class="text-sm text-slate-600">AI model performance</p>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 data-visualization" style="animation-delay: 0.2s;">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 bg-data-teal/10 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-users text-data-teal text-xl"></i>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-2xl font-bold text-slate-900">2,847</div>
+                                <div class="text-sm text-green-600 flex items-center">
+                                    <i class="fas fa-arrow-up mr-1"></i>
+                                    +12.3%
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="font-semibold text-slate-900 mb-1">Active Players</h3>
+                        <p class="text-sm text-slate-600">Tracked this season</p>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 data-visualization" style="animation-delay: 0.3s;">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 bg-data-indigo/10 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-chart-line text-data-indigo text-xl"></i>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-2xl font-bold text-slate-900">$2.3M</div>
+                                <div class="text-sm text-green-600 flex items-center">
+                                    <i class="fas fa-arrow-up mr-1"></i>
+                                    +18.7%
+                                </div>
+                            </div>
+                        </div>
+                        <h3 class="font-semibold text-slate-900 mb-1">ROI Generated</h3>
+                        <p class="text-sm text-slate-600">From analytics insights</p>
+                    </div>
+                </div>
+
+                <!-- Charts Grid -->
+                <div class="grid lg:grid-cols-2 gap-8 mb-8">
+                    <!-- Performance Trends -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 data-visualization" style="animation-delay: 0.4s;">
+                        <div class="flex items-center justify-between mb-6">
+                            <div>
+                                <h3 class="text-lg font-semibold text-slate-900">Performance Trends</h3>
+                                <p class="text-sm text-slate-600">Weekly performance metrics</p>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <button class="text-sm bg-data-blue text-white px-3 py-1 rounded-lg">Win Rate</button>
+                                <button class="text-sm bg-slate-100 text-slate-700 px-3 py-1 rounded-lg hover:bg-slate-200">Score</button>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="performanceChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Team Comparison -->
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 data-visualization" style="animation-delay: 0.5s;">
+                        <div class="flex items-center justify-between mb-6">
+                            <div>
+                                <h3 class="text-lg font-semibold text-slate-900">Team Comparison</h3>
+                                <p class="text-sm text-slate-600">Top 8 teams by performance</p>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <button class="text-sm bg-data-purple text-white px-3 py-1 rounded-lg">Offense</button>
+                                <button class="text-sm bg-slate-100 text-slate-700 px-3 py-1 rounded-lg hover:bg-slate-200">Defense</button>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="teamChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detailed Analytics -->
+                <div class="grid lg:grid-cols-3 gap-8">
+                    <!-- Player Statistics -->
+                    <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-sm border border-slate-200 data-visualization" style="animation-delay: 0.6s;">
+                        <div class="flex items-center justify-between mb-6">
+                            <div>
+                                <h3 class="text-lg font-semibold text-slate-900">Top Players</h3>
+                                <p class="text-sm text-slate-600">Current season leaders</p>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <button class="text-sm bg-data-teal text-white px-3 py-1 rounded-lg">Points</button>
+                                <button class="text-sm bg-slate-100 text-slate-700 px-3 py-1 rounded-lg hover:bg-slate-200">Efficiency</button>
+                                <button class="text-sm bg-slate-100 text-slate-700 px-3 py-1 rounded-lg hover:bg-slate-200">Impact</button>
+                            </div>
+                        </div>
+                        
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="text-left text-sm text-slate-600 border-b border-slate-200">
+                                        <th class="pb-3 font-medium">Player</th>
+                                        <th class="pb-3 font-medium">Team</th>
+                                        <th class="pb-3 font-medium">Points</th>
+                                        <th class="pb-3 font-medium">Efficiency</th>
+                                        <th class="pb-3 font-medium">Trend</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-sm">
+                                    <tr class="border-b border-slate-100">
+                                        <td class="py-4">
+                                            <div class="flex items-center space-x-3">
+                                                <img src="https://images.unsplash.com/photo-1566753323558-f4e0952af115?w=32&h=32&fit=crop&crop=face&auto=format" 
+                                                     alt="Player" class="w-8 h-8 rounded-full">
+                                                <div>
+                                                    <div class="font-medium text-slate-900">Marcus Johnson</div>
+                                                    <div class="text-slate-600">QB</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="py-4 text-slate-900">Titans</td>
+                                        <td class="py-4 font-semibold text-slate-900">2,847</td>
+                                        <td class="py-4">
+                                            <div class="flex items-center space-x-2">
+                                                <div class="w-16 bg-slate-200 rounded-full h-2">
+                                                    <div class="bg-data-blue h-2 rounded-full" style="width: 87%"></div>
+                                                </div>
+                                                <span class="text-sm font-medium">87%</span>
+                                            </div>
+                                        </td>
+                                        <td class="py-4">
+                                            <div class="flex items-center space-x-1 text-green-600">
+                                                <i class="fas fa-arrow-up text-xs"></i>
+                                                <span class="text-sm">+5.2%</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="border-b border-slate-100">
+                                        <td class="py-4">
+                                            <div class="flex items-center space-x-3">
+                                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&h=32&fit=crop&crop=face&auto=format" 
+                                                     alt="Player" class="w-8 h-8 rounded-full">
+                                                <div>
+                                                    <div class="font-medium text-slate-900">David Rodriguez</div>
+                                                    <div class="text-slate-600">RB</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="py-4 text-slate-900">Eagles</td>
+                                        <td class="py-4 font-semibold text-slate-900">2,654</td>
+                                        <td class="py-4">
+                                            <div class="flex items-center space-x-2">
+                                                <div class="w-16 bg-slate-200 rounded-full h-2">
+                                                    <div class="bg-data-purple h-2 rounded-full" style="width: 82%"></div>
+                                                </div>
+                                                <span class="text-sm font-medium">82%</span>
+                                            </div>
+                                        </td>
+                                        <td class="py-4">
+                                            <div class="flex items-center space-x-1 text-green-600">
+                                                <i class="fas fa-arrow-up text-xs"></i>
+                                                <span class="text-sm">+3.8%</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="border-b border-slate-100">
+                                        <td class="py-4">
+                                            <div class="flex items-center space-x-3">
+                                                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face&auto=format" 
+                                                     alt="Player" class="w-8 h-8 rounded-full">
+                                                <div>
+                                                    <div class="font-medium text-slate-900">James Wilson</div>
+                                                    <div class="text-slate-600">WR</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="py-4 text-slate-900">Cardinals</td>
+                                        <td class="py-4 font-semibold text-slate-900">2,389</td>
+                                        <td class="py-4">
+                                            <div class="flex items-center space-x-2">
+                                                <div class="w-16 bg-slate-200 rounded-full h-2">
+                                                    <div class="bg-data-teal h-2 rounded-full" style="width: 78%"></div>
+                                                </div>
+                                                <span class="text-sm font-medium">78%</span>
+                                            </div>
+                                        </td>
+                                        <td class="py-4">
+                                            <div class="flex items-center space-x-1 text-red-600">
+                                                <i class="fas fa-arrow-down text-xs"></i>
+                                                <span class="text-sm">-1.2%</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Predictions & Alerts -->
+                    <div class="space-y-6">
+                        <!-- AI Predictions -->
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 data-visualization" style="animation-delay: 0.7s;">
+                            <div class="flex items-center space-x-2 mb-4">
+                                <div class="w-8 h-8 bg-data-purple/10 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-brain text-data-purple"></i>
+                                </div>
+                                <h3 class="font-semibold text-slate-900">AI Predictions</h3>
+                            </div>
+                            
+                            <div class="space-y-4">
+                                <div class="p-4 bg-gradient-to-r from-data-blue/5 to-data-purple/5 rounded-lg border border-data-blue/10">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-sm font-medium text-slate-900">Next Game Win Probability</span>
+                                        <span class="text-lg font-bold text-data-blue">78.5%</span>
+                                    </div>
+                                    <div class="w-full bg-slate-200 rounded-full h-2">
+                                        <div class="bg-gradient-to-r from-data-blue to-data-purple h-2 rounded-full" style="width: 78.5%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="p-4 bg-gradient-to-r from-data-teal/5 to-data-cyan/5 rounded-lg border border-data-teal/10">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="text-sm font-medium text-slate-900">Season Playoff Odds</span>
+                                        <span class="text-lg font-bold text-data-teal">94.2%</span>
+                                    </div>
+                                    <div class="w-full bg-slate-200 rounded-full h-2">
+                                        <div class="bg-gradient-to-r from-data-teal to-data-cyan h-2 rounded-full" style="width: 94.2%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Live Alerts -->
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 data-visualization" style="animation-delay: 0.8s;">
+                            <div class="flex items-center space-x-2 mb-4">
+                                <div class="w-8 h-8 bg-data-teal/10 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-bell text-data-teal"></i>
+                                </div>
+                                <h3 class="font-semibold text-slate-900">Live Alerts</h3>
+                            </div>
+                            
+                            <div class="space-y-3">
+                                <div class="flex items-start space-x-3 p-3 bg-green-50 rounded-lg border border-green-200">
+                                    <div class="w-2 h-2 bg-green-500 rounded-full mt-2 status-indicator"></div>
+                                    <div class="flex-1">
+                                        <div class="text-sm font-medium text-slate-900">Performance Spike</div>
+                                        <div class="text-xs text-slate-600">Marcus Johnson exceeded efficiency threshold</div>
+                                        <div class="text-xs text-slate-500 mt-1">2 minutes ago</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start space-x-3 p-3 bg-yellow-50 rounded-lg border border-yellow-200">
+                                    <div class="w-2 h-2 bg-yellow-500 rounded-full mt-2 status-indicator"></div>
+                                    <div class="flex-1">
+                                        <div class="text-sm font-medium text-slate-900">Model Update</div>
+                                        <div class="text-xs text-slate-600">Prediction accuracy improved to 94.2%</div>
+                                        <div class="text-xs text-slate-500 mt-1">15 minutes ago</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start space-x-3 p-3 bg-blue-50 rounded-lg border border-blue-200">
+                                    <div class="w-2 h-2 bg-blue-500 rounded-full mt-2 status-indicator"></div>
+                                    <div class="flex-1">
+                                        <div class="text-sm font-medium text-slate-900">Data Sync</div>
+                                        <div class="text-xs text-slate-600">Real-time feed updated successfully</div>
+                                        <div class="text-xs text-slate-500 mt-1">30 minutes ago</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Export Options -->
+                        <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 data-visualization" style="animation-delay: 0.9s;">
+                            <div class="flex items-center space-x-2 mb-4">
+                                <div class="w-8 h-8 bg-data-indigo/10 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-download text-data-indigo"></i>
+                                </div>
+                                <h3 class="font-semibold text-slate-900">Export & Share</h3>
+                            </div>
+                            
+                            <div class="space-y-3">
+                                <button class="w-full flex items-center justify-between p-3 bg-slate-50 hover:bg-slate-100 rounded-lg transition-colors">
+                                    <div class="flex items-center space-x-3">
+                                        <i class="fas fa-file-excel text-green-600"></i>
+                                        <span class="text-sm font-medium text-slate-900">Export to Excel</span>
+                                    </div>
+                                    <i class="fas fa-chevron-right text-slate-400"></i>
+                                </button>
+                                
+                                <button class="w-full flex items-center justify-between p-3 bg-slate-50 hover:bg-slate-100 rounded-lg transition-colors">
+                                    <div class="flex items-center space-x-3">
+                                        <i class="fas fa-file-pdf text-red-600"></i>
+                                        <span class="text-sm font-medium text-slate-900">Generate PDF Report</span>
+                                    </div>
+                                    <i class="fas fa-chevron-right text-slate-400"></i>
+                                </button>
+                                
+                                <button class="w-full flex items-center justify-between p-3 bg-slate-50 hover:bg-slate-100 rounded-lg transition-colors">
+                                    <div class="flex items-center space-x-3">
+                                        <i class="fas fa-share-alt text-data-blue"></i>
+                                        <span class="text-sm font-medium text-slate-900">Share Dashboard</span>
+                                    </div>
+                                    <i class="fas fa-chevron-right text-slate-400"></i>
+                                </button>
+                                
+                                <button class="w-full flex items-center justify-between p-3 bg-slate-50 hover:bg-slate-100 rounded-lg transition-colors">
+                                    <div class="flex items-center space-x-3">
+                                        <i class="fas fa-code text-data-purple"></i>
+                                        <span class="text-sm font-medium text-slate-900">API Access</span>
+                                    </div>
+                                    <i class="fas fa-chevron-right text-slate-400"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobileMenuOverlay" class="fixed inset-0 bg-black/50 z-50 lg:hidden hidden">
+        <div class="fixed inset-y-0 left-0 w-64 bg-dashboard-dark text-white p-6">
+            <div class="flex items-center justify-between mb-8">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-r from-data-blue to-data-purple rounded-lg flex items-center justify-center">
+                        <i class="fas fa-chart-line text-white text-lg"></i>
+                    </div>
+                    <span class="text-xl font-bold">HuddleAI</span>
+                </div>
+                <button onclick="closeMobileMenu()" class="text-white">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <nav class="space-y-2">
+                <a href="#overview" class="flex items-center space-x-3 p-3 rounded-lg bg-data-blue text-white">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Overview</span>
+                </a>
+                <a href="#performance" class="flex items-center space-x-3 p-3 rounded-lg text-slate-300 hover:bg-dashboard-card transition-colors">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Performance</span>
+                </a>
+                <a href="#predictions" class="flex items-center space-x-3 p-3 rounded-lg text-slate-300 hover:bg-dashboard-card transition-colors">
+                    <i class="fas fa-brain"></i>
+                    <span>Predictions</span>
+                </a>
+                <a href="#analytics" class="flex items-center space-x-3 p-3 rounded-lg text-slate-300 hover:bg-dashboard-card transition-colors">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>Analytics</span>
+                </a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Mobile Menu Button -->
+    <button onclick="openMobileMenu()" class="fixed top-4 left-4 z-40 lg:hidden bg-white p-3 rounded-lg shadow-lg">
+        <i class="fas fa-bars text-slate-700"></i>
+    </button>
+
+    <!-- Chart.js Scripts -->
+    <script>
+        // Performance Chart
+        const performanceCtx = document.getElementById('performanceChart').getContext('2d');
+        new Chart(performanceCtx, {
+            type: 'line',
+            data: {
+                labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6', 'Week 7', 'Week 8'],
+                datasets: [{
+                    label: 'Win Rate',
+                    data: [65, 68, 72, 75, 78, 76, 82, 85],
+                    borderColor: '#3b82f6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }, {
+                    label: 'Performance Score',
+                    data: [70, 73, 75, 78, 80, 77, 83, 87],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: {
+                    intersect: false,
+                    mode: 'index'
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        min: 60,
+                        max: 100,
+                        grid: {
+                            color: 'rgba(148, 163, 184, 0.1)'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            color: 'rgba(148, 163, 184, 0.1)'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            usePointStyle: true,
+                            padding: 20
+                        }
+                    }
+                }
+            }
+        });
+
+        // Team Chart
+        const teamCtx = document.getElementById('teamChart').getContext('2d');
+        new Chart(teamCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Titans', 'Eagles', 'Cardinals', 'Ravens', 'Packers', 'Chiefs', 'Bills', 'Cowboys'],
+                datasets: [{
+                    label: 'Offensive Rating',
+                    data: [85, 82, 78, 88, 75, 92, 80, 77],
+                    backgroundColor: 'rgba(59, 130, 246, 0.8)',
+                    borderColor: '#3b82f6',
+                    borderWidth: 1
+                }, {
+                    label: 'Defensive Rating',
+                    data: [78, 85, 82, 75, 88, 73, 85, 80],
+                    backgroundColor: 'rgba(124, 58, 237, 0.8)',
+                    borderColor: '#7c3aed',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        grid: {
+                            color: 'rgba(148, 163, 184, 0.1)'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            color: 'rgba(148, 163, 184, 0.1)'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            usePointStyle: true,
+                            padding: 20
+                        }
+                    }
+                }
+            }
+        });
+
+        // Mobile Menu Functions
+        function openMobileMenu() {
+            document.getElementById('mobileMenuOverlay').classList.remove('hidden');
+        }
+
+        function closeMobileMenu() {
+            document.getElementById('mobileMenuOverlay').classList.add('hidden');
+        }
+
+        // Close mobile menu when clicking overlay
+        document.getElementById('mobileMenuOverlay').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeMobileMenu();
+            }
+        });
+    </script>
+</body>
+</html>

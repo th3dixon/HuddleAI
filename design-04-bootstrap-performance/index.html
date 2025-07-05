@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HuddleAI - Track Your Athletic Performance</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #00C896;
+            --dark-green: #00A67E;
+            --accent-teal: #00B5AD;
+            --light-green: #E8FFF8;
+            --success-green: #10B981;
+            --dark-bg: #0F172A;
+            --text-dark: #1E293B;
+            --text-light: #64748B;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        
+        .bg-primary-green {
+            background-color: var(--primary-green) !important;
+        }
+        
+        .bg-dark-green {
+            background-color: var(--dark-green) !important;
+        }
+        
+        .bg-light-green {
+            background-color: var(--light-green) !important;
+        }
+        
+        .text-primary-green {
+            color: var(--primary-green) !important;
+        }
+        
+        .text-accent-teal {
+            color: var(--accent-teal) !important;
+        }
+        
+        .btn-primary-green {
+            background-color: var(--primary-green);
+            border-color: var(--primary-green);
+            color: white;
+            font-weight: 600;
+            padding: 12px 30px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary-green:hover {
+            background-color: var(--dark-green);
+            border-color: var(--dark-green);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .btn-outline-green {
+            border-color: var(--primary-green);
+            color: var(--primary-green);
+            font-weight: 600;
+            padding: 12px 30px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-outline-green:hover {
+            background-color: var(--primary-green);
+            border-color: var(--primary-green);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, var(--dark-bg) 0%, #1E293B 100%);
+            color: white;
+            padding: 120px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80') center/cover;
+            opacity: 0.1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .metric-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid #F1F5F9;
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 60px rgba(0, 200, 150, 0.15);
+        }
+        
+        .metric-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-green);
+            margin-bottom: 10px;
+        }
+        
+        .success-story {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+        
+        .success-story:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+        
+        .improvement-badge {
+            background: var(--success-green);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .guarantee-card {
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--accent-teal) 100%);
+            color: white;
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+        
+        .nav-link {
+            font-weight: 500;
+            color: var(--text-dark) !important;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary-green) !important;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 50px;
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--light-green);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--primary-green);
+            margin-bottom: 20px;
+        }
+        
+        .stats-section {
+            background: var(--light-green);
+            padding: 80px 0;
+        }
+        
+        .cta-section {
+            background: linear-gradient(135deg, var(--dark-bg) 0%, #1E293B 100%);
+            color: white;
+            padding: 100px 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand text-primary-green" href="#">
+                <i class="fas fa-chart-line me-2"></i>HuddleAI
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Performance Tracking</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#metrics">Metrics</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#success">Success Stories</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="tracking.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item ms-3">
+                        <a class="btn btn-primary-green" href="#cta">Start Tracking</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="hero-content">
+                        <h1 class="display-4 fw-bold mb-4">
+                            Track Your Athletic Performance with AI Precision
+                        </h1>
+                        <p class="lead mb-4">
+                            Transform your training with data-driven insights. HuddleAI analyzes your performance, identifies improvement areas, and accelerates your athletic development.
+                        </p>
+                        <div class="d-flex flex-wrap gap-3 mb-5">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-video text-primary-green me-2"></i>
+                                <span>Video Analysis</span>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-chart-bar text-primary-green me-2"></i>
+                                <span>Performance Metrics</span>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-trophy text-primary-green me-2"></i>
+                                <span>Goal Tracking</span>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-wrap gap-3">
+                            <a href="#cta" class="btn btn-primary-green btn-lg">
+                                <i class="fas fa-play me-2"></i>Start Free Trial
+                            </a>
+                            <a href="tracking.html" class="btn btn-outline-light btn-lg">
+                                View Demo Dashboard
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="text-center">
+                        <img src="https://images.unsplash.com/photo-1544717297-fa95b6ee9643?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                             alt="Athletic Performance" class="img-fluid rounded-3 shadow-lg">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Metrics Section -->
+    <section class="stats-section" id="metrics">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Performance Metrics That Matter</h2>
+                <p class="section-subtitle">Track the data that drives athletic improvement</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="metric-card text-center">
+                        <div class="feature-icon mx-auto">
+                            <i class="fas fa-stopwatch"></i>
+                        </div>
+                        <div class="metric-number">15%</div>
+                        <h5 class="fw-bold mb-2">Average Speed Increase</h5>
+                        <p class="text-muted mb-0">Athletes see measurable speed improvements within 30 days</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="metric-card text-center">
+                        <div class="feature-icon mx-auto">
+                            <i class="fas fa-bullseye"></i>
+                        </div>
+                        <div class="metric-number">92%</div>
+                        <h5 class="fw-bold mb-2">Accuracy Improvement</h5>
+                        <p class="text-muted mb-0">Enhanced technique precision through AI analysis</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="metric-card text-center">
+                        <div class="feature-icon mx-auto">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="metric-number">3.2x</div>
+                        <h5 class="fw-bold mb-2">Faster Goal Achievement</h5>
+                        <p class="text-muted mb-0">Reach performance targets 3x faster with data insights</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="metric-card text-center">
+                        <div class="feature-icon mx-auto">
+                            <i class="fas fa-medal"></i>
+                        </div>
+                        <div class="metric-number">89%</div>
+                        <h5 class="fw-bold mb-2">Goal Completion Rate</h5>
+                        <p class="text-muted mb-0">Athletes consistently achieve their performance objectives</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-5" id="features">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Comprehensive Performance Tracking</h2>
+                <p class="section-subtitle">Every aspect of your athletic development, measured and optimized</p>
+            </div>
+            <div class="row g-5 align-items-center">
+                <div class="col-lg-6">
+                    <div class="row g-4">
+                        <div class="col-12">
+                            <div class="d-flex">
+                                <div class="feature-icon flex-shrink-0">
+                                    <i class="fas fa-video"></i>
+                                </div>
+                                <div class="ms-3">
+                                    <h5 class="fw-bold mb-2">AI Video Analysis</h5>
+                                    <p class="text-muted mb-0">Advanced computer vision analyzes your technique frame by frame, identifying areas for improvement with precision.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="d-flex">
+                                <div class="feature-icon flex-shrink-0">
+                                    <i class="fas fa-tachometer-alt"></i>
+                                </div>
+                                <div class="ms-3">
+                                    <h5 class="fw-bold mb-2">Real-Time Performance Metrics</h5>
+                                    <p class="text-muted mb-0">Track speed, acceleration, form quality, and endurance with instant feedback and detailed analytics.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="d-flex">
+                                <div class="feature-icon flex-shrink-0">
+                                    <i class="fas fa-target"></i>
+                                </div>
+                                <div class="ms-3">
+                                    <h5 class="fw-bold mb-2">Personalized Goal Setting</h5>
+                                    <p class="text-muted mb-0">Set SMART goals based on your current performance and receive customized training recommendations.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                         alt="Performance Analysis" class="img-fluid rounded-3 shadow-lg">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Success Stories Section -->
+    <section class="bg-light py-5" id="success">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="section-title">Before & After Success Stories</h2>
+                <p class="section-subtitle">Real athletes, real improvements, real results</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <div class="success-story">
+                        <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                             alt="Runner" class="w-100" style="height: 250px; object-fit: cover;">
+                        <div class="p-4">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="fw-bold mb-0">Sarah Chen</h5>
+                                <span class="improvement-badge">+22% Speed</span>
+                            </div>
+                            <p class="text-muted mb-3">Marathon Runner</p>
+                            <p class="mb-3">"HuddleAI identified inefficiencies in my stride that I never noticed. After 6 weeks of targeted training, I shaved 15 minutes off my marathon time."</p>
+                            <div class="row text-center">
+                                <div class="col-6">
+                                    <small class="text-muted">Before</small>
+                                    <div class="fw-bold text-primary-green">3:45:30</div>
+                                </div>
+                                <div class="col-6">
+                                    <small class="text-muted">After</small>
+                                    <div class="fw-bold text-primary-green">3:30:15</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="success-story">
+                        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                             alt="Sprinter" class="w-100" style="height: 250px; object-fit: cover;">
+                        <div class="p-4">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="fw-bold mb-0">Marcus Johnson</h5>
+                                <span class="improvement-badge">+18% Power</span>
+                            </div>
+                            <p class="text-muted mb-3">Track Sprinter</p>
+                            <p class="mb-3">"The AI analysis showed me exactly where I was losing power in my starts. Now I'm consistently hitting personal bests in the 100m."</p>
+                            <div class="row text-center">
+                                <div class="col-6">
+                                    <small class="text-muted">Before</small>
+                                    <div class="fw-bold text-primary-green">10.85s</div>
+                                </div>
+                                <div class="col-6">
+                                    <small class="text-muted">After</small>
+                                    <div class="fw-bold text-primary-green">10.42s</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="success-story">
+                        <img src="https://images.unsplash.com/photo-1544717297-fa95b6ee9643?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                             alt="Cyclist" class="w-100" style="height: 250px; object-fit: cover;">
+                        <div class="p-4">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="fw-bold mb-0">Emma Rodriguez</h5>
+                                <span class="improvement-badge">+25% Endurance</span>
+                            </div>
+                            <p class="text-muted mb-3">Competitive Cyclist</p>
+                            <p class="mb-3">"The endurance tracking helped me optimize my pacing strategy. I can now maintain higher speeds for longer distances."</p>
+                            <div class="row text-center">
+                                <div class="col-6">
+                                    <small class="text-muted">Before</small>
+                                    <div class="fw-bold text-primary-green">45 min</div>
+                                </div>
+                                <div class="col-6">
+                                    <small class="text-muted">After</small>
+                                    <div class="fw-bold text-primary-green">60 min</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Performance Guarantee Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="guarantee-card">
+                        <i class="fas fa-shield-alt fa-3x mb-4 opacity-75"></i>
+                        <h3 class="fw-bold mb-3">30-Day Performance Improvement Guarantee</h3>
+                        <p class="mb-4 opacity-90">
+                            We're so confident in HuddleAI's ability to improve your athletic performance that we guarantee measurable improvements within 30 days, or your money back.
+                        </p>
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-4">
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <i class="fas fa-check-circle me-2"></i>
+                                    <span>Technique Improvement</span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <i class="fas fa-check-circle me-2"></i>
+                                    <span>Speed Enhancement</span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <i class="fas fa-check-circle me-2"></i>
+                                    <span>Goal Achievement</span>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#cta" class="btn btn-light btn-lg">
+                            Start Your Improvement Journey
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section" id="cta">
+        <div class="container">
+            <div class="row justify-content-center text-center">
+                <div class="col-lg-8">
+                    <h2 class="display-5 fw-bold mb-4">Ready to Transform Your Athletic Performance?</h2>
+                    <p class="lead mb-5">Join thousands of athletes who are already using HuddleAI to break through performance barriers and achieve their goals faster.</p>
+                    <div class="d-flex flex-wrap justify-content-center gap-3 mb-4">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-star text-warning me-1"></i>
+                            <i class="fas fa-star text-warning me-1"></i>
+                            <i class="fas fa-star text-warning me-1"></i>
+                            <i class="fas fa-star text-warning me-1"></i>
+                            <i class="fas fa-star text-warning me-2"></i>
+                            <span>4.9/5 from 2,500+ athletes</span>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-wrap justify-content-center gap-3">
+                        <a href="tracking.html" class="btn btn-primary-green btn-lg">
+                            <i class="fas fa-chart-line me-2"></i>Start Free Trial
+                        </a>
+                        <a href="#" class="btn btn-outline-light btn-lg">
+                            <i class="fas fa-play me-2"></i>Watch Demo
+                        </a>
+                    </div>
+                    <p class="mt-3 opacity-75">
+                        <i class="fas fa-lock me-2"></i>No credit card required • 14-day free trial
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <h5 class="fw-bold mb-3">
+                        <i class="fas fa-chart-line me-2 text-primary-green"></i>HuddleAI
+                    </h5>
+                    <p class="mb-3">Empowering athletes with AI-driven performance insights and personalized training recommendations.</p>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="text-white"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <h6 class="fw-bold mb-3">Product</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white-50">Features</a></li>
+                        <li><a href="tracking.html" class="text-white-50">Dashboard</a></li>
+                        <li><a href="#" class="text-white-50">Pricing</a></li>
+                        <li><a href="#" class="text-white-50">API</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2">
+                    <h6 class="fw-bold mb-3">Company</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white-50">About</a></li>
+                        <li><a href="#" class="text-white-50">Blog</a></li>
+                        <li><a href="#" class="text-white-50">Careers</a></li>
+                        <li><a href="#" class="text-white-50">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2">
+                    <h6 class="fw-bold mb-3">Resources</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white-50">Help Center</a></li>
+                        <li><a href="#" class="text-white-50">Training Guides</a></li>
+                        <li><a href="#" class="text-white-50">Webinars</a></li>
+                        <li><a href="#" class="text-white-50">Community</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2">
+                    <h6 class="fw-bold mb-3">Legal</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white-50">Privacy Policy</a></li>
+                        <li><a href="#" class="text-white-50">Terms of Service</a></li>
+                        <li><a href="#" class="text-white-50">Cookie Policy</a></li>
+                        <li><a href="#" class="text-white-50">GDPR</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4 opacity-25">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="mb-0 text-white-50">&copy; 2024 HuddleAI. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0 text-white-50">Made with <i class="fas fa-heart text-danger"></i> for athletes worldwide</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

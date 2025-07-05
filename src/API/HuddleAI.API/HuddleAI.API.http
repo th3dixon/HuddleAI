@@ -1,0 +1,6 @@
+@HuddleAI.API_HostAddress = http://localhost:5262
+
+GET {{HuddleAI.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

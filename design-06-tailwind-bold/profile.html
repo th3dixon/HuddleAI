@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Athlete Profile - HuddleAI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'electric-blue': '#00D4FF',
+                        'neon-orange': '#FF6B35',
+                        'power-yellow': '#FFD23F',
+                        'deep-navy': '#0A1628',
+                        'steel-gray': '#2D3748'
+                    },
+                    fontFamily: {
+                        'athletic': ['Impact', 'Arial Black', 'sans-serif'],
+                        'bold': ['Montserrat', 'Arial', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-deep-navy text-white font-bold">
+    <!-- Header -->
+    <header class="relative bg-gradient-to-r from-deep-navy via-steel-gray to-deep-navy">
+        <div class="absolute inset-0 bg-black/20"></div>
+        <nav class="relative z-10 container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-gradient-to-br from-electric-blue to-neon-orange rounded-xl flex items-center justify-center">
+                        <i class="fas fa-bolt text-white text-2xl"></i>
+                    </div>
+                    <h1 class="text-3xl font-athletic text-transparent bg-clip-text bg-gradient-to-r from-electric-blue to-power-yellow">
+                        HUDDLE<span class="text-neon-orange">AI</span>
+                    </h1>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-white hover:text-electric-blue transition-colors font-bold text-lg">HOME</a>
+                    <a href="#" class="text-white hover:text-electric-blue transition-colors font-bold text-lg">TRAIN</a>
+                    <a href="#" class="text-white hover:text-electric-blue transition-colors font-bold text-lg">COMPETE</a>
+                    <a href="#" class="text-white hover:text-electric-blue transition-colors font-bold text-lg">ANALYZE</a>
+                    <button class="bg-gradient-to-r from-neon-orange to-power-yellow text-deep-navy px-6 py-3 rounded-xl font-bold text-lg hover:scale-105 transform transition-all shadow-lg">
+                        DASHBOARD
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Bold Profile Header -->
+    <section class="relative py-20 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-steel-gray via-deep-navy to-steel-gray"></div>
+        <div class="absolute inset-0 opacity-20">
+            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" 
+                 alt="Athletic background" class="w-full h-full object-cover">
+        </div>
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="grid md:grid-cols-3 gap-12 items-center">
+                <div class="md:col-span-1">
+                    <div class="relative">
+                        <div class="absolute inset-0 bg-gradient-to-br from-electric-blue to-neon-orange rounded-3xl transform rotate-6"></div>
+                        <div class="absolute inset-0 bg-gradient-to-br from-power-yellow to-electric-blue rounded-3xl transform -rotate-3"></div>
+                        <img src="https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
+                             alt="Marcus Johnson" class="relative z-10 rounded-3xl w-full">
+                    </div>
+                </div>
+                <div class="md:col-span-2">
+                    <div class="mb-6">
+                        <h1 class="text-6xl md:text-8xl font-athletic text-transparent bg-clip-text bg-gradient-to-r from-electric-blue to-neon-orange mb-4">
+                            MARCUS
+                            <br>
+                            JOHNSON
+                        </h1>
+                        <p class="text-3xl text-power-yellow font-bold mb-2">PROFESSIONAL SPRINTER</p>
+                        <p class="text-xl text-gray-300 mb-6">Team USA • 100m/200m Specialist • Olympic Qualifier</p>
+                    </div>
+                    
+                    <!-- Quick Stats -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+                        <div class="bg-black/30 backdrop-blur-sm rounded-2xl p-4 text-center">
+                            <div class="text-3xl font-athletic text-electric-blue mb-1">9.82s</div>
+                            <div class="text-gray-400 text-sm">100M PB</div>
+                        </div>
+                        <div class="bg-black/30 backdrop-blur-sm rounded-2xl p-4 text-center">
+                            <div class="text-3xl font-athletic text-neon-orange mb-1">19.45s</div>
+                            <div class="text-gray-400 text-sm">200M PB</div>
+                        </div>
+                        <div class="bg-black/30 backdrop-blur-sm rounded-2xl p-4 text-center">
+                            <div class="text-3xl font-athletic text-power-yellow mb-1">12</div>
+                            <div class="text-gray-400 text-sm">MEDALS</div>
+                        </div>
+                        <div class="bg-black/30 backdrop-blur-sm rounded-2xl p-4 text-center">
+                            <div class="text-3xl font-athletic text-electric-blue mb-1">3rd</div>
+                            <div class="text-gray-400 text-sm">WORLD RANK</div>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="flex flex-wrap gap-4">
+                        <button class="bg-gradient-to-r from-electric-blue to-neon-orange text-white px-8 py-4 rounded-2xl font-bold text-lg hover:scale-105 transform transition-all shadow-lg">
+                            <i class="fas fa-message mr-2"></i>MESSAGE
+                        </button>
+                        <button class="border-2 border-electric-blue text-electric-blue px-8 py-4 rounded-2xl font-bold text-lg hover:bg-electric-blue hover:text-deep-navy transition-all">
+                            <i class="fas fa-users mr-2"></i>FOLLOW
+                        </button>
+                        <button class="border-2 border-power-yellow text-power-yellow px-8 py-4 rounded-2xl font-bold text-lg hover:bg-power-yellow hover:text-deep-navy transition-all">
+                            <i class="fas fa-share mr-2"></i>SHARE
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Performance Statistics -->
+    <section class="py-24 bg-gradient-to-b from-deep-navy to-steel-gray">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-5xl font-athletic text-transparent bg-clip-text bg-gradient-to-r from-electric-blue to-neon-orange mb-4">
+                    PERFORMANCE ANALYTICS
+                </h2>
+                <p class="text-xl text-gray-300 font-bold">Data-driven excellence powered by HuddleAI</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                <!-- Speed Analysis -->
+                <div class="relative group">
+                    <div class="absolute inset-0 bg-gradient-to-br from-electric-blue/20 to-neon-orange/20 rounded-3xl group-hover:from-electric-blue/30 group-hover:to-neon-orange/30 transition-all"></div>
+                    <div class="relative bg-black/30 backdrop-blur-sm rounded-3xl p-8">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-2xl font-athletic text-electric-blue">SPEED ZONE</h3>
+                            <i class="fas fa-tachometer-alt text-electric-blue text-2xl"></i>
+                        </div>
+                        <div class="text-4xl font-athletic text-white mb-2">47.8 km/h</div>
+                        <div class="text-gray-400 mb-4">MAX SPEED ACHIEVED</div>
+                        <div class="w-full bg-gray-700 rounded-full h-3 mb-4">
+                            <div class="bg-gradient-to-r from-electric-blue to-neon-orange h-3 rounded-full" style="width: 95%"></div>
+                        </div>
+                        <div class="text-sm text-gray-400">+2.3% from last month</div>
+                    </div>
+                </div>
+
+                <!-- Power Output -->
+                <div class="relative group">
+                    <div class="absolute inset-0 bg-gradient-to-br from-neon-orange/20 to-power-yellow/20 rounded-3xl group-hover:from-neon-orange/30 group-hover:to-power-yellow/30 transition-all"></div>
+                    <div class="relative bg-black/30 backdrop-blur-sm rounded-3xl p-8">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-2xl font-athletic text-neon-orange">POWER OUTPUT</h3>
+                            <i class="fas fa-bolt text-neon-orange text-2xl"></i>
+                        </div>
+                        <div class="text-4xl font-athletic text-white mb-2">1,847W</div>
+                        <div class="text-gray-400 mb-4">PEAK POWER</div>
+                        <div class="w-full bg-gray-700 rounded-full h-3 mb-4">
+                            <div class="bg-gradient-to-r from-neon-orange to-power-yellow h-3 rounded-full" style="width: 88%"></div>
+                        </div>
+                        <div class="text-sm text-gray-400">Personal Best</div>
+                    </div>
+                </div>
+
+                <!-- Recovery Rate -->
+                <div class="relative group">
+                    <div class="absolute inset-0 bg-gradient-to-br from-power-yellow/20 to-electric-blue/20 rounded-3xl group-hover:from-power-yellow/30 group-hover:to-electric-blue/30 transition-all"></div>
+                    <div class="relative bg-black/30 backdrop-blur-sm rounded-3xl p-8">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-2xl font-athletic text-power-yellow">RECOVERY</h3>
+                            <i class="fas fa-heart text-power-yellow text-2xl"></i>
+                        </div>
+                        <div class="text-4xl font-athletic text-white mb-2">92%</div>
+                        <div class="text-gray-400 mb-4">OPTIMAL ZONE</div>
+                        <div class="w-full bg-gray-700 rounded-full h-3 mb-4">
+                            <div class="bg-gradient-to-r from-power-yellow to-electric-blue h-3 rounded-full" style="width: 92%"></div>
+                        </div>
+                        <div class="text-sm text-gray-400">Ready for competition</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Training Progress Chart -->
+            <div class="bg-black/30 backdrop-blur-sm rounded-3xl p-8 mb-12">
+                <h3 class="text-3xl font-athletic text-transparent bg-clip-text bg-gradient-to-r from-electric-blue to-neon-orange mb-6">
+                    TRAINING PROGRESSION
+                </h3>
+                <div class="grid md:grid-cols-2 gap-12">
+                    <div>
+                        <h4 class="text-xl font-bold text-electric-blue mb-4">100M SPRINT TIMES</h4>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <span class="text-gray-400">JAN 2024</span>
+                                <span class="text-white font-bold">10.12s</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-gray-400">MAR 2024</span>
+                                <span class="text-white font-bold">9.98s</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-gray-400">JUN 2024</span>
+                                <span class="text-white font-bold">9.89s</span>
+                            </div>
+                            <div class="flex items-center justify-between border-t border-gray-600 pt-4">
+                                <span class="text-electric-blue font-bold">CURRENT PB</span>
+                                <span class="text-electric-blue font-bold text-xl">9.82s</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="text-xl font-bold text-neon-orange mb-4">STRENGTH GAINS</h4>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-gray-400">SQUAT</span>
+                                    <span class="text-white font-bold">285kg</span>
+                                </div>
+                                <div class="w-full bg-gray-700 rounded-full h-2">
+                                    <div class="bg-gradient-to-r from-electric-blue to-neon-orange h-2 rounded-full" style="width: 90%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-gray-400">DEADLIFT</span>
+                                    <span class="text-white font-bold">320kg</span>
+                                </div>
+                                <div class="w-full bg-gray-700 rounded-full h-2">
+                                    <div class="bg-gradient-to-r from-neon-orange to-power-yellow h-2 rounded-full" style="width: 85%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-gray-400">POWER CLEAN</span>
+                                    <span class="text-white font-bold">165kg</span>
+                                </div>
+                                <div class="w-full bg-gray-700 rounded-full h-2">
+                                    <div class="bg-gradient-to-r from-power-yellow to-electric-blue h-2 rounded-full" style="width: 95%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievement Showcase -->
+    <section class="py-24 bg-gradient-to-br from-steel-gray to-deep-navy relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" 
+                 alt="Victory celebration" class="w-full h-full object-cover">
+        </div>
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center mb-16">
+                <h2 class="text-5xl font-athletic text-transparent bg-clip-text bg-gradient-to-r from-power-yellow to-neon-orange mb-4">
+                    CHAMPIONSHIP LEGACY
+                </h2>
+                <p class="text-xl text-gray-300 font-bold">Victories that define greatness</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+                <!-- Olympic Medal -->
+                <div class="relative group">
+                    <div class="absolute inset-0 bg-gradient-to-br from-power-yellow/30 to-neon-orange/30 rounded-3xl group-hover:scale-105 transition-all"></div>
+                    <div class="relative bg-black/40 backdrop-blur-sm rounded-3xl p-8 text-center group-hover:transform group-hover:scale-105 transition-all">
+                        <div class="w-20 h-20 bg-gradient-to-br from-power-yellow to-neon-orange rounded-full mx-auto mb-4 flex items-center justify-center">
+                            <i class="fas fa-medal text-3xl text-white"></i>
+                        </div>
+                        <h3 class="text-xl font-athletic text-power-yellow mb-2">OLYMPIC BRONZE</h3>
+                        <p class="text-gray-400 mb-2">Tokyo 2021</p>
+                        <p class="text-sm text-gray-300">200m Sprint</p>
+                    </div>
+                </div>
+
+                <!-- World Championship -->
+                <div class="relative group">
+                    <div class="absolute inset-0 bg-gradient-to-br from-electric-blue/30 to-neon-orange/30 rounded-3xl group-hover:scale-105 transition-all"></div>
+                    <div class="relative bg-black/40 backdrop-blur-sm rounded-3xl p-8 text-center group-hover:transform group-hover:scale-105 transition-all">
+                        <div class="w-20 h-20 bg-gradient-to-br from-electric-blue to-neon-orange rounded-full mx-auto mb-4 flex items-center justify-center">
+                            <i class="fas fa-globe text-3xl text-white"></i>
+                        </div>
+                        <h3 class="text-xl font-athletic text-electric-blue mb-2">WORLD SILVER</h3>
+                        <p class="text-gray-400 mb-2">Budapest 2023</p>
+                        <p class="text-sm text-gray-300">100m Sprint</p>
+                    </div>
+                </div>
+
+                <!-- Diamond League -->
+                <div class="relative group">
+                    <div class="absolute inset-0 bg-gradient-to-br from-neon-orange/30 to-power-yellow/30 rounded-3xl group-hover:scale-105 transition-all"></div>
+                    <div class="relative bg-black/40 backdrop-blur-sm rounded-3xl p-8 text-center group-hover:transform group-hover:scale-105 transition-all">
+                        <div class="w-20 h-20 bg-gradient-to-br from-neon-orange to-power-yellow rounded-full mx-auto mb-4 flex items-center justify-center">
+                            <i class="fas fa-gem text-3xl text-white"></i>
+                        </div>
+                        <h3 class="text-xl font-athletic text-neon-orange mb-2">DIAMOND WINNER</h3>
+                        <p class="text-gray-400 mb-2">2023 Season</p>
+                        <p class="text-sm text-gray-300">100m Champion</p>
+                    </div>
+                </div>
+
+                <!-- National Record -->
+                <div class="relative group">
+                    <div class="absolute inset-0 bg-gradient-to-br from-electric-blue/30 to-power-yellow/30 rounded-3xl group-hover:scale-105 transition-all"></div>
+                    <div class="relative bg-black/40 backdrop-blur-sm rounded-3xl p-8 text-center group-hover:transform group-hover:scale-105 transition-all">
+                        <div class="w-20 h-20 bg-gradient-to-br from-electric-blue to-power-yellow rounded-full mx-auto mb-4 flex items-center justify-center">
+                            <i class="fas fa-flag-usa text-3xl text-white"></i>
+                        </div>
+                        <h3 class="text-xl font-athletic text-electric-blue mb-2">NATIONAL RECORD</h3>
+                        <p class="text-gray-400 mb-2">USA 2024</p>
+                        <p class="text-sm text-gray-300">Indoor 60m</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Competitions -->
+            <div class="bg-black/30 backdrop-blur-sm rounded-3xl p-8">
+                <h3 class="text-3xl font-athletic text-transparent bg-clip-text bg-gradient-to-r from-electric-blue to-neon-orange mb-8">
+                    RECENT COMPETITIONS
+                </h3>
+                <div class="space-y-6">
+                    <div class="flex items-center justify-between p-6 bg-black/20 rounded-2xl hover:bg-black/40 transition-all">
+                        <div class="flex items-center space-x-6">
+                            <div class="w-4 h-4 bg-power-yellow rounded-full"></div>
+                            <div>
+                                <h4 class="text-xl font-bold text-white">US Championships</h4>
+                                <p class="text-gray-400">Eugene, OR • June 2024</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-2xl font-athletic text-power-yellow">1st Place</div>
+                            <div class="text-gray-400">9.82s (PB)</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between p-6 bg-black/20 rounded-2xl hover:bg-black/40 transition-all">
+                        <div class="flex items-center space-x-6">
+                            <div class="w-4 h-4 bg-electric-blue rounded-full"></div>
+                            <div>
+                                <h4 class="text-xl font-bold text-white">Diamond League Shanghai</h4>
+                                <p class="text-gray-400">Shanghai, China • May 2024</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-2xl font-athletic text-electric-blue">2nd Place</div>
+                            <div class="text-gray-400">9.89s</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between p-6 bg-black/20 rounded-2xl hover:bg-black/40 transition-all">
+                        <div class="flex items-center space-x-6">
+                            <div class="w-4 h-4 bg-neon-orange rounded-full"></div>
+                            <div>
+                                <h4 class="text-xl font-bold text-white">World Relays</h4>
+                                <p class="text-gray-400">Nassau, Bahamas • May 2024</p>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-2xl font-athletic text-neon-orange">1st Place</div>
+                            <div class="text-gray-400">4x100m Relay</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Gallery -->
+    <section class="py-24 bg-gradient-to-b from-deep-navy to-steel-gray">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-5xl font-athletic text-transparent bg-clip-text bg-gradient-to-r from-electric-blue to-neon-orange mb-4">
+                    CHAMPIONSHIP MOMENTS
+                </h2>
+                <p class="text-xl text-gray-300 font-bold">Witness greatness in motion</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Featured Video -->
+                <div class="lg:col-span-2 lg:row-span-2 relative group">
+                    <div class="absolute inset-0 bg-gradient-to-br from-electric-blue/20 to-neon-orange/20 rounded-3xl group-hover:from-electric-blue/30 group-hover:to-neon-orange/30 transition-all"></div>
+                    <div class="relative overflow-hidden rounded-3xl">
+                        <img src="https://images.unsplash.com/photo-1544717297-fa95b6ee9643?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" 
+                             alt="Olympic race" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black/40 flex items-center justify-center group-hover:bg-black/20 transition-all">
+                            <button class="w-24 h-24 bg-gradient-to-br from-electric-blue to-neon-orange rounded-full flex items-center justify-center group-hover:scale-110 transform transition-all shadow-2xl">
+                                <i class="fas fa-play text-white text-2xl ml-1"></i>
+                            </button>
+                        </div>
+                        <div class="absolute bottom-6 left-6 right-6">
+                            <h3 class="text-2xl font-athletic text-white mb-2">OLYMPIC BRONZE MEDAL RACE</h3>
+                            <p class="text-gray-300">Tokyo 2021 • 200m Final</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Training Video -->
+                <div class="relative group">
+                    <div class="absolute inset-0 bg-gradient-to-br from-neon-orange/20 to-power-yellow/20 rounded-3xl group-hover:from-neon-orange/30 group-hover:to-power-yellow/30 transition-all"></div>
+                    <div class="relative overflow-hidden rounded-3xl">
+                        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
+                             alt="Training session" class="w-full h-48 object-cover">
+                        <div class="absolute inset-0 bg-black/40 flex items-center justify-center group-hover:bg-black/20 transition-all">
+                            <button class="w-16 h-16 bg-gradient-to-br from-neon-orange to-power-yellow rounded-full flex items-center justify-center group-hover:scale-110 transform transition-all">
+                                <i class="fas fa-play text-white ml-1"></i>
+                            </button>
+                        </div>
+                        <div class="absolute bottom-4 left-4 right-4">
+                            <h4 class="text-lg font-bold text-white">TRAINING BREAKDOWN</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- World Record Attempt -->
+                <div class="relative group">
+                    <div class="absolute inset-0 bg-gradient-to-br from-power-yellow/20 to-electric-blue/20 rounded-3xl group-hover:from-power-yellow/30 group-hover:to-electric-blue/30 transition-all"></div>
+                    <div class="relative overflow-hidden rounded-3xl">
+                        <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
+                             alt="World record attempt" class="w-full h-48 object-cover">
+                        <div class="absolute inset-0 bg-black/40 flex items-center justify-center group-hover:bg-black/20 transition-all">
+                            <button class="w-16 h-16 bg-gradient-to-br from-power-yellow to-electric-blue rounded-full flex items-center justify-center group-hover:scale-110 transform transition-all">
+                                <i class="fas fa-play text-white ml-1"></i>
+                            </button>
+                        </div>
+                        <div class="absolute bottom-4 left-4 right-4">
+                            <h4 class="text-lg font-bold text-white">WORLD RECORD ATTEMPT</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Technique Analysis -->
+                <div class="relative group">
+                    <div class="absolute inset-0 bg-gradient-to-br from-electric-blue/20 to-power-yellow/20 rounded-3xl group-hover:from-electric-blue/30 group-hover:to-power-yellow/30 transition-all"></div>
+                    <div class="relative overflow-hidden rounded-3xl">
+                        <img src="https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
+                             alt="Technique analysis" class="w-full h-48 object-cover">
+                        <div class="absolute inset-0 bg-black/40 flex items-center justify-center group-hover:bg-black/20 transition-all">
+                            <button class="w-16 h-16 bg-gradient-to-br from-electric-blue to-power-yellow rounded-full flex items-center justify-center group-hover:scale-110 transform transition-all">
+                                <i class="fas fa-play text-white ml-1"></i>
+                            </button>
+                        </div>
+                        <div class="absolute bottom-4 left-4 right-4">
+                            <h4 class="text-lg font-bold text-white">AI TECHNIQUE ANALYSIS</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Behind the Scenes -->
+                <div class="relative group">
+                    <div class="absolute inset-0 bg-gradient-to-br from-neon-orange/20 to-electric-blue/20 rounded-3xl group-hover:from-neon-orange/30 group-hover:to-electric-blue/30 transition-all"></div>
+                    <div class="relative overflow-hidden rounded-3xl">
+                        <img src="https://images.unsplash.com/photo-1544717297-fa95b6ee9643?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" 
+                             alt="Behind the scenes" class="w-full h-48 object-cover">
+                        <div class="absolute inset-0 bg-black/40 flex items-center justify-center group-hover:bg-black/20 transition-all">
+                            <button class="w-16 h-16 bg-gradient-to-br from-neon-orange to-electric-blue rounded-full flex items-center justify-center group-hover:scale-110 transform transition-all">
+                                <i class="fas fa-play text-white ml-1"></i>
+                            </button>
+                        </div>
+                        <div class="absolute bottom-4 left-4 right-4">
+                            <h4 class="text-lg font-bold text-white">BEHIND THE SCENES</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-deep-navy py-16">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-12 mb-12">
+                <div>
+                    <div class="flex items-center space-x-4 mb-6">
+                        <div class="w-12 h-12 bg-gradient-to-br from-electric-blue to-neon-orange rounded-xl flex items-center justify-center">
+                            <i class="fas fa-bolt text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-athletic text-transparent bg-clip-text bg-gradient-to-r from-electric-blue to-power-yellow">
+                            HUDDLE<span class="text-neon-orange">AI</span>
+                        </h3>
+                    </div>
+                    <p class="text-gray-400 font-bold">Elite AI-powered athletic training for champions.</p>
+                </div>
+                <div>
+                    <h4 class="text-xl font-bold text-electric-blue mb-4">TRAIN</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">AI Analysis</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Personal Coach</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Workout Plans</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-xl font-bold text-neon-orange mb-4">COMPETE</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Performance Tracking</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Competition Prep</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Analytics</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-xl font-bold text-power-yellow mb-4">SUPPORT</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Help Center</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Contact Us</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Community</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 HuddleAI. All rights reserved. Built for champions.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

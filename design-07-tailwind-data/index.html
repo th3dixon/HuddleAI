@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HuddleAI - Data-Driven Sports Intelligence</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'data-blue': '#2563eb',
+                        'data-purple': '#7c3aed',
+                        'data-teal': '#0d9488',
+                        'data-indigo': '#4f46e5',
+                        'data-cyan': '#0891b2',
+                        'chart-primary': '#3b82f6',
+                        'chart-secondary': '#8b5cf6',
+                        'chart-accent': '#06b6d4',
+                        'dashboard-dark': '#0f172a',
+                        'dashboard-card': '#1e293b'
+                    },
+                    fontFamily: {
+                        'data': ['Inter', 'system-ui', 'sans-serif']
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'data-flow': 'dataFlow 8s linear infinite'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes dataFlow {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .gradient-mesh {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .data-grid {
+            background-image: 
+                linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        
+        .chart-glow {
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.3);
+        }
+    </style>
+</head>
+<body class="font-data bg-slate-50 text-slate-900">
+    <!-- Navigation -->
+    <nav class="bg-white/90 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-8">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-gradient-to-r from-data-blue to-data-purple rounded-lg flex items-center justify-center">
+                            <i class="fas fa-chart-line text-white text-lg"></i>
+                        </div>
+                        <span class="text-xl font-bold bg-gradient-to-r from-data-blue to-data-purple bg-clip-text text-transparent">
+                            HuddleAI
+                        </span>
+                    </div>
+                    
+                    <div class="hidden md:flex items-center space-x-8">
+                        <a href="#analytics" class="flex items-center space-x-2 text-slate-600 hover:text-data-blue transition-colors">
+                            <i class="fas fa-analytics text-sm"></i>
+                            <span>Analytics</span>
+                        </a>
+                        <a href="#insights" class="flex items-center space-x-2 text-slate-600 hover:text-data-blue transition-colors">
+                            <i class="fas fa-chart-pie text-sm"></i>
+                            <span>Insights</span>
+                        </a>
+                        <a href="#data-sources" class="flex items-center space-x-2 text-slate-600 hover:text-data-blue transition-colors">
+                            <i class="fas fa-database text-sm"></i>
+                            <span>Data Sources</span>
+                        </a>
+                        <a href="#api" class="flex items-center space-x-2 text-slate-600 hover:text-data-blue transition-colors">
+                            <i class="fas fa-code text-sm"></i>
+                            <span>API</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <button class="hidden sm:flex items-center space-x-2 px-4 py-2 text-slate-600 hover:text-data-blue transition-colors">
+                        <i class="fas fa-sign-in-alt text-sm"></i>
+                        <span>Login</span>
+                    </button>
+                    <button class="bg-gradient-to-r from-data-blue to-data-purple text-white px-6 py-2 rounded-lg hover:shadow-lg transition-all duration-300">
+                        Start Free Trial
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center overflow-hidden">
+        <div class="absolute inset-0 gradient-mesh opacity-5"></div>
+        <div class="absolute inset-0 data-grid"></div>
+        
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-8">
+                    <div class="space-y-4">
+                        <div class="inline-flex items-center space-x-2 bg-data-blue/10 text-data-blue px-4 py-2 rounded-full text-sm font-medium">
+                            <i class="fas fa-sparkles"></i>
+                            <span>AI-Powered Sports Analytics</span>
+                        </div>
+                        <h1 class="text-5xl lg:text-6xl font-bold leading-tight">
+                            Turn Sports Data Into
+                            <span class="bg-gradient-to-r from-data-blue via-data-purple to-data-teal bg-clip-text text-transparent">
+                                Winning Insights
+                            </span>
+                        </h1>
+                        <p class="text-xl text-slate-600 leading-relaxed">
+                            Advanced analytics platform that transforms raw sports data into actionable intelligence. 
+                            Make data-driven decisions with real-time insights, predictive modeling, and comprehensive reporting.
+                        </p>
+                    </div>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button class="bg-gradient-to-r from-data-blue to-data-purple text-white px-8 py-4 rounded-xl hover:shadow-xl transition-all duration-300 flex items-center justify-center space-x-2">
+                            <i class="fas fa-rocket"></i>
+                            <span class="font-semibold">Start Analytics Dashboard</span>
+                        </button>
+                        <button class="border-2 border-slate-300 text-slate-700 px-8 py-4 rounded-xl hover:border-data-blue hover:text-data-blue transition-all duration-300 flex items-center justify-center space-x-2">
+                            <i class="fas fa-play"></i>
+                            <span class="font-semibold">Watch Demo</span>
+                        </button>
+                    </div>
+                    
+                    <div class="flex items-center space-x-8 pt-8">
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-data-blue">500M+</div>
+                            <div class="text-sm text-slate-600">Data Points</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-data-purple">99.9%</div>
+                            <div class="text-sm text-slate-600">Accuracy</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-data-teal">50+</div>
+                            <div class="text-sm text-slate-600">Sports Covered</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="relative">
+                    <div class="bg-white p-8 rounded-2xl shadow-2xl chart-glow">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-lg font-semibold text-slate-800">Live Performance Metrics</h3>
+                            <div class="flex items-center space-x-2 text-green-600">
+                                <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                                <span class="text-sm font-medium">Live</span>
+                            </div>
+                        </div>
+                        <canvas id="heroChart" width="400" height="250"></canvas>
+                        <div class="grid grid-cols-3 gap-4 mt-6">
+                            <div class="text-center p-3 bg-data-blue/5 rounded-lg">
+                                <div class="text-lg font-bold text-data-blue">94.2%</div>
+                                <div class="text-xs text-slate-600">Win Prediction</div>
+                            </div>
+                            <div class="text-center p-3 bg-data-purple/5 rounded-lg">
+                                <div class="text-lg font-bold text-data-purple">2.3x</div>
+                                <div class="text-xs text-slate-600">ROI Increase</div>
+                            </div>
+                            <div class="text-center p-3 bg-data-teal/5 rounded-lg">
+                                <div class="text-lg font-bold text-data-teal">18ms</div>
+                                <div class="text-xs text-slate-600">Response Time</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="absolute -top-4 -right-4 w-24 h-24 bg-gradient-to-r from-data-purple to-data-teal rounded-full opacity-20 animate-float"></div>
+                    <div class="absolute -bottom-4 -left-4 w-16 h-16 bg-gradient-to-r from-data-blue to-data-purple rounded-full opacity-20 animate-float" style="animation-delay: -3s;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Data Preview -->
+    <section id="analytics" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-slate-900 mb-4">
+                    Real-Time Data <span class="text-data-blue">Intelligence</span>
+                </h2>
+                <p class="text-xl text-slate-600 max-w-3xl mx-auto">
+                    Experience the power of live sports analytics with interactive dashboards, 
+                    predictive modeling, and comprehensive data visualization tools.
+                </p>
+            </div>
+            
+            <div class="grid lg:grid-cols-3 gap-8 mb-12">
+                <div class="bg-gradient-to-br from-slate-50 to-white p-8 rounded-2xl border border-slate-200 hover:shadow-xl transition-all duration-300">
+                    <div class="w-12 h-12 bg-data-blue/10 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-chart-line text-data-blue text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-slate-900 mb-3">Performance Analytics</h3>
+                    <p class="text-slate-600 mb-6">
+                        Track player performance, team dynamics, and game statistics with advanced metrics and KPIs.
+                    </p>
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-slate-600">Player Efficiency</span>
+                            <span class="text-sm font-semibold text-data-blue">87.3%</span>
+                        </div>
+                        <div class="w-full bg-slate-200 rounded-full h-2">
+                            <div class="bg-gradient-to-r from-data-blue to-data-purple h-2 rounded-full" style="width: 87.3%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gradient-to-br from-slate-50 to-white p-8 rounded-2xl border border-slate-200 hover:shadow-xl transition-all duration-300">
+                    <div class="w-12 h-12 bg-data-purple/10 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-brain text-data-purple text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-slate-900 mb-3">Predictive Modeling</h3>
+                    <p class="text-slate-600 mb-6">
+                        AI-powered predictions for game outcomes, player performance, and strategic recommendations.
+                    </p>
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-slate-600">Prediction Accuracy</span>
+                            <span class="text-sm font-semibold text-data-purple">94.2%</span>
+                        </div>
+                        <div class="w-full bg-slate-200 rounded-full h-2">
+                            <div class="bg-gradient-to-r from-data-purple to-data-teal h-2 rounded-full" style="width: 94.2%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gradient-to-br from-slate-50 to-white p-8 rounded-2xl border border-slate-200 hover:shadow-xl transition-all duration-300">
+                    <div class="w-12 h-12 bg-data-teal/10 rounded-xl flex items-center justify-center mb-6">
+                        <i class="fas fa-database text-data-teal text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-slate-900 mb-3">Data Integration</h3>
+                    <p class="text-slate-600 mb-6">
+                        Seamlessly connect multiple data sources for comprehensive sports intelligence and reporting.
+                    </p>
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-slate-600">Data Sources</span>
+                            <span class="text-sm font-semibold text-data-teal">50+ APIs</span>
+                        </div>
+                        <div class="w-full bg-slate-200 rounded-full h-2">
+                            <div class="bg-gradient-to-r from-data-teal to-data-blue h-2 rounded-full" style="width: 100%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Interactive Dashboard Preview -->
+            <div class="bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl p-8 text-white">
+                <div class="flex items-center justify-between mb-8">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-2">Live Dashboard Preview</h3>
+                        <p class="text-slate-300">Real-time sports analytics in action</p>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <button class="bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg transition-colors">
+                            <i class="fas fa-expand-arrows-alt"></i>
+                        </button>
+                        <button class="bg-data-blue hover:bg-data-blue/80 px-6 py-2 rounded-lg transition-colors">
+                            View Full Dashboard
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="grid lg:grid-cols-2 gap-8">
+                    <div class="bg-white/5 backdrop-blur-sm rounded-xl p-6">
+                        <h4 class="text-lg font-semibold mb-4 flex items-center space-x-2">
+                            <i class="fas fa-chart-area text-data-blue"></i>
+                            <span>Performance Trends</span>
+                        </h4>
+                        <canvas id="trendChart" width="400" height="200"></canvas>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="bg-white/5 backdrop-blur-sm rounded-xl p-6">
+                            <h4 class="text-lg font-semibold mb-4 flex items-center space-x-2">
+                                <i class="fas fa-bullseye text-data-purple"></i>
+                                <span>Key Metrics</span>
+                            </h4>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="text-center">
+                                    <div class="text-2xl font-bold text-data-blue">78.5%</div>
+                                    <div class="text-sm text-slate-300">Win Rate</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-2xl font-bold text-data-purple">12.3</div>
+                                    <div class="text-sm text-slate-300">Avg Score</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-2xl font-bold text-data-teal">2.8x</div>
+                                    <div class="text-sm text-slate-300">ROI</div>
+                                </div>
+                                <div class="text-center">
+                                    <div class="text-2xl font-bold text-data-cyan">45ms</div>
+                                    <div class="text-sm text-slate-300">Latency</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white/5 backdrop-blur-sm rounded-xl p-6">
+                            <h4 class="text-lg font-semibold mb-4 flex items-center space-x-2">
+                                <i class="fas fa-bell text-data-teal"></i>
+                                <span>Live Alerts</span>
+                            </h4>
+                            <div class="space-y-3">
+                                <div class="flex items-center space-x-3 p-3 bg-green-500/10 rounded-lg border border-green-500/20">
+                                    <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                                    <span class="text-sm">Performance threshold exceeded</span>
+                                </div>
+                                <div class="flex items-center space-x-3 p-3 bg-yellow-500/10 rounded-lg border border-yellow-500/20">
+                                    <div class="w-2 h-2 bg-yellow-500 rounded-full animate-pulse"></div>
+                                    <span class="text-sm">Prediction confidence updated</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Stack -->
+    <section id="data-sources" class="py-20 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-slate-900 mb-4">
+                    Powered by <span class="text-data-blue">Advanced Technology</span>
+                </h2>
+                <p class="text-xl text-slate-600 max-w-3xl mx-auto">
+                    Built on enterprise-grade infrastructure with cutting-edge AI and machine learning capabilities 
+                    for sports analytics and data processing.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+                <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-lg transition-shadow">
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fab fa-python text-blue-600 text-xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-slate-900 mb-2">Machine Learning</h3>
+                    <p class="text-sm text-slate-600">Advanced ML algorithms for predictive analytics and pattern recognition</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-lg transition-shadow">
+                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-cloud text-green-600 text-xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-slate-900 mb-2">Cloud Computing</h3>
+                    <p class="text-sm text-slate-600">Scalable cloud infrastructure for real-time data processing</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-lg transition-shadow">
+                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-database text-purple-600 text-xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-slate-900 mb-2">Big Data</h3>
+                    <p class="text-sm text-slate-600">Distributed systems for processing massive sports datasets</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-lg transition-shadow">
+                    <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-bolt text-orange-600 text-xl"></i>
+                    </div>
+                    <h3 class="font-semibold text-slate-900 mb-2">Real-time APIs</h3>
+                    <p class="text-sm text-slate-600">Lightning-fast API responses with sub-50ms latency</p>
+                </div>
+            </div>
+            
+            <!-- API Integration Showcase -->
+            <div class="bg-white rounded-2xl p-8 shadow-lg">
+                <div class="text-center mb-8">
+                    <h3 class="text-2xl font-bold text-slate-900 mb-2">API Integration Made Simple</h3>
+                    <p class="text-slate-600">Connect to our sports analytics API with just a few lines of code</p>
+                </div>
+                
+                <div class="bg-slate-900 rounded-xl p-6 text-green-400 font-mono text-sm overflow-x-auto">
+                    <div class="mb-4">
+                        <span class="text-slate-500"># Get real-time player statistics</span>
+                    </div>
+                    <div class="mb-2">
+                        <span class="text-blue-400">import</span> requests
+                    </div>
+                    <div class="mb-4">
+                        <span class="text-blue-400">from</span> huddleai <span class="text-blue-400">import</span> SportsAnalytics
+                    </div>
+                    <div class="mb-2">
+                        api = SportsAnalytics(api_key=<span class="text-yellow-400">"your_key"</span>)
+                    </div>
+                    <div class="mb-2">
+                        stats = api.get_player_stats(player_id=<span class="text-yellow-400">"12345"</span>)
+                    </div>
+                    <div class="mb-2">
+                        prediction = api.predict_performance(stats)
+                    </div>
+                    <div>
+                        <span class="text-blue-400">print</span>(f<span class="text-yellow-400">"Win probability: {prediction.win_rate}%"</span>)
+                    </div>
+                </div>
+                
+                <div class="flex justify-center mt-6">
+                    <button class="bg-data-blue text-white px-6 py-3 rounded-lg hover:bg-data-blue/90 transition-colors flex items-center space-x-2">
+                        <i class="fas fa-code"></i>
+                        <span>View API Documentation</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ROI Testimonials -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-slate-900 mb-4">
+                    Proven <span class="text-data-blue">Results</span>
+                </h2>
+                <p class="text-xl text-slate-600 max-w-3xl mx-auto">
+                    See how leading sports organizations are leveraging our data analytics platform 
+                    to drive performance and achieve measurable ROI.
+                </p>
+            </div>
+            
+            <div class="grid lg:grid-cols-3 gap-8">
+                <div class="bg-gradient-to-br from-data-blue/5 to-data-purple/5 p-8 rounded-2xl border border-data-blue/10">
+                    <div class="flex items-center space-x-4 mb-6">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop&crop=face&auto=format" 
+                             alt="Analytics Director" class="w-12 h-12 rounded-full object-cover">
+                        <div>
+                            <div class="font-semibold text-slate-900">Michael Rodriguez</div>
+                            <div class="text-sm text-slate-600">Analytics Director, Premier League Club</div>
+                        </div>
+                    </div>
+                    <blockquote class="text-slate-700 mb-6">
+                        "HuddleAI's predictive models increased our scouting efficiency by 340% and reduced 
+                        player acquisition costs by $2.1M annually. The ROI was immediate and substantial."
+                    </blockquote>
+                    <div class="flex items-center space-x-4">
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-data-blue">340%</div>
+                            <div class="text-xs text-slate-600">Efficiency Gain</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-data-purple">$2.1M</div>
+                            <div class="text-xs text-slate-600">Annual Savings</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-data-teal">98.7%</div>
+                            <div class="text-xs text-slate-600">Accuracy Rate</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gradient-to-br from-data-purple/5 to-data-teal/5 p-8 rounded-2xl border border-data-purple/10">
+                    <div class="flex items-center space-x-4 mb-6">
+                        <img src="https://images.unsplash.com/photo-1494790108755-2616b5bb2947?w=60&h=60&fit=crop&crop=face&auto=format" 
+                             alt="Data Science Manager" class="w-12 h-12 rounded-full object-cover">
+                        <div>
+                            <div class="font-semibold text-slate-900">Sarah Chen</div>
+                            <div class="text-sm text-slate-600">Data Science Manager, NBA Analytics</div>
+                        </div>
+                    </div>
+                    <blockquote class="text-slate-700 mb-6">
+                        "The real-time analytics dashboard transformed our game strategy decisions. 
+                        We've seen a 28% improvement in win rate since implementing HuddleAI's platform."
+                    </blockquote>
+                    <div class="flex items-center space-x-4">
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-data-purple">28%</div>
+                            <div class="text-xs text-slate-600">Win Rate Boost</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-data-teal">15ms</div>
+                            <div class="text-xs text-slate-600">Response Time</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-data-blue">24/7</div>
+                            <div class="text-xs text-slate-600">Monitoring</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-gradient-to-br from-data-teal/5 to-data-blue/5 p-8 rounded-2xl border border-data-teal/10">
+                    <div class="flex items-center space-x-4 mb-6">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=60&h=60&fit=crop&crop=face&auto=format" 
+                             alt="Performance Analyst" class="w-12 h-12 rounded-full object-cover">
+                        <div>
+                            <div class="font-semibold text-slate-900">David Thompson</div>
+                            <div class="text-sm text-slate-600">Performance Analyst, Olympic Committee</div>
+                        </div>
+                    </div>
+                    <blockquote class="text-slate-700 mb-6">
+                        "HuddleAI's machine learning models helped us identify performance bottlenecks 
+                        that led to a 42% improvement in athlete training effectiveness."
+                    </blockquote>
+                    <div class="flex items-center space-x-4">
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-data-teal">42%</div>
+                            <div class="text-xs text-slate-600">Training Boost</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-data-blue">97.3%</div>
+                            <div class="text-xs text-slate-600">Model Accuracy</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-data-purple">5.2x</div>
+                            <div class="text-xs text-slate-600">ROI Multiplier</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-slate-900 via-data-blue to-data-purple text-white relative overflow-hidden">
+        <div class="absolute inset-0 bg-black/20"></div>
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl lg:text-5xl font-bold mb-6">
+                Ready to Transform Your Sports Analytics?
+            </h2>
+            <p class="text-xl text-white/90 mb-8 max-w-3xl mx-auto">
+                Join thousands of sports professionals who trust HuddleAI for data-driven decision making. 
+                Start your free trial today and experience the power of advanced sports analytics.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+                <button class="bg-white text-slate-900 px-8 py-4 rounded-xl font-semibold hover:bg-slate-100 transition-colors flex items-center justify-center space-x-2">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Start Free Trial</span>
+                </button>
+                <button class="border-2 border-white/30 text-white px-8 py-4 rounded-xl font-semibold hover:bg-white/10 transition-colors flex items-center justify-center space-x-2">
+                    <i class="fas fa-calendar"></i>
+                    <span>Schedule Demo</span>
+                </button>
+            </div>
+            
+            <div class="flex flex-wrap justify-center items-center gap-8 text-white/70">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-check-circle text-green-400"></i>
+                    <span>14-day free trial</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-check-circle text-green-400"></i>
+                    <span>No credit card required</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-check-circle text-green-400"></i>
+                    <span>Setup in 5 minutes</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-4 gap-8">
+                <div class="space-y-6">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-gradient-to-r from-data-blue to-data-purple rounded-lg flex items-center justify-center">
+                            <i class="fas fa-chart-line text-white text-lg"></i>
+                        </div>
+                        <span class="text-xl font-bold">HuddleAI</span>
+                    </div>
+                    <p class="text-slate-400">
+                        Advanced sports analytics platform powered by AI and machine learning for data-driven sports intelligence.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-slate-400 hover:text-white transition-colors">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="text-slate-400 hover:text-white transition-colors">
+                            <i class="fab fa-linkedin text-xl"></i>
+                        </a>
+                        <a href="#" class="text-slate-400 hover:text-white transition-colors">
+                            <i class="fab fa-github text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Platform</h4>
+                    <ul class="space-y-2 text-slate-400">
+                        <li><a href="insights.html" class="hover:text-white transition-colors">Analytics Dashboard</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Predictive Models</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">API Access</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Data Integration</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Solutions</h4>
+                    <ul class="space-y-2 text-slate-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Performance Analytics</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Player Scouting</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Game Strategy</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Fan Engagement</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Company</h4>
+                    <ul class="space-y-2 text-slate-400">
+                        <li><a href="#" class="hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Careers</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Contact</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-slate-800 mt-12 pt-8 text-center text-slate-400">
+                <p>&copy; 2024 HuddleAI. All rights reserved. Transforming sports through data intelligence.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Chart.js Initialization -->
+    <script>
+        // Hero Chart
+        const heroCtx = document.getElementById('heroChart').getContext('2d');
+        new Chart(heroCtx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'Performance Score',
+                    data: [65, 72, 80, 74, 88, 94],
+                    borderColor: '#3b82f6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }, {
+                    label: 'Prediction Accuracy',
+                    data: [70, 75, 78, 82, 89, 92],
+                    borderColor: '#7c3aed',
+                    backgroundColor: 'rgba(124, 58, 237, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        min: 60,
+                        max: 100
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+
+        // Trend Chart
+        const trendCtx = document.getElementById('trendChart').getContext('2d');
+        new Chart(trendCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Win Rate', 'Draw Rate', 'Loss Rate'],
+                datasets: [{
+                    data: [65, 20, 15],
+                    backgroundColor: ['#3b82f6', '#7c3aed', '#0d9488'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            color: 'white'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

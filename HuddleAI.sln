@@ -1,0 +1,50 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{6C6EC1AD-E76B-4204-839F-3D6240A3B5E3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{44D50FF4-2725-4E4A-A058-EF4F1CF8FE03}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HuddleAI.API", "src\API\HuddleAI.API\HuddleAI.API.csproj", "{A6FBA901-428B-4956-94D0-F6C4821E5F36}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{2FE09E19-CA95-4455-AE57-AC9BD1A15364}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HuddleAI.WebApp", "src\Web\HuddleAI.WebApp\HuddleAI.WebApp.csproj", "{3465F081-D9ED-44A4-BFF6-73F011C5C6BA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildingBlocks", "BuildingBlocks", "{36FC51C6-6B00-445F-8479-1B5B2DE8A71D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HuddleAI.SharedKernel", "src\BuildingBlocks\HuddleAI.SharedKernel\HuddleAI.SharedKernel.csproj", "{AD6278A1-E7DF-475B-98EA-4A8771FF7CC2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A6FBA901-428B-4956-94D0-F6C4821E5F36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6FBA901-428B-4956-94D0-F6C4821E5F36}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6FBA901-428B-4956-94D0-F6C4821E5F36}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6FBA901-428B-4956-94D0-F6C4821E5F36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3465F081-D9ED-44A4-BFF6-73F011C5C6BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3465F081-D9ED-44A4-BFF6-73F011C5C6BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3465F081-D9ED-44A4-BFF6-73F011C5C6BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3465F081-D9ED-44A4-BFF6-73F011C5C6BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD6278A1-E7DF-475B-98EA-4A8771FF7CC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD6278A1-E7DF-475B-98EA-4A8771FF7CC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD6278A1-E7DF-475B-98EA-4A8771FF7CC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD6278A1-E7DF-475B-98EA-4A8771FF7CC2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{44D50FF4-2725-4E4A-A058-EF4F1CF8FE03} = {6C6EC1AD-E76B-4204-839F-3D6240A3B5E3}
+		{A6FBA901-428B-4956-94D0-F6C4821E5F36} = {44D50FF4-2725-4E4A-A058-EF4F1CF8FE03}
+		{2FE09E19-CA95-4455-AE57-AC9BD1A15364} = {6C6EC1AD-E76B-4204-839F-3D6240A3B5E3}
+		{3465F081-D9ED-44A4-BFF6-73F011C5C6BA} = {2FE09E19-CA95-4455-AE57-AC9BD1A15364}
+		{36FC51C6-6B00-445F-8479-1B5B2DE8A71D} = {6C6EC1AD-E76B-4204-839F-3D6240A3B5E3}
+		{AD6278A1-E7DF-475B-98EA-4A8771FF7CC2} = {36FC51C6-6B00-445F-8479-1B5B2DE8A71D}
+	EndGlobalSection
+EndGlobal

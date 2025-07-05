@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HuddleAI - Elite Athletic Performance</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'electric-blue': '#00D4FF',
+                        'neon-orange': '#FF6B35',
+                        'power-yellow': '#FFD23F',
+                        'deep-navy': '#0A1628',
+                        'steel-gray': '#2D3748'
+                    },
+                    fontFamily: {
+                        'athletic': ['Impact', 'Arial Black', 'sans-serif'],
+                        'bold': ['Montserrat', 'Arial', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-deep-navy text-white font-bold">
+    <!-- Dynamic Header -->
+    <header class="relative bg-gradient-to-r from-deep-navy via-steel-gray to-deep-navy">
+        <div class="absolute inset-0 bg-black/20"></div>
+        <nav class="relative z-10 container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-gradient-to-br from-electric-blue to-neon-orange rounded-xl flex items-center justify-center">
+                        <i class="fas fa-bolt text-white text-2xl"></i>
+                    </div>
+                    <h1 class="text-3xl font-athletic text-transparent bg-clip-text bg-gradient-to-r from-electric-blue to-power-yellow">
+                        HUDDLE<span class="text-neon-orange">AI</span>
+                    </h1>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#" class="text-white hover:text-electric-blue transition-colors font-bold text-lg">TRAIN</a>
+                    <a href="#" class="text-white hover:text-electric-blue transition-colors font-bold text-lg">COMPETE</a>
+                    <a href="#" class="text-white hover:text-electric-blue transition-colors font-bold text-lg">ANALYZE</a>
+                    <a href="profile.html" class="text-white hover:text-electric-blue transition-colors font-bold text-lg">PROFILE</a>
+                    <button class="bg-gradient-to-r from-neon-orange to-power-yellow text-deep-navy px-6 py-3 rounded-xl font-bold text-lg hover:scale-105 transform transition-all shadow-lg">
+                        START NOW
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- High-Impact Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-deep-navy via-steel-gray to-deep-navy"></div>
+        <div class="absolute inset-0 opacity-30">
+            <img src="https://images.unsplash.com/photo-1544717297-fa95b6ee9643?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" 
+                 alt="Athletes in action" class="w-full h-full object-cover">
+        </div>
+        <div class="relative z-10 text-center px-6 max-w-6xl">
+            <h1 class="text-7xl md:text-9xl font-athletic text-transparent bg-clip-text bg-gradient-to-r from-electric-blue via-power-yellow to-neon-orange mb-8 leading-tight">
+                UNLEASH YOUR
+                <br>
+                <span class="text-white">POTENTIAL</span>
+            </h1>
+            <p class="text-2xl md:text-3xl text-gray-300 mb-12 font-bold max-w-4xl mx-auto">
+                Elite AI-powered training that transforms good athletes into <span class="text-electric-blue">CHAMPIONS</span>
+            </p>
+            <div class="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-6">
+                <button class="bg-gradient-to-r from-electric-blue to-neon-orange text-white px-12 py-6 rounded-2xl font-bold text-2xl hover:scale-110 transform transition-all shadow-2xl">
+                    <i class="fas fa-rocket mr-3"></i>DOMINATE NOW
+                </button>
+                <button class="border-3 border-electric-blue text-electric-blue px-12 py-6 rounded-2xl font-bold text-2xl hover:bg-electric-blue hover:text-deep-navy transition-all shadow-2xl">
+                    <i class="fas fa-play mr-3"></i>WATCH DEMO
+                </button>
+            </div>
+        </div>
+        
+        <!-- Dynamic Stats Bar -->
+        <div class="absolute bottom-0 left-0 right-0 bg-black/50 backdrop-blur-sm">
+            <div class="container mx-auto px-6 py-8">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                    <div>
+                        <div class="text-4xl font-athletic text-electric-blue mb-2">50K+</div>
+                        <div class="text-gray-300 font-bold">ELITE ATHLETES</div>
+                    </div>
+                    <div>
+                        <div class="text-4xl font-athletic text-neon-orange mb-2">1M+</div>
+                        <div class="text-gray-300 font-bold">WORKOUTS ANALYZED</div>
+                    </div>
+                    <div>
+                        <div class="text-4xl font-athletic text-power-yellow mb-2">95%</div>
+                        <div class="text-gray-300 font-bold">PERFORMANCE BOOST</div>
+                    </div>
+                    <div>
+                        <div class="text-4xl font-athletic text-electric-blue mb-2">24/7</div>
+                        <div class="text-gray-300 font-bold">AI COACHING</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dynamic Feature Sections -->
+    <section class="py-24 bg-gradient-to-b from-steel-gray to-deep-navy">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-20">
+                <h2 class="text-6xl font-athletic text-transparent bg-clip-text bg-gradient-to-r from-electric-blue to-neon-orange mb-6">
+                    GAME-CHANGING FEATURES
+                </h2>
+                <p class="text-2xl text-gray-300 font-bold">Technology that separates winners from everyone else</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-12">
+                <!-- AI Performance Analysis -->
+                <div class="relative group">
+                    <div class="absolute inset-0 bg-gradient-to-r from-electric-blue to-neon-orange rounded-3xl opacity-20 group-hover:opacity-40 transition-opacity"></div>
+                    <div class="relative bg-black/30 backdrop-blur-sm rounded-3xl p-8 hover:transform hover:scale-105 transition-all">
+                        <div class="w-20 h-20 bg-gradient-to-br from-electric-blue to-power-yellow rounded-2xl flex items-center justify-center mb-6">
+                            <i class="fas fa-brain text-3xl text-white"></i>
+                        </div>
+                        <h3 class="text-3xl font-athletic text-electric-blue mb-4">AI PERFORMANCE ANALYSIS</h3>
+                        <p class="text-gray-300 text-lg mb-6">Real-time biomechanical analysis that identifies weaknesses and optimizes your technique with precision accuracy.</p>
+                        <div class="flex items-center text-neon-orange font-bold">
+                            <span>LEARN MORE</span>
+                            <i class="fas fa-arrow-right ml-2"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Personalized Training -->
+                <div class="relative group">
+                    <div class="absolute inset-0 bg-gradient-to-r from-neon-orange to-power-yellow rounded-3xl opacity-20 group-hover:opacity-40 transition-opacity"></div>
+                    <div class="relative bg-black/30 backdrop-blur-sm rounded-3xl p-8 hover:transform hover:scale-105 transition-all">
+                        <div class="w-20 h-20 bg-gradient-to-br from-neon-orange to-electric-blue rounded-2xl flex items-center justify-center mb-6">
+                            <i class="fas fa-dumbbell text-3xl text-white"></i>
+                        </div>
+                        <h3 class="text-3xl font-athletic text-neon-orange mb-4">PERSONALIZED TRAINING</h3>
+                        <p class="text-gray-300 text-lg mb-6">Dynamic workout plans that adapt to your progress, goals, and performance data in real-time.</p>
+                        <div class="flex items-center text-power-yellow font-bold">
+                            <span>LEARN MORE</span>
+                            <i class="fas fa-arrow-right ml-2"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Competition Analytics -->
+                <div class="relative group">
+                    <div class="absolute inset-0 bg-gradient-to-r from-power-yellow to-electric-blue rounded-3xl opacity-20 group-hover:opacity-40 transition-opacity"></div>
+                    <div class="relative bg-black/30 backdrop-blur-sm rounded-3xl p-8 hover:transform hover:scale-105 transition-all">
+                        <div class="w-20 h-20 bg-gradient-to-br from-power-yellow to-neon-orange rounded-2xl flex items-center justify-center mb-6">
+                            <i class="fas fa-trophy text-3xl text-white"></i>
+                        </div>
+                        <h3 class="text-3xl font-athletic text-power-yellow mb-4">COMPETITION ANALYTICS</h3>
+                        <p class="text-gray-300 text-lg mb-6">Advanced opponent analysis and strategic insights that give you the competitive edge when it matters most.</p>
+                        <div class="flex items-center text-electric-blue font-bold">
+                            <span>LEARN MORE</span>
+                            <i class="fas fa-arrow-right ml-2"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Athlete Spotlight Section -->
+    <section class="py-24 bg-gradient-to-r from-deep-navy to-steel-gray relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2340&q=80" 
+                 alt="Athletic background" class="w-full h-full object-cover">
+        </div>
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center mb-20">
+                <h2 class="text-6xl font-athletic text-transparent bg-clip-text bg-gradient-to-r from-neon-orange to-power-yellow mb-6">
+                    ATHLETE SPOTLIGHT
+                </h2>
+                <p class="text-2xl text-gray-300 font-bold">Champions who dominate with HuddleAI</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div class="relative">
+                    <div class="absolute inset-0 bg-gradient-to-br from-electric-blue to-neon-orange rounded-3xl transform rotate-3"></div>
+                    <img src="https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" 
+                         alt="Elite athlete" class="relative z-10 rounded-3xl w-full">
+                </div>
+                <div>
+                    <h3 class="text-5xl font-athletic text-electric-blue mb-4">SARAH CHEN</h3>
+                    <p class="text-2xl text-neon-orange font-bold mb-6">Olympic Sprinter</p>
+                    <blockquote class="text-2xl text-gray-300 italic mb-8">
+                        "HuddleAI didn't just improve my performance - it revolutionized how I train. The AI insights helped me shave 0.3 seconds off my personal best in just 3 months."
+                    </blockquote>
+                    <div class="grid grid-cols-3 gap-6 mb-8">
+                        <div class="text-center">
+                            <div class="text-3xl font-athletic text-power-yellow">0.3s</div>
+                            <div class="text-gray-400 font-bold">IMPROVEMENT</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-athletic text-electric-blue">3</div>
+                            <div class="text-gray-400 font-bold">MONTHS</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-3xl font-athletic text-neon-orange">1st</div>
+                            <div class="text-gray-400 font-bold">PLACE</div>
+                        </div>
+                    </div>
+                    <button class="bg-gradient-to-r from-electric-blue to-neon-orange text-white px-8 py-4 rounded-2xl font-bold text-lg hover:scale-105 transform transition-all">
+                        READ SUCCESS STORY
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Strong Call-to-Action Section -->
+    <section class="py-32 bg-gradient-to-br from-electric-blue via-neon-orange to-power-yellow relative overflow-hidden">
+        <div class="absolute inset-0 bg-black/20"></div>
+        <div class="container mx-auto px-6 text-center relative z-10">
+            <h2 class="text-7xl md:text-9xl font-athletic text-white mb-8 leading-tight">
+                READY TO
+                <br>
+                <span class="text-deep-navy">DOMINATE?</span>
+            </h2>
+            <p class="text-3xl text-white mb-12 font-bold max-w-4xl mx-auto">
+                Join the elite. Train with AI. Become unstoppable.
+            </p>
+            <div class="flex flex-col md:flex-row items-center justify-center space-y-6 md:space-y-0 md:space-x-8 mb-16">
+                <button class="bg-deep-navy text-white px-16 py-8 rounded-3xl font-bold text-3xl hover:scale-110 transform transition-all shadow-2xl">
+                    <i class="fas fa-rocket mr-4"></i>START FREE TRIAL
+                </button>
+                <button class="border-4 border-white text-white px-16 py-8 rounded-3xl font-bold text-3xl hover:bg-white hover:text-deep-navy transition-all shadow-2xl">
+                    <i class="fas fa-phone mr-4"></i>TALK TO EXPERT
+                </button>
+            </div>
+            <div class="text-white text-xl font-bold">
+                <i class="fas fa-shield-alt mr-2"></i>
+                30-DAY MONEY-BACK GUARANTEE
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-deep-navy py-16">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-12 mb-12">
+                <div>
+                    <div class="flex items-center space-x-4 mb-6">
+                        <div class="w-12 h-12 bg-gradient-to-br from-electric-blue to-neon-orange rounded-xl flex items-center justify-center">
+                            <i class="fas fa-bolt text-white text-2xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-athletic text-transparent bg-clip-text bg-gradient-to-r from-electric-blue to-power-yellow">
+                            HUDDLE<span class="text-neon-orange">AI</span>
+                        </h3>
+                    </div>
+                    <p class="text-gray-400 font-bold">Elite AI-powered athletic training for champions.</p>
+                </div>
+                <div>
+                    <h4 class="text-xl font-bold text-electric-blue mb-4">TRAIN</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">AI Analysis</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Personal Coach</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Workout Plans</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-xl font-bold text-neon-orange mb-4">COMPETE</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Performance Tracking</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Competition Prep</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Analytics</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-xl font-bold text-power-yellow mb-4">SUPPORT</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Help Center</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Contact Us</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Community</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 HuddleAI. All rights reserved. Built for champions.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

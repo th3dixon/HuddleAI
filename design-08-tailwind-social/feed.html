@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Feed - HuddleAI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#10B981',
+                        accent: '#F59E0B',
+                        social: '#1DA1F2',
+                        success: '#06D6A0',
+                        warm: '#FF6B6B'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50" x-data="{ mobileMenuOpen: false }">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <h1 class="text-2xl font-bold text-primary">HuddleAI</h1>
+                    </div>
+                </div>
+
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="index.html" class="text-gray-600 hover:bg-primary hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
+                        <a href="#" class="text-primary hover:bg-primary hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Community Feed</a>
+                        <a href="#" class="text-gray-600 hover:bg-primary hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Training</a>
+                        <a href="#" class="text-gray-600 hover:bg-primary hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Challenges</a>
+                        <a href="#" class="text-gray-600 hover:bg-primary hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Groups</a>
+                    </div>
+                </div>
+
+                <div class="hidden md:flex items-center space-x-4">
+                    <button class="text-gray-600 hover:text-primary transition-colors">
+                        <i class="fas fa-search text-lg"></i>
+                    </button>
+                    <button class="text-gray-600 hover:text-primary transition-colors relative">
+                        <i class="fas fa-bell text-lg"></i>
+                        <span class="absolute -top-1 -right-1 bg-warm text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">5</span>
+                    </button>
+                    <div class="flex items-center space-x-2">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=50&q=80" 
+                             class="w-8 h-8 rounded-full">
+                        <span class="text-sm font-medium text-gray-700">Alex</span>
+                    </div>
+                </div>
+
+                <div class="md:hidden">
+                    <button @click="mobileMenuOpen = !mobileMenuOpen" class="text-gray-600 hover:text-primary">
+                        <i class="fas fa-bars text-lg"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <!-- Left Sidebar -->
+            <div class="lg:col-span-1">
+                <!-- User Profile Card -->
+                <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+                    <div class="text-center">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" 
+                             class="w-20 h-20 rounded-full mx-auto mb-4">
+                        <h3 class="font-semibold text-gray-900">Alex Rivera</h3>
+                        <p class="text-sm text-gray-500 mb-4">Marathon Runner</p>
+                        <div class="grid grid-cols-3 gap-2 text-center">
+                            <div>
+                                <div class="font-semibold text-primary">127</div>
+                                <div class="text-xs text-gray-500">Posts</div>
+                            </div>
+                            <div>
+                                <div class="font-semibold text-secondary">2.3K</div>
+                                <div class="text-xs text-gray-500">Following</div>
+                            </div>
+                            <div>
+                                <div class="font-semibold text-accent">1.8K</div>
+                                <div class="text-xs text-gray-500">Followers</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+                    <h3 class="font-semibold text-gray-900 mb-4">Quick Actions</h3>
+                    <div class="space-y-3">
+                        <button class="w-full bg-primary text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors">
+                            <i class="fas fa-plus mr-2"></i>Create Post
+                        </button>
+                        <button class="w-full bg-secondary text-white py-2 px-4 rounded-lg hover:bg-green-600 transition-colors">
+                            <i class="fas fa-video mr-2"></i>Share Workout
+                        </button>
+                        <button class="w-full bg-accent text-white py-2 px-4 rounded-lg hover:bg-yellow-500 transition-colors">
+                            <i class="fas fa-trophy mr-2"></i>Log Achievement
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Trending Hashtags -->
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h3 class="font-semibold text-gray-900 mb-4">Trending</h3>
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span class="text-primary font-medium">#MarathonMonday</span>
+                            <span class="text-xs text-gray-500">2.1K posts</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-primary font-medium">#StrengthStories</span>
+                            <span class="text-xs text-gray-500">1.8K posts</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-primary font-medium">#TransformationTuesday</span>
+                            <span class="text-xs text-gray-500">1.5K posts</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-primary font-medium">#WorkoutWednesday</span>
+                            <span class="text-xs text-gray-500">1.2K posts</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-primary font-medium">#FitnessFamily</span>
+                            <span class="text-xs text-gray-500">987 posts</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Feed -->
+            <div class="lg:col-span-2">
+                <!-- Create Post -->
+                <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=50&q=80" 
+                             class="w-10 h-10 rounded-full">
+                        <input type="text" placeholder="Share your fitness journey..." 
+                               class="flex-1 bg-gray-100 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary">
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-4">
+                            <button class="flex items-center text-gray-600 hover:text-primary transition-colors">
+                                <i class="fas fa-image mr-2"></i>Photo
+                            </button>
+                            <button class="flex items-center text-gray-600 hover:text-primary transition-colors">
+                                <i class="fas fa-video mr-2"></i>Video
+                            </button>
+                            <button class="flex items-center text-gray-600 hover:text-primary transition-colors">
+                                <i class="fas fa-trophy mr-2"></i>Achievement
+                            </button>
+                        </div>
+                        <button class="bg-primary text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+                            Post
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Feed Posts -->
+                <div class="space-y-6">
+                    <!-- Post 1 -->
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center">
+                                    <img src="https://images.unsplash.com/photo-1494790108755-2616b95a1dd4?ixlib=rb-4.0.3&auto=format&fit=crop&w=50&q=80" 
+                                         class="w-12 h-12 rounded-full mr-3">
+                                    <div>
+                                        <div class="font-semibold text-gray-900">Sarah Chen</div>
+                                        <div class="text-sm text-gray-500">2 hours ago • Training</div>
+                                    </div>
+                                </div>
+                                <button class="text-gray-400 hover:text-gray-600">
+                                    <i class="fas fa-ellipsis-h"></i>
+                                </button>
+                            </div>
+                            <p class="text-gray-700 mb-4">Just crushed my personal best on deadlifts! 💪 185lbs x 5 reps. The AI coaching tips from HuddleAI made all the difference in my form. Feeling stronger every day! <span class="text-primary">#StrengthStories #PersonalBest</span></p>
+                        </div>
+                        <img src="https://images.unsplash.com/photo-1594736797933-d0401ba2fe65?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                             alt="Workout session" class="w-full h-64 object-cover">
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center space-x-6">
+                                    <button class="flex items-center text-gray-600 hover:text-warm transition-colors">
+                                        <i class="fas fa-heart mr-2"></i>
+                                        <span>234</span>
+                                    </button>
+                                    <button class="flex items-center text-gray-600 hover:text-primary transition-colors">
+                                        <i class="fas fa-comment mr-2"></i>
+                                        <span>45</span>
+                                    </button>
+                                    <button class="flex items-center text-gray-600 hover:text-secondary transition-colors">
+                                        <i class="fas fa-share mr-2"></i>
+                                        <span>12</span>
+                                    </button>
+                                </div>
+                                <button class="text-gray-600 hover:text-accent transition-colors">
+                                    <i class="fas fa-bookmark"></i>
+                                </button>
+                            </div>
+                            <div class="flex items-center space-x-2 mb-3">
+                                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=30&q=80" 
+                                     class="w-6 h-6 rounded-full">
+                                <span class="text-sm text-gray-600">Liked by <strong>Jordan Kim</strong> and <strong>233 others</strong></span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=30&q=80" 
+                                     class="w-6 h-6 rounded-full">
+                                <input type="text" placeholder="Add a comment..." 
+                                       class="flex-1 text-sm bg-gray-100 rounded-full px-3 py-1 focus:outline-none focus:ring-2 focus:ring-primary">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Post 2 -->
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center">
+                                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=50&q=80" 
+                                         class="w-12 h-12 rounded-full mr-3">
+                                    <div>
+                                        <div class="font-semibold text-gray-900">Jordan Kim</div>
+                                        <div class="text-sm text-gray-500">4 hours ago • Achievement</div>
+                                    </div>
+                                </div>
+                                <button class="text-gray-400 hover:text-gray-600">
+                                    <i class="fas fa-ellipsis-h"></i>
+                                </button>
+                            </div>
+                            <p class="text-gray-700 mb-4">Marathon training week 16 complete! 🏃‍♂️ 65 miles this week including a 20-mile long run. Boston Marathon, here I come! Thank you HuddleAI community for keeping me motivated through the tough days. <span class="text-primary">#MarathonTraining #BostonBound</span></p>
+                        </div>
+                        <div class="grid grid-cols-2 gap-1">
+                            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
+                                 alt="Running" class="w-full h-32 object-cover">
+                            <img src="https://images.unsplash.com/photo-1530549387789-4c1017266635?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
+                                 alt="Group run" class="w-full h-32 object-cover">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center space-x-6">
+                                    <button class="flex items-center text-gray-600 hover:text-warm transition-colors">
+                                        <i class="fas fa-heart mr-2"></i>
+                                        <span>187</span>
+                                    </button>
+                                    <button class="flex items-center text-gray-600 hover:text-primary transition-colors">
+                                        <i class="fas fa-comment mr-2"></i>
+                                        <span>23</span>
+                                    </button>
+                                    <button class="flex items-center text-gray-600 hover:text-secondary transition-colors">
+                                        <i class="fas fa-share mr-2"></i>
+                                        <span>8</span>
+                                    </button>
+                                </div>
+                                <button class="text-gray-600 hover:text-accent transition-colors">
+                                    <i class="fas fa-bookmark"></i>
+                                </button>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex items-start space-x-2">
+                                    <img src="https://images.unsplash.com/photo-1494790108755-2616b95a1dd4?ixlib=rb-4.0.3&auto=format&fit=crop&w=30&q=80" 
+                                         class="w-6 h-6 rounded-full mt-1">
+                                    <div class="flex-1">
+                                        <span class="text-sm font-medium text-gray-900">Sarah Chen</span>
+                                        <span class="text-sm text-gray-600 ml-1">You're crushing it! Boston will be amazing 🔥</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-2">
+                                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=30&q=80" 
+                                         class="w-6 h-6 rounded-full mt-1">
+                                    <div class="flex-1">
+                                        <span class="text-sm font-medium text-gray-900">Marcus Johnson</span>
+                                        <span class="text-sm text-gray-600 ml-1">Incredible dedication! See you at the finish line 💪</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Post 3 - Video Post -->
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center">
+                                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=50&q=80" 
+                                         class="w-12 h-12 rounded-full mr-3">
+                                    <div>
+                                        <div class="font-semibold text-gray-900">Marcus Johnson</div>
+                                        <div class="text-sm text-gray-500">6 hours ago • Workout</div>
+                                    </div>
+                                </div>
+                                <button class="text-gray-400 hover:text-gray-600">
+                                    <i class="fas fa-ellipsis-h"></i>
+                                </button>
+                            </div>
+                            <p class="text-gray-700 mb-4">Today's HIIT session was intense! 🔥 Sharing my favorite 20-minute routine that always gets me sweating. Who's ready to try it? <span class="text-primary">#HIITWorkout #FitnessChallenge</span></p>
+                        </div>
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                                 alt="HIIT workout" class="w-full h-64 object-cover">
+                            <div class="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
+                                <button class="bg-white bg-opacity-90 rounded-full p-4 hover:bg-opacity-100 transition-all">
+                                    <i class="fas fa-play text-2xl text-primary"></i>
+                                </button>
+                            </div>
+                            <div class="absolute bottom-4 right-4 bg-black bg-opacity-70 text-white px-2 py-1 rounded text-sm">
+                                20:15
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center space-x-6">
+                                    <button class="flex items-center text-gray-600 hover:text-warm transition-colors">
+                                        <i class="fas fa-heart mr-2"></i>
+                                        <span>312</span>
+                                    </button>
+                                    <button class="flex items-center text-gray-600 hover:text-primary transition-colors">
+                                        <i class="fas fa-comment mr-2"></i>
+                                        <span>67</span>
+                                    </button>
+                                    <button class="flex items-center text-gray-600 hover:text-secondary transition-colors">
+                                        <i class="fas fa-share mr-2"></i>
+                                        <span>25</span>
+                                    </button>
+                                </div>
+                                <button class="text-gray-600 hover:text-accent transition-colors">
+                                    <i class="fas fa-bookmark"></i>
+                                </button>
+                            </div>
+                            <button class="text-sm text-gray-500 hover:text-gray-700">View all 67 comments</button>
+                        </div>
+                    </div>
+
+                    <!-- Load More -->
+                    <div class="text-center py-8">
+                        <button class="bg-primary text-white px-8 py-3 rounded-lg hover:bg-blue-600 transition-colors">
+                            Load More Posts
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Sidebar -->
+            <div class="lg:col-span-1">
+                <!-- Suggested Connections -->
+                <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+                    <h3 class="font-semibold text-gray-900 mb-4">Suggested For You</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <img src="https://images.unsplash.com/photo-1494790108755-2616b95a1dd4?ixlib=rb-4.0.3&auto=format&fit=crop&w=50&q=80" 
+                                     class="w-10 h-10 rounded-full mr-3">
+                                <div>
+                                    <div class="font-medium text-gray-900">Emma Wilson</div>
+                                    <div class="text-sm text-gray-500">Yoga Instructor</div>
+                                </div>
+                            </div>
+                            <button class="bg-primary text-white px-3 py-1 rounded-md text-sm hover:bg-blue-600 transition-colors">
+                                Follow
+                            </button>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=50&q=80" 
+                                     class="w-10 h-10 rounded-full mr-3">
+                                <div>
+                                    <div class="font-medium text-gray-900">Tyler Brooks</div>
+                                    <div class="text-sm text-gray-500">Powerlifter</div>
+                                </div>
+                            </div>
+                            <button class="bg-primary text-white px-3 py-1 rounded-md text-sm hover:bg-blue-600 transition-colors">
+                                Follow
+                            </button>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=50&q=80" 
+                                     class="w-10 h-10 rounded-full mr-3">
+                                <div>
+                                    <div class="font-medium text-gray-900">Lisa Chang</div>
+                                    <div class="text-sm text-gray-500">Triathlete</div>
+                                </div>
+                            </div>
+                            <button class="bg-primary text-white px-3 py-1 rounded-md text-sm hover:bg-blue-600 transition-colors">
+                                Follow
+                            </button>
+                        </div>
+                    </div>
+                    <button class="text-sm text-primary hover:text-blue-600 mt-4">See all suggestions</button>
+                </div>
+
+                <!-- Active Groups -->
+                <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+                    <h3 class="font-semibold text-gray-900 mb-4">Your Groups</h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center mr-3">
+                                <i class="fas fa-running text-white"></i>
+                            </div>
+                            <div>
+                                <div class="font-medium text-gray-900">Marathon Runners</div>
+                                <div class="text-sm text-gray-500">2.1K members</div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center mr-3">
+                                <i class="fas fa-dumbbell text-white"></i>
+                            </div>
+                            <div>
+                                <div class="font-medium text-gray-900">Strength Training</div>
+                                <div class="text-sm text-gray-500">1.8K members</div>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <div class="w-10 h-10 bg-accent rounded-lg flex items-center justify-center mr-3">
+                                <i class="fas fa-heart text-white"></i>
+                            </div>
+                            <div>
+                                <div class="font-medium text-gray-900">Fitness Motivation</div>
+                                <div class="text-sm text-gray-500">3.2K members</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Upcoming Events -->
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h3 class="font-semibold text-gray-900 mb-4">Upcoming Events</h3>
+                    <div class="space-y-4">
+                        <div class="border-l-4 border-primary pl-4">
+                            <div class="font-medium text-gray-900">Virtual 5K Challenge</div>
+                            <div class="text-sm text-gray-500">Tomorrow, 9:00 AM</div>
+                            <div class="text-sm text-primary">127 participating</div>
+                        </div>
+                        
+                        <div class="border-l-4 border-secondary pl-4">
+                            <div class="font-medium text-gray-900">HIIT Class Live Stream</div>
+                            <div class="text-sm text-gray-500">Friday, 6:00 PM</div>
+                            <div class="text-sm text-secondary">89 attending</div>
+                        </div>
+                        
+                        <div class="border-l-4 border-accent pl-4">
+                            <div class="font-medium text-gray-900">Weekend Warrior Challenge</div>
+                            <div class="text-sm text-gray-500">Saturday, 10:00 AM</div>
+                            <div class="text-sm text-accent">245 interested</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

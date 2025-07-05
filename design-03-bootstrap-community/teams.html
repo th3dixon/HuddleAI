@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teams - HuddleAI Community</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-orange: #FF6B35;
+            --secondary-red: #E74C3C;
+            --accent-yellow: #F39C12;
+            --dark-gray: #2C3E50;
+            --light-gray: #ECF0F1;
+        }
+        
+        .bg-primary-orange { background-color: var(--primary-orange) !important; }
+        .bg-secondary-red { background-color: var(--secondary-red) !important; }
+        .text-primary-orange { color: var(--primary-orange) !important; }
+        .text-secondary-red { color: var(--secondary-red) !important; }
+        .btn-primary-orange { 
+            background-color: var(--primary-orange); 
+            border-color: var(--primary-orange);
+            color: white;
+        }
+        .btn-primary-orange:hover { 
+            background-color: var(--secondary-red); 
+            border-color: var(--secondary-red);
+        }
+        .btn-outline-orange {
+            color: var(--primary-orange);
+            border-color: var(--primary-orange);
+        }
+        .btn-outline-orange:hover {
+            background-color: var(--primary-orange);
+            border-color: var(--primary-orange);
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+        
+        .hero-header {
+            background: linear-gradient(135deg, var(--primary-orange) 0%, var(--secondary-red) 100%);
+            padding: 100px 0 60px;
+        }
+        
+        .team-card {
+            transition: all 0.3s ease;
+            border: none;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        
+        .team-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.3);
+        }
+        
+        .team-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 4px solid white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .leaderboard-item {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.2s ease;
+        }
+        
+        .leaderboard-item:hover {
+            transform: translateX(5px);
+        }
+        
+        .rank-badge {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .rank-1 { background: linear-gradient(135deg, #FFD700, #FFA500); }
+        .rank-2 { background: linear-gradient(135deg, #C0C0C0, #A0A0A0); }
+        .rank-3 { background: linear-gradient(135deg, #CD7F32, #B8860B); }
+        .rank-other { background: linear-gradient(135deg, var(--primary-orange), var(--secondary-red)); }
+        
+        .stats-card {
+            background: linear-gradient(135deg, #FF6B35, #E74C3C);
+            border-radius: 15px;
+            color: white;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .filter-chip {
+            display: inline-block;
+            padding: 8px 16px;
+            margin: 5px;
+            background: var(--light-gray);
+            border-radius: 25px;
+            text-decoration: none;
+            color: var(--dark-gray);
+            transition: all 0.3s ease;
+        }
+        
+        .filter-chip:hover,
+        .filter-chip.active {
+            background: var(--primary-orange);
+            color: white;
+            text-decoration: none;
+        }
+        
+        .communication-widget {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .member-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .activity-item {
+            padding: 15px;
+            border-left: 4px solid var(--primary-orange);
+            background: var(--light-gray);
+            margin-bottom: 15px;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .search-form {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
+        <div class="container">
+            <a class="navbar-brand text-primary-orange" href="index.html">
+                <i class="fas fa-users-cog me-2"></i>HuddleAI
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold active" href="teams.html">Teams</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle fw-semibold" href="#" role="button" data-bs-toggle="dropdown">
+                            Community
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#forums">Forums</a></li>
+                            <li><a class="dropdown-item" href="#competitions">Competitions</a></li>
+                            <li><a class="dropdown-item" href="#leaderboards">Leaderboards</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold" href="index.html#features">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold" href="#contact">Contact</a>
+                    </li>
+                    <li class="nav-item ms-2">
+                        <a class="btn btn-primary-orange btn-sm" href="#create-team">Create Team</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Header -->
+    <section class="hero-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center text-white">
+                    <h1 class="display-4 fw-bold mb-4">Discover Amazing Teams</h1>
+                    <p class="lead mb-4">Connect with teams that share your passion, compete at your level, and grow together in our vibrant sports community</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search and Filter Section -->
+    <section class="py-4">
+        <div class="container">
+            <div class="search-form">
+                <div class="row align-items-center">
+                    <div class="col-lg-4 mb-3 mb-lg-0">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search teams...">
+                            <button class="btn btn-primary-orange" type="button">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="d-flex flex-wrap">
+                            <span class="me-3 fw-semibold align-self-center">Filter by sport:</span>
+                            <a href="#" class="filter-chip active">All Sports</a>
+                            <a href="#" class="filter-chip">Basketball</a>
+                            <a href="#" class="filter-chip">Soccer</a>
+                            <a href="#" class="filter-chip">Running</a>
+                            <a href="#" class="filter-chip">Tennis</a>
+                            <a href="#" class="filter-chip">Swimming</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="py-4">
+        <div class="container">
+            <div class="row">
+                <!-- Teams Grid -->
+                <div class="col-lg-8">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h3 class="fw-bold">Teams Directory</h3>
+                        <div class="dropdown">
+                            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                Sort by: Most Active
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">Most Active</a></li>
+                                <li><a class="dropdown-item" href="#">Newest</a></li>
+                                <li><a class="dropdown-item" href="#">Most Members</a></li>
+                                <li><a class="dropdown-item" href="#">Highest Rated</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- Team Card 1 -->
+                        <div class="col-lg-6 col-md-6 mb-4">
+                            <div class="card team-card h-100">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" 
+                                             alt="Thunder Bolts" class="team-avatar me-3">
+                                        <div>
+                                            <h5 class="card-title mb-1 text-primary-orange">Thunder Bolts</h5>
+                                            <small class="text-muted">
+                                                <i class="fas fa-basketball-ball me-1"></i>Basketball
+                                            </small>
+                                        </div>
+                                    </div>
+                                    <p class="card-text text-muted mb-3">Professional basketball team with 15 championship wins and a focus on community engagement.</p>
+                                    
+                                    <div class="row text-center mb-3">
+                                        <div class="col-4">
+                                            <div class="fw-bold text-primary-orange">24</div>
+                                            <small class="text-muted">Members</small>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="fw-bold text-success">15</div>
+                                            <small class="text-muted">Wins</small>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="fw-bold text-warning">4.9</div>
+                                            <small class="text-muted">Rating</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="d-flex -space-x-2">
+                                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=40&q=80" 
+                                                 class="member-avatar" alt="Member">
+                                            <img src="https://images.unsplash.com/photo-1494790108755-2616b2e0c85b?ixlib=rb-4.0.3&auto=format&fit=crop&w=40&q=80" 
+                                                 class="member-avatar" alt="Member">
+                                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=40&q=80" 
+                                                 class="member-avatar" alt="Member">
+                                            <div class="member-avatar bg-secondary d-flex align-items-center justify-content-center">
+                                                <small class="text-white fw-bold">+21</small>
+                                            </div>
+                                        </div>
+                                        <div class="btn-group" role="group">
+                                            <button class="btn btn-outline-orange btn-sm">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="btn btn-primary-orange btn-sm">
+                                                <i class="fas fa-user-plus"></i> Join
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Team Card 2 -->
+                        <div class="col-lg-6 col-md-6 mb-4">
+                            <div class="card team-card h-100">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" 
+                                             alt="Fire Hawks" class="team-avatar me-3">
+                                        <div>
+                                            <h5 class="card-title mb-1 text-primary-orange">Fire Hawks</h5>
+                                            <small class="text-muted">
+                                                <i class="fas fa-futbol me-1"></i>Soccer
+                                            </small>
+                                        </div>
+                                    </div>
+                                    <p class="card-text text-muted mb-3">Dynamic soccer team known for their aggressive gameplay and strong team spirit.</p>
+                                    
+                                    <div class="row text-center mb-3">
+                                        <div class="col-4">
+                                            <div class="fw-bold text-primary-orange">32</div>
+                                            <small class="text-muted">Members</small>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="fw-bold text-success">28</div>
+                                            <small class="text-muted">Wins</small>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="fw-bold text-warning">4.7</div>
+                                            <small class="text-muted">Rating</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="d-flex">
+                                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=40&q=80" 
+                                                 class="member-avatar" alt="Member">
+                                            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=40&q=80" 
+                                                 class="member-avatar" alt="Member">
+                                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=40&q=80" 
+                                                 class="member-avatar" alt="Member">
+                                            <div class="member-avatar bg-secondary d-flex align-items-center justify-content-center">
+                                                <small class="text-white fw-bold">+29</small>
+                                            </div>
+                                        </div>
+                                        <div class="btn-group" role="group">
+                                            <button class="btn btn-outline-orange btn-sm">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="btn btn-primary-orange btn-sm">
+                                                <i class="fas fa-user-plus"></i> Join
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Team Card 3 -->
+                        <div class="col-lg-6 col-md-6 mb-4">
+                            <div class="card team-card h-100">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <img src="https://images.unsplash.com/photo-1546525848-3ce03ca516f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" 
+                                             alt="Storm Runners" class="team-avatar me-3">
+                                        <div>
+                                            <h5 class="card-title mb-1 text-primary-orange">Storm Runners</h5>
+                                            <small class="text-muted">
+                                                <i class="fas fa-running me-1"></i>Running
+                                            </small>
+                                        </div>
+                                    </div>
+                                    <p class="card-text text-muted mb-3">Elite marathon team setting new records every season with dedicated training programs.</p>
+                                    
+                                    <div class="row text-center mb-3">
+                                        <div class="col-4">
+                                            <div class="fw-bold text-primary-orange">18</div>
+                                            <small class="text-muted">Members</small>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="fw-bold text-success">45</div>
+                                            <small class="text-muted">Races</small>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="fw-bold text-warning">4.8</div>
+                                            <small class="text-muted">Rating</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="d-flex">
+                                            <img src="https://images.unsplash.com/photo-1552058544-f2b08422138a?ixlib=rb-4.0.3&auto=format&fit=crop&w=40&q=80" 
+                                                 class="member-avatar" alt="Member">
+                                            <img src="https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-4.0.3&auto=format&fit=crop&w=40&q=80" 
+                                                 class="member-avatar" alt="Member">
+                                            <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=40&q=80" 
+                                                 class="member-avatar" alt="Member">
+                                            <div class="member-avatar bg-secondary d-flex align-items-center justify-content-center">
+                                                <small class="text-white fw-bold">+15</small>
+                                            </div>
+                                        </div>
+                                        <div class="btn-group" role="group">
+                                            <button class="btn btn-outline-orange btn-sm">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="btn btn-primary-orange btn-sm">
+                                                <i class="fas fa-user-plus"></i> Join
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Team Card 4 -->
+                        <div class="col-lg-6 col-md-6 mb-4">
+                            <div class="card team-card h-100">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center mb-3">
+                                        <img src="https://images.unsplash.com/photo-1552196563-55cd4e45efb3?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" 
+                                             alt="Wave Riders" class="team-avatar me-3">
+                                        <div>
+                                            <h5 class="card-title mb-1 text-primary-orange">Wave Riders</h5>
+                                            <small class="text-muted">
+                                                <i class="fas fa-swimmer me-1"></i>Swimming
+                                            </small>
+                                        </div>
+                                    </div>
+                                    <p class="card-text text-muted mb-3">Competitive swimming team with Olympic-level training and championship aspirations.</p>
+                                    
+                                    <div class="row text-center mb-3">
+                                        <div class="col-4">
+                                            <div class="fw-bold text-primary-orange">16</div>
+                                            <small class="text-muted">Members</small>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="fw-bold text-success">8</div>
+                                            <small class="text-muted">Medals</small>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="fw-bold text-warning">4.9</div>
+                                            <small class="text-muted">Rating</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="d-flex">
+                                            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=40&q=80" 
+                                                 class="member-avatar" alt="Member">
+                                            <img src="https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?ixlib=rb-4.0.3&auto=format&fit=crop&w=40&q=80" 
+                                                 class="member-avatar" alt="Member">
+                                            <img src="https://images.unsplash.com/photo-1558507652-2d9626c4e67a?ixlib=rb-4.0.3&auto=format&fit=crop&w=40&q=80" 
+                                                 class="member-avatar" alt="Member">
+                                            <div class="member-avatar bg-secondary d-flex align-items-center justify-content-center">
+                                                <small class="text-white fw-bold">+13</small>
+                                            </div>
+                                        </div>
+                                        <div class="btn-group" role="group">
+                                            <button class="btn btn-outline-orange btn-sm">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <button class="btn btn-primary-orange btn-sm">
+                                                <i class="fas fa-user-plus"></i> Join
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pagination -->
+                    <nav aria-label="Teams pagination">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" tabindex="-1">Previous</a>
+                            </li>
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="col-lg-4">
+                    <!-- Community Stats -->
+                    <div class="stats-card">
+                        <h5 class="fw-bold mb-3">Community Stats</h5>
+                        <div class="row text-center">
+                            <div class="col-6">
+                                <div class="display-6 fw-bold">1,250</div>
+                                <small>Active Teams</small>
+                            </div>
+                            <div class="col-6">
+                                <div class="display-6 fw-bold">15K</div>
+                                <small>Members</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Leaderboards -->
+                    <div class="communication-widget">
+                        <h5 class="fw-bold mb-3">
+                            <i class="fas fa-trophy text-warning me-2"></i>Top Teams This Month
+                        </h5>
+                        
+                        <div class="leaderboard-item">
+                            <div class="d-flex align-items-center">
+                                <div class="rank-badge rank-1 me-3">1</div>
+                                <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=50&q=80" 
+                                     alt="Thunder Bolts" class="rounded-circle me-3" style="width: 40px; height: 40px; object-fit: cover;">
+                                <div class="flex-grow-1">
+                                    <div class="fw-bold">Thunder Bolts</div>
+                                    <small class="text-muted">2,450 points</small>
+                                </div>
+                                <div class="text-warning">
+                                    <i class="fas fa-crown"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="leaderboard-item">
+                            <div class="d-flex align-items-center">
+                                <div class="rank-badge rank-2 me-3">2</div>
+                                <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=50&q=80" 
+                                     alt="Fire Hawks" class="rounded-circle me-3" style="width: 40px; height: 40px; object-fit: cover;">
+                                <div class="flex-grow-1">
+                                    <div class="fw-bold">Fire Hawks</div>
+                                    <small class="text-muted">2,180 points</small>
+                                </div>
+                                <div class="text-secondary">
+                                    <i class="fas fa-medal"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="leaderboard-item">
+                            <div class="d-flex align-items-center">
+                                <div class="rank-badge rank-3 me-3">3</div>
+                                <img src="https://images.unsplash.com/photo-1546525848-3ce03ca516f6?ixlib=rb-4.0.3&auto=format&fit=crop&w=50&q=80" 
+                                     alt="Storm Runners" class="rounded-circle me-3" style="width: 40px; height: 40px; object-fit: cover;">
+                                <div class="flex-grow-1">
+                                    <div class="fw-bold">Storm Runners</div>
+                                    <small class="text-muted">1,950 points</small>
+                                </div>
+                                <div style="color: #CD7F32;">
+                                    <i class="fas fa-medal"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center mt-3">
+                            <a href="#" class="btn btn-outline-orange btn-sm">View Full Leaderboard</a>
+                        </div>
+                    </div>
+
+                    <!-- Team Communication Features -->
+                    <div class="communication-widget">
+                        <h5 class="fw-bold mb-3">
+                            <i class="fas fa-comments text-primary-orange me-2"></i>Recent Activity
+                        </h5>
+                        
+                        <div class="activity-item">
+                            <div class="d-flex align-items-center mb-2">
+                                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=40&q=80" 
+                                     alt="Mike" class="member-avatar me-2">
+                                <div>
+                                    <div class="fw-semibold">Mike Johnson</div>
+                                    <small class="text-muted">2 minutes ago</small>
+                                </div>
+                            </div>
+                            <p class="mb-0 small">Posted new training video in Thunder Bolts team forum</p>
+                        </div>
+
+                        <div class="activity-item">
+                            <div class="d-flex align-items-center mb-2">
+                                <img src="https://images.unsplash.com/photo-1494790108755-2616b2e0c85b?ixlib=rb-4.0.3&auto=format&fit=crop&w=40&q=80" 
+                                     alt="Sarah" class="member-avatar me-2">
+                                <div>
+                                    <div class="fw-semibold">Sarah Williams</div>
+                                    <small class="text-muted">15 minutes ago</small>
+                                </div>
+                            </div>
+                            <p class="mb-0 small">Scheduled team practice for Fire Hawks this weekend</p>
+                        </div>
+
+                        <div class="activity-item">
+                            <div class="d-flex align-items-center mb-2">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=40&q=80" 
+                                     alt="David" class="member-avatar me-2">
+                                <div>
+                                    <div class="fw-semibold">David Chen</div>
+                                    <small class="text-muted">1 hour ago</small>
+                                </div>
+                            </div>
+                            <p class="mb-0 small">Storm Runners achieved new personal best in marathon training</p>
+                        </div>
+
+                        <div class="text-center mt-3">
+                            <a href="#" class="btn btn-outline-orange btn-sm">View All Activity</a>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="communication-widget">
+                        <h5 class="fw-bold mb-3">
+                            <i class="fas fa-bolt text-warning me-2"></i>Quick Actions
+                        </h5>
+                        
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-primary-orange">
+                                <i class="fas fa-plus me-2"></i>Create New Team
+                            </button>
+                            <button class="btn btn-outline-orange">
+                                <i class="fas fa-calendar me-2"></i>Schedule Event
+                            </button>
+                            <button class="btn btn-outline-orange">
+                                <i class="fas fa-trophy me-2"></i>Start Competition
+                            </button>
+                            <button class="btn btn-outline-orange">
+                                <i class="fas fa-users me-2"></i>Find Teammates
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <h5 class="text-primary-orange mb-3">
+                        <i class="fas fa-users-cog me-2"></i>HuddleAI
+                    </h5>
+                    <p class="text-muted">Empowering sports teams with AI-driven insights and community collaboration tools.</p>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="text-primary-orange"><i class="fab fa-facebook fa-lg"></i></a>
+                        <a href="#" class="text-primary-orange"><i class="fab fa-twitter fa-lg"></i></a>
+                        <a href="#" class="text-primary-orange"><i class="fab fa-instagram fa-lg"></i></a>
+                        <a href="#" class="text-primary-orange"><i class="fab fa-linkedin fa-lg"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h6 class="fw-bold mb-3">Platform</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-muted text-decoration-none">Features</a></li>
+                        <li><a href="#" class="text-muted text-decoration-none">Pricing</a></li>
+                        <li><a href="#" class="text-muted text-decoration-none">API</a></li>
+                        <li><a href="#" class="text-muted text-decoration-none">Documentation</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h6 class="fw-bold mb-3">Community</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-muted text-decoration-none">Teams</a></li>
+                        <li><a href="#" class="text-muted text-decoration-none">Forums</a></li>
+                        <li><a href="#" class="text-muted text-decoration-none">Events</a></li>
+                        <li><a href="#" class="text-muted text-decoration-none">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h6 class="fw-bold mb-3">Support</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-muted text-decoration-none">Help Center</a></li>
+                        <li><a href="#" class="text-muted text-decoration-none">Contact</a></li>
+                        <li><a href="#" class="text-muted text-decoration-none">Status</a></li>
+                        <li><a href="#" class="text-muted text-decoration-none">Training</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <h6 class="fw-bold mb-3">Legal</h6>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-muted text-decoration-none">Privacy</a></li>
+                        <li><a href="#" class="text-muted text-decoration-none">Terms</a></li>
+                        <li><a href="#" class="text-muted text-decoration-none">Cookies</a></li>
+                        <li><a href="#" class="text-muted text-decoration-none">Security</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="text-muted mb-0">&copy; 2024 HuddleAI. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="text-muted mb-0">Made with <i class="fas fa-heart text-danger"></i> for sports teams</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

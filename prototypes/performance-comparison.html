@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Performance Comparison - HuddleAI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-8">
+                    <div class="text-2xl font-bold text-blue-600">HuddleAI</div>
+                    <div class="hidden md:flex space-x-6">
+                        <a href="#" class="text-gray-700 hover:text-blue-600">Dashboard</a>
+                        <a href="#" class="text-blue-600 font-medium">Analytics</a>
+                        <a href="#" class="text-gray-700 hover:text-blue-600">Community</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="text-gray-400 hover:text-gray-600">
+                        <i class="fas fa-bell"></i>
+                    </button>
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&h=32&fit=crop&crop=face" 
+                         alt="Profile" class="w-8 h-8 rounded-full">
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-6 py-8">
+        <!-- Header -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">Performance Comparison</h1>
+            <p class="text-gray-600">Compare your performance with other athletes and track your progress</p>
+        </div>
+
+        <!-- Athlete Selection -->
+        <div class="bg-white rounded-xl shadow-sm border mb-8">
+            <div class="p-6">
+                <h2 class="text-xl font-semibold mb-6">Compare Athletes</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Athlete 1 (You) -->
+                    <div class="border-2 border-blue-200 rounded-lg p-4 bg-blue-50">
+                        <div class="flex items-center space-x-4">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop&crop=face" 
+                                 alt="You" class="w-15 h-15 rounded-full">
+                            <div class="flex-1">
+                                <div class="font-semibold text-lg">Marcus Johnson (You)</div>
+                                <div class="text-blue-600">Track & Field • 400m Sprint</div>
+                                <div class="text-sm text-gray-600">Elite • Los Angeles, CA</div>
+                            </div>
+                            <div class="text-blue-600">
+                                <i class="fas fa-user-check text-2xl"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Athlete 2 -->
+                    <div class="border-2 border-gray-200 rounded-lg p-4 hover:border-blue-200 transition-colors">
+                        <div class="flex items-center space-x-4">
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=60&h=60&fit=crop&crop=face" 
+                                 alt="James Wilson" class="w-15 h-15 rounded-full">
+                            <div class="flex-1">
+                                <div class="font-semibold text-lg">James Wilson</div>
+                                <div class="text-gray-700">Track & Field • 400m Sprint</div>
+                                <div class="text-sm text-gray-600">Elite • New York, NY</div>
+                            </div>
+                            <button class="text-blue-600 hover:text-blue-700">
+                                <i class="fas fa-plus-circle text-2xl"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Compare Options -->
+                <div class="mt-6 flex flex-wrap gap-3">
+                    <button class="bg-blue-100 text-blue-700 px-4 py-2 rounded-lg hover:bg-blue-200 transition-colors">
+                        <i class="fas fa-trophy mr-2"></i>Similar Level Athletes
+                    </button>
+                    <button class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors">
+                        <i class="fas fa-users mr-2"></i>Teammates
+                    </button>
+                    <button class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors">
+                        <i class="fas fa-map-marker-alt mr-2"></i>Local Athletes
+                    </button>
+                    <button class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors">
+                        <i class="fas fa-star mr-2"></i>Elite Athletes
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Main Comparison -->
+            <div class="lg:col-span-2 space-y-6">
+                <!-- Head-to-Head Stats -->
+                <div class="bg-white rounded-xl shadow-sm border">
+                    <div class="p-6 border-b">
+                        <h3 class="text-lg font-semibold">Head-to-Head Comparison</h3>
+                    </div>
+                    <div class="p-6">
+                        <!-- Personal Best Comparison -->
+                        <div class="mb-6">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="font-medium">Personal Best (400m)</span>
+                                <span class="text-sm text-gray-500">Lower is better</span>
+                            </div>
+                            <div class="space-y-3">
+                                <div class="flex items-center space-x-4">
+                                    <div class="w-32 text-sm font-medium">Marcus Johnson</div>
+                                    <div class="flex-1 bg-gray-200 rounded-full h-6 relative">
+                                        <div class="bg-blue-500 h-6 rounded-full" style="width: 85%"></div>
+                                        <div class="absolute inset-0 flex items-center justify-center text-xs font-medium text-white">
+                                            49.23s
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-4">
+                                    <div class="w-32 text-sm font-medium">James Wilson</div>
+                                    <div class="flex-1 bg-gray-200 rounded-full h-6 relative">
+                                        <div class="bg-gray-400 h-6 rounded-full" style="width: 88%"></div>
+                                        <div class="absolute inset-0 flex items-center justify-center text-xs font-medium text-white">
+                                            49.67s
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Season Best -->
+                        <div class="mb-6">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="font-medium">Season Best</span>
+                                <span class="text-sm text-gray-500">2024 Season</span>
+                            </div>
+                            <div class="space-y-3">
+                                <div class="flex items-center space-x-4">
+                                    <div class="w-32 text-sm font-medium">Marcus Johnson</div>
+                                    <div class="flex-1 bg-gray-200 rounded-full h-6 relative">
+                                        <div class="bg-blue-500 h-6 rounded-full" style="width: 85%"></div>
+                                        <div class="absolute inset-0 flex items-center justify-center text-xs font-medium text-white">
+                                            49.23s
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-4">
+                                    <div class="w-32 text-sm font-medium">James Wilson</div>
+                                    <div class="flex-1 bg-gray-200 rounded-full h-6 relative">
+                                        <div class="bg-gray-400 h-6 rounded-full" style="width: 90%"></div>
+                                        <div class="absolute inset-0 flex items-center justify-center text-xs font-medium text-white">
+                                            49.89s
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- AI Performance Metrics -->
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="text-center p-4 bg-blue-50 rounded-lg">
+                                <div class="text-2xl font-bold text-blue-600">94</div>
+                                <div class="text-sm text-gray-600">Your AI Score</div>
+                                <div class="text-xs text-green-600">+5 vs James</div>
+                            </div>
+                            <div class="text-center p-4 bg-green-50 rounded-lg">
+                                <div class="text-2xl font-bold text-green-600">8.7</div>
+                                <div class="text-sm text-gray-600">Avg Speed (m/s)</div>
+                                <div class="text-xs text-green-600">+0.3 vs James</div>
+                            </div>
+                            <div class="text-center p-4 bg-purple-50 rounded-lg">
+                                <div class="text-2xl font-bold text-purple-600">4.2</div>
+                                <div class="text-sm text-gray-600">Stride Rate (Hz)</div>
+                                <div class="text-xs text-red-600">-0.1 vs James</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Performance Timeline -->
+                <div class="bg-white rounded-xl shadow-sm border">
+                    <div class="p-6 border-b">
+                        <div class="flex justify-between items-center">
+                            <h3 class="text-lg font-semibold">Performance Timeline</h3>
+                            <div class="flex space-x-2">
+                                <button class="bg-blue-100 text-blue-700 px-3 py-1 rounded text-sm">2024</button>
+                                <button class="bg-gray-100 text-gray-700 px-3 py-1 rounded text-sm">2023</button>
+                                <button class="bg-gray-100 text-gray-700 px-3 py-1 rounded text-sm">All Time</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="h-64 bg-gray-50 rounded-lg flex items-center justify-center">
+                            <div class="text-center text-gray-500">
+                                <i class="fas fa-chart-line text-3xl mb-2"></i>
+                                <p>Performance timeline chart</p>
+                                <p class="text-sm">Shows progress over time for both athletes</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Race Results Comparison -->
+                <div class="bg-white rounded-xl shadow-sm border">
+                    <div class="p-6 border-b">
+                        <h3 class="text-lg font-semibold">Recent Race Results</h3>
+                    </div>
+                    <div class="p-6">
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead>
+                                    <tr class="border-b text-left">
+                                        <th class="py-2 font-medium text-gray-700">Date</th>
+                                        <th class="py-2 font-medium text-gray-700">Event</th>
+                                        <th class="py-2 font-medium text-gray-700">Marcus</th>
+                                        <th class="py-2 font-medium text-gray-700">James</th>
+                                        <th class="py-2 font-medium text-gray-700">Winner</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="text-sm">
+                                    <tr class="border-b">
+                                        <td class="py-3">Mar 15, 2024</td>
+                                        <td class="py-3">City Championships</td>
+                                        <td class="py-3 font-medium text-green-600">49.23s</td>
+                                        <td class="py-3">49.67s</td>
+                                        <td class="py-3">
+                                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">Marcus</span>
+                                        </td>
+                                    </tr>
+                                    <tr class="border-b">
+                                        <td class="py-3">Mar 8, 2024</td>
+                                        <td class="py-3">Spring Invitational</td>
+                                        <td class="py-3">49.45s</td>
+                                        <td class="py-3 font-medium text-green-600">49.34s</td>
+                                        <td class="py-3">
+                                            <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs">James</span>
+                                        </td>
+                                    </tr>
+                                    <tr class="border-b">
+                                        <td class="py-3">Feb 28, 2024</td>
+                                        <td class="py-3">Indoor Nationals</td>
+                                        <td class="py-3 font-medium text-green-600">49.56s</td>
+                                        <td class="py-3">49.89s</td>
+                                        <td class="py-3">
+                                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">Marcus</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="space-y-6">
+                <!-- Quick Stats -->
+                <div class="bg-white rounded-xl shadow-sm border">
+                    <div class="p-6 border-b">
+                        <h3 class="text-lg font-semibold">Quick Stats</h3>
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Head-to-Head</span>
+                            <span class="font-semibold text-green-600">5-3 (You)</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Avg Difference</span>
+                            <span class="font-semibold text-blue-600">0.34s</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Best Matchup</span>
+                            <span class="font-semibold">City Champs</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-600">Next Meet</span>
+                            <span class="font-semibold">Mar 22</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Strengths Analysis -->
+                <div class="bg-white rounded-xl shadow-sm border">
+                    <div class="p-6 border-b">
+                        <h3 class="text-lg font-semibold">AI Analysis</h3>
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <div class="flex items-center mb-2">
+                                <i class="fas fa-thumbs-up text-green-600 mr-2"></i>
+                                <span class="font-medium text-green-800">Your Advantages</span>
+                            </div>
+                            <ul class="text-sm text-green-700 space-y-1">
+                                <li>• Better acceleration phase</li>
+                                <li>• More consistent form</li>
+                                <li>• Stronger finish</li>
+                            </ul>
+                        </div>
+                        <div class="bg-orange-50 p-4 rounded-lg">
+                            <div class="flex items-center mb-2">
+                                <i class="fas fa-exclamation-triangle text-orange-600 mr-2"></i>
+                                <span class="font-medium text-orange-800">Areas to Improve</span>
+                            </div>
+                            <ul class="text-sm text-orange-700 space-y-1">
+                                <li>• Mid-race speed maintenance</li>
+                                <li>• Stride rate optimization</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Suggested Training -->
+                <div class="bg-white rounded-xl shadow-sm border">
+                    <div class="p-6 border-b">
+                        <h3 class="text-lg font-semibold">Training Suggestions</h3>
+                    </div>
+                    <div class="p-6 space-y-3">
+                        <div class="p-3 bg-blue-50 rounded-lg">
+                            <div class="font-medium text-blue-800 text-sm">Speed Endurance</div>
+                            <div class="text-xs text-blue-600">Focus on 300m repeats to match James' mid-race speed</div>
+                        </div>
+                        <div class="p-3 bg-purple-50 rounded-lg">
+                            <div class="font-medium text-purple-800 text-sm">Cadence Drills</div>
+                            <div class="text-xs text-purple-600">Increase stride rate to 4.3 Hz for optimal speed</div>
+                        </div>
+                        <div class="p-3 bg-green-50 rounded-lg">
+                            <div class="font-medium text-green-800 text-sm">Race Tactics</div>
+                            <div class="text-xs text-green-600">Maintain your strong finish advantage</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Similar Athletes -->
+                <div class="bg-white rounded-xl shadow-sm border">
+                    <div class="p-6 border-b">
+                        <h3 class="text-lg font-semibold">Similar Athletes</h3>
+                    </div>
+                    <div class="p-6 space-y-3">
+                        <div class="flex items-center space-x-3 cursor-pointer hover:bg-gray-50 p-2 rounded">
+                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=32&h=32&fit=crop&crop=face" 
+                                 alt="Alex Thompson" class="w-8 h-8 rounded-full">
+                            <div class="flex-1">
+                                <div class="font-medium text-sm">Alex Thompson</div>
+                                <div class="text-xs text-gray-500">PB: 49.12s</div>
+                            </div>
+                            <i class="fas fa-plus text-gray-400"></i>
+                        </div>
+                        <div class="flex items-center space-x-3 cursor-pointer hover:bg-gray-50 p-2 rounded">
+                            <img src="https://images.unsplash.com/photo-1494790108755-2616b332c5d2?w=32&h=32&fit=crop&crop=face" 
+                                 alt="Maria Garcia" class="w-8 h-8 rounded-full">
+                            <div class="flex-1">
+                                <div class="font-medium text-sm">Maria Garcia</div>
+                                <div class="text-xs text-gray-500">PB: 49.78s</div>
+                            </div>
+                            <i class="fas fa-plus text-gray-400"></i>
+                        </div>
+                        <div class="flex items-center space-x-3 cursor-pointer hover:bg-gray-50 p-2 rounded">
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face" 
+                                 alt="David Kim" class="w-8 h-8 rounded-full">
+                            <div class="flex-1">
+                                <div class="font-medium text-sm">David Kim</div>
+                                <div class="text-xs text-gray-500">PB: 49.45s</div>
+                            </div>
+                            <i class="fas fa-plus text-gray-400"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

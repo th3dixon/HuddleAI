@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Performance Dashboard - HuddleAI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary-green: #00C896;
+            --dark-green: #00A67E;
+            --accent-teal: #00B5AD;
+            --light-green: #E8FFF8;
+            --success-green: #10B981;
+            --warning-orange: #F59E0B;
+            --danger-red: #EF4444;
+            --dark-bg: #0F172A;
+            --text-dark: #1E293B;
+            --text-light: #64748B;
+            --bg-light: #F8FAFC;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        
+        .bg-primary-green {
+            background-color: var(--primary-green) !important;
+        }
+        
+        .bg-light-green {
+            background-color: var(--light-green) !important;
+        }
+        
+        .text-primary-green {
+            color: var(--primary-green) !important;
+        }
+        
+        .text-success-green {
+            color: var(--success-green) !important;
+        }
+        
+        .sidebar {
+            background: white;
+            border-right: 1px solid #E2E8F0;
+            min-height: 100vh;
+            position: fixed;
+            width: 250px;
+            z-index: 1000;
+        }
+        
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+        
+        .dashboard-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid #F1F5F9;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .dashboard-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 200, 150, 0.12);
+        }
+        
+        .metric-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid #F1F5F9;
+            transition: all 0.3s ease;
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+        
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        
+        .metric-change {
+            font-size: 0.9rem;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+        
+        .change-positive {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: var(--success-green);
+        }
+        
+        .change-negative {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: var(--danger-red);
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.3rem;
+        }
+        
+        .nav-link {
+            color: var(--text-light) !important;
+            font-weight: 500;
+            padding: 12px 20px !important;
+            border-radius: 8px;
+            margin: 2px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--primary-green) !important;
+            background-color: var(--light-green);
+        }
+        
+        .progress-ring {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: conic-gradient(var(--primary-green) 0deg 252deg, #E5E7EB 252deg 360deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .progress-ring::before {
+            content: '';
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: white;
+            position: absolute;
+        }
+        
+        .progress-value {
+            position: relative;
+            z-index: 1;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-green);
+        }
+        
+        .timeline-item {
+            border-left: 3px solid var(--primary-green);
+            padding-left: 20px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--primary-green);
+            position: absolute;
+            left: -7.5px;
+            top: 8px;
+        }
+        
+        .badge-earned {
+            background: linear-gradient(135deg, var(--primary-green), var(--accent-teal));
+            color: white;
+            padding: 12px;
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .badge-earned:hover {
+            transform: scale(1.05);
+        }
+        
+        .badge-locked {
+            background: #F3F4F6;
+            color: var(--text-light);
+            padding: 12px;
+            border-radius: 12px;
+            text-align: center;
+            opacity: 0.6;
+        }
+        
+        .goal-progress {
+            background: #F3F4F6;
+            border-radius: 8px;
+            height: 8px;
+            overflow: hidden;
+        }
+        
+        .goal-progress-bar {
+            background: linear-gradient(90deg, var(--primary-green), var(--accent-teal));
+            height: 100%;
+            transition: width 0.5s ease;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin: 20px 0;
+        }
+        
+        .video-thumbnail {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .video-thumbnail:hover {
+            transform: scale(1.02);
+        }
+        
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: rgba(0, 200, 150, 0.95);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+            
+            .sidebar.show {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <div class="p-3">
+            <a class="navbar-brand text-primary-green d-flex align-items-center" href="index.html">
+                <i class="fas fa-chart-line me-2"></i>
+                HuddleAI
+            </a>
+        </div>
+        <div class="nav flex-column px-3">
+            <a class="nav-link active" href="#overview">
+                <i class="fas fa-tachometer-alt me-2"></i>Overview
+            </a>
+            <a class="nav-link" href="#performance">
+                <i class="fas fa-chart-bar me-2"></i>Performance
+            </a>
+            <a class="nav-link" href="#videos">
+                <i class="fas fa-video me-2"></i>Video Analysis
+            </a>
+            <a class="nav-link" href="#goals">
+                <i class="fas fa-target me-2"></i>Goals
+            </a>
+            <a class="nav-link" href="#achievements">
+                <i class="fas fa-trophy me-2"></i>Achievements
+            </a>
+            <a class="nav-link" href="#training">
+                <i class="fas fa-dumbbell me-2"></i>Training Plans
+            </a>
+            <hr class="my-3">
+            <a class="nav-link" href="index.html">
+                <i class="fas fa-home me-2"></i>Back to Home
+            </a>
+            <a class="nav-link" href="#settings">
+                <i class="fas fa-cog me-2"></i>Settings
+            </a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h1 class="h3 fw-bold mb-0">Performance Dashboard</h1>
+                <p class="text-muted mb-0">Track your athletic progress and achievements</p>
+            </div>
+            <div class="d-flex gap-2">
+                <button class="btn btn-outline-secondary">
+                    <i class="fas fa-download me-2"></i>Export Data
+                </button>
+                <button class="btn btn-primary-green">
+                    <i class="fas fa-plus me-2"></i>Add Session
+                </button>
+            </div>
+        </div>
+
+        <!-- Overview Metrics -->
+        <section id="overview">
+            <div class="row g-3 mb-4">
+                <div class="col-md-6 col-lg-3">
+                    <div class="metric-card">
+                        <div class="metric-value text-primary-green">15.2%</div>
+                        <h6 class="fw-bold mb-2">Speed Improvement</h6>
+                        <span class="metric-change change-positive">
+                            <i class="fas fa-arrow-up me-1"></i>+2.3% this week
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="metric-card">
+                        <div class="metric-value text-success-green">94%</div>
+                        <h6 class="fw-bold mb-2">Technique Score</h6>
+                        <span class="metric-change change-positive">
+                            <i class="fas fa-arrow-up me-1"></i>+5% this week
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="metric-card">
+                        <div class="metric-value" style="color: var(--warning-orange);">42</div>
+                        <h6 class="fw-bold mb-2">Training Sessions</h6>
+                        <span class="metric-change change-positive">
+                            <i class="fas fa-arrow-up me-1"></i>+3 this week
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="metric-card">
+                        <div class="metric-value" style="color: var(--accent-teal);">8/10</div>
+                        <h6 class="fw-bold mb-2">Goals Achieved</h6>
+                        <span class="metric-change change-positive">
+                            <i class="fas fa-arrow-up me-1"></i>+2 this month
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Performance Charts -->
+        <section id="performance">
+            <div class="row g-4 mb-4">
+                <div class="col-lg-8">
+                    <div class="dashboard-card">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="fw-bold mb-0">Performance Over Time</h5>
+                            <div class="btn-group btn-group-sm">
+                                <button class="btn btn-outline-secondary active">7D</button>
+                                <button class="btn btn-outline-secondary">30D</button>
+                                <button class="btn btn-outline-secondary">90D</button>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="performanceChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="dashboard-card">
+                        <h5 class="fw-bold mb-3">Overall Progress</h5>
+                        <div class="d-flex justify-content-center mb-3">
+                            <div class="progress-ring">
+                                <div class="progress-value">78%</div>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-muted mb-2">Current Performance Level</p>
+                            <h6 class="fw-bold text-primary-green">Advanced Athlete</h6>
+                        </div>
+                        <hr>
+                        <div class="row g-3 text-center">
+                            <div class="col-6">
+                                <div class="fw-bold text-primary-green">127</div>
+                                <small class="text-muted">Training Hours</small>
+                            </div>
+                            <div class="col-6">
+                                <div class="fw-bold text-primary-green">23</div>
+                                <small class="text-muted">PR Records</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Video Analysis -->
+        <section id="videos">
+            <div class="dashboard-card mb-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h5 class="fw-bold mb-0">Recent Video Analysis</h5>
+                    <button class="btn btn-primary-green btn-sm">
+                        <i class="fas fa-upload me-2"></i>Upload Video
+                    </button>
+                </div>
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <div class="video-thumbnail">
+                            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
+                                 alt="Sprint Analysis" class="w-100" style="height: 200px; object-fit: cover;">
+                            <div class="play-button">
+                                <i class="fas fa-play"></i>
+                            </div>
+                        </div>
+                        <div class="mt-2">
+                            <h6 class="fw-bold mb-1">Sprint Technique Analysis</h6>
+                            <p class="small text-muted mb-1">Dec 20, 2024 • 2:34</p>
+                            <div class="d-flex align-items-center">
+                                <span class="badge bg-success me-2">Improved</span>
+                                <small class="text-success">+5% efficiency</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="video-thumbnail">
+                            <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
+                                 alt="Form Analysis" class="w-100" style="height: 200px; object-fit: cover;">
+                            <div class="play-button">
+                                <i class="fas fa-play"></i>
+                            </div>
+                        </div>
+                        <div class="mt-2">
+                            <h6 class="fw-bold mb-1">Running Form Check</h6>
+                            <p class="small text-muted mb-1">Dec 18, 2024 • 4:12</p>
+                            <div class="d-flex align-items-center">
+                                <span class="badge bg-warning me-2">Needs Work</span>
+                                <small class="text-warning">Stride length</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="video-thumbnail">
+                            <img src="https://images.unsplash.com/photo-1544717297-fa95b6ee9643?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" 
+                                 alt="Endurance Analysis" class="w-100" style="height: 200px; object-fit: cover;">
+                            <div class="play-button">
+                                <i class="fas fa-play"></i>
+                            </div>
+                        </div>
+                        <div class="mt-2">
+                            <h6 class="fw-bold mb-1">Endurance Test</h6>
+                            <p class="small text-muted mb-1">Dec 15, 2024 • 12:45</p>
+                            <div class="d-flex align-items-center">
+                                <span class="badge bg-success me-2">Excellent</span>
+                                <small class="text-success">New PR!</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Goals Section -->
+        <section id="goals">
+            <div class="row g-4 mb-4">
+                <div class="col-lg-8">
+                    <div class="dashboard-card">
+                        <h5 class="fw-bold mb-3">Current Goals Progress</h5>
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="fw-semibold">Improve 100m Sprint Time</span>
+                                    <span class="text-primary-green fw-bold">85%</span>
+                                </div>
+                                <div class="goal-progress mb-2">
+                                    <div class="goal-progress-bar" style="width: 85%"></div>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <small class="text-muted">Target: 10.50s</small>
+                                    <small class="text-muted">Current: 10.67s</small>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="fw-semibold">Increase Training Frequency</span>
+                                    <span class="text-primary-green fw-bold">70%</span>
+                                </div>
+                                <div class="goal-progress mb-2">
+                                    <div class="goal-progress-bar" style="width: 70%"></div>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <small class="text-muted">Target: 5 sessions/week</small>
+                                    <small class="text-muted">Current: 3.5 sessions/week</small>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="fw-semibold">Master New Technique</span>
+                                    <span class="text-primary-green fw-bold">45%</span>
+                                </div>
+                                <div class="goal-progress mb-2">
+                                    <div class="goal-progress-bar" style="width: 45%"></div>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <small class="text-muted">Target: 95% accuracy</small>
+                                    <small class="text-muted">Current: 73% accuracy</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="dashboard-card">
+                        <h5 class="fw-bold mb-3">Goal Timeline</h5>
+                        <div class="timeline-item">
+                            <h6 class="fw-bold mb-1">Sprint Training</h6>
+                            <p class="small text-muted mb-1">Dec 20, 2024</p>
+                            <p class="small mb-0">Completed interval training session with 15% improvement in acceleration.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h6 class="fw-bold mb-1">Form Analysis</h6>
+                            <p class="small text-muted mb-1">Dec 18, 2024</p>
+                            <p class="small mb-0">AI analysis identified stride optimization opportunities.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h6 class="fw-bold mb-1">New PR Set</h6>
+                            <p class="small text-muted mb-1">Dec 15, 2024</p>
+                            <p class="small mb-0">Achieved personal record in 100m sprint: 10.67s</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Achievements Section -->
+        <section id="achievements">
+            <div class="dashboard-card">
+                <h5 class="fw-bold mb-3">Achievement Badges</h5>
+                <div class="row g-3">
+                    <div class="col-md-6 col-lg-3">
+                        <div class="badge-earned">
+                            <i class="fas fa-medal fa-2x mb-2"></i>
+                            <h6 class="fw-bold mb-1">Speed Demon</h6>
+                            <small>Improved sprint speed by 15%</small>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="badge-earned">
+                            <i class="fas fa-fire fa-2x mb-2"></i>
+                            <h6 class="fw-bold mb-1">Training Streak</h6>
+                            <small>30 consecutive training days</small>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="badge-earned">
+                            <i class="fas fa-bullseye fa-2x mb-2"></i>
+                            <h6 class="fw-bold mb-1">Goal Crusher</h6>
+                            <small>Achieved 5 performance goals</small>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="badge-locked">
+                            <i class="fas fa-lock fa-2x mb-2"></i>
+                            <h6 class="fw-bold mb-1">Marathon Ready</h6>
+                            <small>Complete 26.2 mile run</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-3 mt-3">
+                    <div class="col-md-6 col-lg-3">
+                        <div class="badge-earned">
+                            <i class="fas fa-chart-line fa-2x mb-2"></i>
+                            <h6 class="fw-bold mb-1">Consistency King</h6>
+                            <small>Consistent improvement for 8 weeks</small>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="badge-locked">
+                            <i class="fas fa-crown fa-2x mb-2"></i>
+                            <h6 class="fw-bold mb-1">Elite Athlete</h6>
+                            <small>Reach top 1% performance</small>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="badge-locked">
+                            <i class="fas fa-star fa-2x mb-2"></i>
+                            <h6 class="fw-bold mb-1">Perfect Form</h6>
+                            <small>Achieve 98% technique score</small>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="badge-locked">
+                            <i class="fas fa-trophy fa-2x mb-2"></i>
+                            <h6 class="fw-bold mb-1">Champion</h6>
+                            <small>Win a competition</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Performance Chart
+        const ctx = document.getElementById('performanceChart').getContext('2d');
+        const performanceChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                datasets: [{
+                    label: 'Speed (km/h)',
+                    data: [28.5, 29.2, 30.1, 29.8, 31.2, 32.1, 31.8],
+                    borderColor: '#00C896',
+                    backgroundColor: 'rgba(0, 200, 150, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4
+                }, {
+                    label: 'Technique Score (%)',
+                    data: [85, 87, 89, 88, 92, 94, 93],
+                    borderColor: '#00B5AD',
+                    backgroundColor: 'rgba(0, 181, 173, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        grid: {
+                            color: '#F1F5F9'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            color: '#F1F5F9'
+                        }
+                    }
+                },
+                elements: {
+                    point: {
+                        radius: 6,
+                        hoverRadius: 8
+                    }
+                }
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('.nav-link[href^="#"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Active navigation highlighting
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-link[href^="#"]');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

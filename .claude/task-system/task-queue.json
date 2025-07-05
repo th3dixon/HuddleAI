@@ -1,0 +1,70 @@
+{
+  "metadata": {
+    "totalTasks": 65,
+    "createdAt": "2025-01-13T15:30:00Z",
+    "lastUpdated": "2025-01-13T15:30:00Z"
+  },
+  "queue": [
+    {
+      "taskId": "CMS-002",
+      "priority": "critical",
+      "estimatedHours": 2,
+      "readyToStart": true,
+      "dependencies": ["CMS-001"]
+    },
+    {
+      "taskId": "CMS-004",
+      "priority": "critical",
+      "estimatedHours": 2,
+      "readyToStart": true,
+      "dependencies": ["CMS-001"]
+    },
+    {
+      "taskId": "CMS-005",
+      "priority": "critical",
+      "estimatedHours": 2,
+      "readyToStart": true,
+      "dependencies": ["CMS-001"]
+    },
+    {
+      "taskId": "CMS-006",
+      "priority": "critical",
+      "estimatedHours": 2,
+      "readyToStart": true,
+      "dependencies": ["CMS-001"]
+    },
+    {
+      "taskId": "CMS-008",
+      "priority": "critical",
+      "estimatedHours": 2,
+      "readyToStart": true,
+      "dependencies": ["CMS-003"]
+    },
+    {
+      "taskId": "CMS-011",
+      "priority": "critical",
+      "estimatedHours": 3,
+      "readyToStart": true,
+      "dependencies": ["CMS-010"]
+    },
+    {
+      "taskId": "CMS-013",
+      "priority": "critical",
+      "estimatedHours": 2,
+      "readyToStart": true,
+      "dependencies": ["CMS-010"]
+    },
+    {
+      "taskId": "CMS-019",
+      "priority": "critical",
+      "estimatedHours": 2,
+      "readyToStart": true,
+      "dependencies": ["CMS-018"]
+    }
+  ],
+  "settings": {
+    "maxParallel": 4,
+    "autoQueue": true,
+    "autoAdvancePhases": false
+  }
+}

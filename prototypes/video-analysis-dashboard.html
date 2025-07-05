@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Analysis Dashboard - HuddleAI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-8">
+                    <div class="text-2xl font-bold text-blue-600">HuddleAI</div>
+                    <div class="hidden md:flex space-x-6">
+                        <a href="#" class="text-gray-700 hover:text-blue-600">Dashboard</a>
+                        <a href="#" class="text-blue-600 font-medium">Analytics</a>
+                        <a href="#" class="text-gray-700 hover:text-blue-600">Community</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="text-gray-400 hover:text-gray-600">
+                        <i class="fas fa-bell"></i>
+                    </button>
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&h=32&fit=crop&crop=face" 
+                         alt="Profile" class="w-8 h-8 rounded-full">
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-6 py-8">
+        <!-- Header -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">Video Analysis Dashboard</h1>
+            <p class="text-gray-600">AI-powered performance insights from your training videos</p>
+        </div>
+
+        <!-- Upload Section -->
+        <div class="bg-white rounded-xl shadow-sm border mb-8">
+            <div class="p-6">
+                <h2 class="text-xl font-semibold mb-4 flex items-center">
+                    <i class="fas fa-upload text-blue-500 mr-2"></i>
+                    Upload New Video
+                </h2>
+                <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-blue-400 transition-colors">
+                    <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-4"></i>
+                    <p class="text-lg text-gray-600 mb-2">Drag and drop your video here, or click to browse</p>
+                    <p class="text-sm text-gray-500 mb-4">Supports MP4, MOV, AVI up to 500MB</p>
+                    <button class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                        Select Video File
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Main Content -->
+            <div class="lg:col-span-2 space-y-6">
+                <!-- Current Analysis -->
+                <div class="bg-white rounded-xl shadow-sm border">
+                    <div class="p-6 border-b">
+                        <h3 class="text-lg font-semibold flex items-center">
+                            <i class="fas fa-video text-purple-500 mr-2"></i>
+                            Current Analysis: Sprint Training Session
+                        </h3>
+                    </div>
+                    <div class="p-6">
+                        <!-- Video Player -->
+                        <div class="aspect-video bg-black rounded-lg mb-4 relative overflow-hidden">
+                            <div class="absolute inset-0 flex items-center justify-center text-white">
+                                <div class="text-center">
+                                    <i class="fas fa-play-circle text-6xl mb-4 opacity-80"></i>
+                                    <p class="text-lg">Video Player Placeholder</p>
+                                    <p class="text-sm opacity-75">Sprint_Training_Session_March_15.mp4</p>
+                                </div>
+                            </div>
+                            <!-- AI Analysis Overlay -->
+                            <div class="absolute top-4 left-4 bg-black bg-opacity-70 rounded-lg p-3">
+                                <div class="text-white text-sm">
+                                    <div class="flex items-center mb-1">
+                                        <div class="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
+                                        AI Analysis Active
+                                    </div>
+                                    <div>Processing: 87%</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Analysis Controls -->
+                        <div class="flex items-center justify-between mb-6">
+                            <div class="flex items-center space-x-4">
+                                <button class="flex items-center space-x-2 bg-gray-100 px-4 py-2 rounded-lg hover:bg-gray-200">
+                                    <i class="fas fa-play"></i>
+                                    <span>Play</span>
+                                </button>
+                                <button class="flex items-center space-x-2 bg-gray-100 px-4 py-2 rounded-lg hover:bg-gray-200">
+                                    <i class="fas fa-redo"></i>
+                                    <span>Replay</span>
+                                </button>
+                                <button class="flex items-center space-x-2 bg-blue-100 text-blue-700 px-4 py-2 rounded-lg hover:bg-blue-200">
+                                    <i class="fas fa-robot"></i>
+                                    <span>AI Annotations</span>
+                                </button>
+                            </div>
+                            <div class="text-sm text-gray-500">
+                                Duration: 0:45 • Uploaded: 2 hours ago
+                            </div>
+                        </div>
+
+                        <!-- AI Insights -->
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                                <div class="flex items-center mb-2">
+                                    <i class="fas fa-check-circle text-green-600 mr-2"></i>
+                                    <span class="font-medium text-green-800">Form Score</span>
+                                </div>
+                                <div class="text-2xl font-bold text-green-700">94/100</div>
+                                <div class="text-sm text-green-600">Excellent technique</div>
+                            </div>
+                            <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                                <div class="flex items-center mb-2">
+                                    <i class="fas fa-tachometer-alt text-blue-600 mr-2"></i>
+                                    <span class="font-medium text-blue-800">Avg Speed</span>
+                                </div>
+                                <div class="text-2xl font-bold text-blue-700">8.7 m/s</div>
+                                <div class="text-sm text-blue-600">+0.3 from last session</div>
+                            </div>
+                            <div class="bg-orange-50 border border-orange-200 rounded-lg p-4">
+                                <div class="flex items-center mb-2">
+                                    <i class="fas fa-running text-orange-600 mr-2"></i>
+                                    <span class="font-medium text-orange-800">Stride Rate</span>
+                                </div>
+                                <div class="text-2xl font-bold text-orange-700">4.2 Hz</div>
+                                <div class="text-sm text-orange-600">Optimal range</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detailed Analysis -->
+                <div class="bg-white rounded-xl shadow-sm border">
+                    <div class="p-6 border-b">
+                        <h3 class="text-lg font-semibold flex items-center">
+                            <i class="fas fa-chart-line text-green-500 mr-2"></i>
+                            Detailed Analysis
+                        </h3>
+                    </div>
+                    <div class="p-6">
+                        <!-- Recommendations -->
+                        <div class="mb-6">
+                            <h4 class="font-medium text-gray-900 mb-3">AI Recommendations</h4>
+                            <div class="space-y-3">
+                                <div class="flex items-start space-x-3 bg-green-50 p-4 rounded-lg">
+                                    <i class="fas fa-thumbs-up text-green-600 mt-0.5"></i>
+                                    <div>
+                                        <p class="font-medium text-green-800">Excellent arm swing mechanics</p>
+                                        <p class="text-sm text-green-700">Your arm coordination is consistent throughout the sprint. Maintain this technique.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-3 bg-yellow-50 p-4 rounded-lg">
+                                    <i class="fas fa-exclamation-triangle text-yellow-600 mt-0.5"></i>
+                                    <div>
+                                        <p class="font-medium text-yellow-800">Slight forward lean in mid-sprint</p>
+                                        <p class="text-sm text-yellow-700">Consider maintaining more upright posture after the acceleration phase.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-3 bg-blue-50 p-4 rounded-lg">
+                                    <i class="fas fa-lightbulb text-blue-600 mt-0.5"></i>
+                                    <div>
+                                        <p class="font-medium text-blue-800">Consistent stride length</p>
+                                        <p class="text-sm text-blue-700">Your stride mechanics show good consistency. This is a strength to build upon.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Biomechanics Chart -->
+                        <div class="mb-6">
+                            <h4 class="font-medium text-gray-900 mb-3">Biomechanics Timeline</h4>
+                            <div class="h-48 bg-gray-50 rounded-lg flex items-center justify-center">
+                                <div class="text-center text-gray-500">
+                                    <i class="fas fa-chart-area text-3xl mb-2"></i>
+                                    <p>Biomechanics visualization</p>
+                                    <p class="text-sm">Speed, stride rate, and form analysis over time</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Comparison with Previous -->
+                        <div>
+                            <h4 class="font-medium text-gray-900 mb-3">Comparison with Previous Session</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="bg-gray-50 rounded-lg p-4">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <span class="text-sm text-gray-600">Form Score</span>
+                                        <span class="text-sm font-medium text-green-600">+2 points</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-green-600 h-2 rounded-full" style="width: 94%"></div>
+                                    </div>
+                                </div>
+                                <div class="bg-gray-50 rounded-lg p-4">
+                                    <div class="flex justify-between items-center mb-2">
+                                        <span class="text-sm text-gray-600">Average Speed</span>
+                                        <span class="text-sm font-medium text-blue-600">+0.3 m/s</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-blue-600 h-2 rounded-full" style="width: 87%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="space-y-6">
+                <!-- Analysis History -->
+                <div class="bg-white rounded-xl shadow-sm border">
+                    <div class="p-6 border-b">
+                        <h3 class="text-lg font-semibold">Recent Analyses</h3>
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <div class="flex items-center space-x-3 p-3 bg-blue-50 rounded-lg">
+                            <i class="fas fa-video text-blue-600"></i>
+                            <div class="flex-1">
+                                <div class="font-medium text-sm">Sprint Training</div>
+                                <div class="text-xs text-gray-500">2 hours ago • 94/100</div>
+                            </div>
+                            <i class="fas fa-chevron-right text-gray-400"></i>
+                        </div>
+                        <div class="flex items-center space-x-3 p-3 hover:bg-gray-50 rounded-lg cursor-pointer">
+                            <i class="fas fa-video text-gray-400"></i>
+                            <div class="flex-1">
+                                <div class="font-medium text-sm">Block Starts</div>
+                                <div class="text-xs text-gray-500">1 day ago • 89/100</div>
+                            </div>
+                            <i class="fas fa-chevron-right text-gray-400"></i>
+                        </div>
+                        <div class="flex items-center space-x-3 p-3 hover:bg-gray-50 rounded-lg cursor-pointer">
+                            <i class="fas fa-video text-gray-400"></i>
+                            <div class="flex-1">
+                                <div class="font-medium text-sm">Hurdle Technique</div>
+                                <div class="text-xs text-gray-500">3 days ago • 91/100</div>
+                            </div>
+                            <i class="fas fa-chevron-right text-gray-400"></i>
+                        </div>
+                        <div class="flex items-center space-x-3 p-3 hover:bg-gray-50 rounded-lg cursor-pointer">
+                            <i class="fas fa-video text-gray-400"></i>
+                            <div class="flex-1">
+                                <div class="font-medium text-sm">Long Jump</div>
+                                <div class="text-xs text-gray-500">5 days ago • 87/100</div>
+                            </div>
+                            <i class="fas fa-chevron-right text-gray-400"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Processing Queue -->
+                <div class="bg-white rounded-xl shadow-sm border">
+                    <div class="p-6 border-b">
+                        <h3 class="text-lg font-semibold">Processing Queue</h3>
+                    </div>
+                    <div class="p-6">
+                        <div class="space-y-3">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-spinner fa-spin text-blue-600 text-sm"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="font-medium text-sm">Sprint_Training.mp4</div>
+                                    <div class="text-xs text-gray-500">Processing... 87%</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <div class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-clock text-gray-400 text-sm"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="font-medium text-sm">Relay_Practice.mp4</div>
+                                    <div class="text-xs text-gray-500">Queued</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Stats -->
+                <div class="bg-white rounded-xl shadow-sm border">
+                    <div class="p-6 border-b">
+                        <h3 class="text-lg font-semibold">This Month</h3>
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-600">Videos Analyzed</span>
+                            <span class="font-semibold">47</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-600">Avg Form Score</span>
+                            <span class="font-semibold text-green-600">91.2</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-600">Improvement</span>
+                            <span class="font-semibold text-blue-600">+5.3%</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-600">Analysis Time</span>
+                            <span class="font-semibold">2.3 hrs</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Share & Export -->
+                <div class="bg-white rounded-xl shadow-sm border">
+                    <div class="p-6">
+                        <h3 class="text-lg font-semibold mb-4">Share Analysis</h3>
+                        <div class="space-y-3">
+                            <button class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">
+                                <i class="fas fa-share mr-2"></i>
+                                Share with Coach
+                            </button>
+                            <button class="w-full bg-gray-100 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-200 transition-colors">
+                                <i class="fas fa-download mr-2"></i>
+                                Export Report
+                            </button>
+                            <button class="w-full bg-gray-100 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-200 transition-colors">
+                                <i class="fas fa-users mr-2"></i>
+                                Post to Community
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

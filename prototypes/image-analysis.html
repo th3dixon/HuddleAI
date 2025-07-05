@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Analysis Results - HuddleAI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-8">
+                    <div class="text-2xl font-bold text-blue-600">HuddleAI</div>
+                    <div class="hidden md:flex space-x-6">
+                        <a href="#" class="text-gray-700 hover:text-blue-600">Dashboard</a>
+                        <a href="#" class="text-blue-600 font-medium">Analytics</a>
+                        <a href="#" class="text-gray-700 hover:text-blue-600">Community</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="text-gray-400 hover:text-gray-600">
+                        <i class="fas fa-bell"></i>
+                    </button>
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&h=32&fit=crop&crop=face" 
+                         alt="Profile" class="w-8 h-8 rounded-full">
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-6 py-8">
+        <!-- Header -->
+        <div class="mb-8">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-3xl font-bold text-gray-900 mb-2">Image Analysis Results</h1>
+                    <p class="text-gray-600">AI-powered form analysis from your training photo</p>
+                </div>
+                <div class="flex space-x-3">
+                    <button class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200">
+                        <i class="fas fa-download mr-2"></i>Export Report
+                    </button>
+                    <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                        <i class="fas fa-share mr-2"></i>Share Results
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Main Analysis -->
+            <div class="lg:col-span-2 space-y-6">
+                <!-- Image with Annotations -->
+                <div class="bg-white rounded-xl shadow-sm border">
+                    <div class="p-6 border-b">
+                        <h3 class="text-lg font-semibold flex items-center">
+                            <i class="fas fa-camera text-purple-500 mr-2"></i>
+                            Sprint Form Analysis
+                        </h3>
+                        <p class="text-sm text-gray-500 mt-1">High Jump Approach • Uploaded 2 hours ago</p>
+                    </div>
+                    <div class="p-6">
+                        <!-- Image with AI Annotations -->
+                        <div class="relative bg-gray-900 rounded-lg overflow-hidden mb-4">
+                            <div class="aspect-video flex items-center justify-center text-white">
+                                <div class="text-center">
+                                    <i class="fas fa-image text-6xl mb-4 opacity-60"></i>
+                                    <p class="text-lg">High Jump Approach Analysis</p>
+                                    <p class="text-sm opacity-75">athlete_highjump_approach_march15.jpg</p>
+                                </div>
+                            </div>
+                            
+                            <!-- AI Annotation Overlays -->
+                            <div class="absolute top-4 left-4 bg-green-500 bg-opacity-90 rounded-lg p-2">
+                                <div class="text-white text-xs">
+                                    <div class="font-medium">✓ Excellent Posture</div>
+                                    <div>Upright torso position</div>
+                                </div>
+                            </div>
+                            
+                            <div class="absolute top-1/2 right-4 bg-yellow-500 bg-opacity-90 rounded-lg p-2">
+                                <div class="text-white text-xs">
+                                    <div class="font-medium">⚠ Arm Position</div>
+                                    <div>Slight asymmetry detected</div>
+                                </div>
+                            </div>
+                            
+                            <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-blue-500 bg-opacity-90 rounded-lg p-2">
+                                <div class="text-white text-xs">
+                                    <div class="font-medium">✓ Foot Placement</div>
+                                    <div>Optimal stride angle</div>
+                                </div>
+                            </div>
+
+                            <!-- Analysis Score Badge -->
+                            <div class="absolute top-4 right-4 bg-white rounded-lg p-3">
+                                <div class="text-center">
+                                    <div class="text-2xl font-bold text-green-600">92</div>
+                                    <div class="text-xs text-gray-600">AI Score</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Image Controls -->
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-4">
+                                <button class="flex items-center space-x-2 bg-blue-100 text-blue-700 px-4 py-2 rounded-lg hover:bg-blue-200">
+                                    <i class="fas fa-eye"></i>
+                                    <span>Show Annotations</span>
+                                </button>
+                                <button class="flex items-center space-x-2 bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200">
+                                    <i class="fas fa-ruler"></i>
+                                    <span>Measurements</span>
+                                </button>
+                                <button class="flex items-center space-x-2 bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200">
+                                    <i class="fas fa-history"></i>
+                                    <span>Compare Previous</span>
+                                </button>
+                            </div>
+                            <div class="text-sm text-gray-500">
+                                Resolution: 1920x1080 • Focus: High Jump Approach
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detailed Analysis -->
+                <div class="bg-white rounded-xl shadow-sm border">
+                    <div class="p-6 border-b">
+                        <h3 class="text-lg font-semibold">Detailed Form Analysis</h3>
+                    </div>
+                    <div class="p-6">
+                        <!-- Body Segments Analysis -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <h4 class="font-medium text-gray-900 mb-3">Upper Body Analysis</h4>
+                                <div class="space-y-3">
+                                    <div class="flex items-center justify-between p-3 bg-green-50 rounded-lg">
+                                        <div class="flex items-center space-x-2">
+                                            <i class="fas fa-check-circle text-green-600"></i>
+                                            <span class="text-sm font-medium">Head Position</span>
+                                        </div>
+                                        <span class="text-green-700 font-bold">96%</span>
+                                    </div>
+                                    <div class="flex items-center justify-between p-3 bg-green-50 rounded-lg">
+                                        <div class="flex items-center space-x-2">
+                                            <i class="fas fa-check-circle text-green-600"></i>
+                                            <span class="text-sm font-medium">Torso Angle</span>
+                                        </div>
+                                        <span class="text-green-700 font-bold">94%</span>
+                                    </div>
+                                    <div class="flex items-center justify-between p-3 bg-yellow-50 rounded-lg">
+                                        <div class="flex items-center space-x-2">
+                                            <i class="fas fa-exclamation-triangle text-yellow-600"></i>
+                                            <span class="text-sm font-medium">Arm Symmetry</span>
+                                        </div>
+                                        <span class="text-yellow-700 font-bold">87%</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h4 class="font-medium text-gray-900 mb-3">Lower Body Analysis</h4>
+                                <div class="space-y-3">
+                                    <div class="flex items-center justify-between p-3 bg-green-50 rounded-lg">
+                                        <div class="flex items-center space-x-2">
+                                            <i class="fas fa-check-circle text-green-600"></i>
+                                            <span class="text-sm font-medium">Hip Position</span>
+                                        </div>
+                                        <span class="text-green-700 font-bold">95%</span>
+                                    </div>
+                                    <div class="flex items-center justify-between p-3 bg-green-50 rounded-lg">
+                                        <div class="flex items-center space-x-2">
+                                            <i class="fas fa-check-circle text-green-600"></i>
+                                            <span class="text-sm font-medium">Knee Drive</span>
+                                        </div>
+                                        <span class="text-green-700 font-bold">93%</span>
+                                    </div>
+                                    <div class="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
+                                        <div class="flex items-center space-x-2">
+                                            <i class="fas fa-info-circle text-blue-600"></i>
+                                            <span class="text-sm font-medium">Foot Strike</span>
+                                        </div>
+                                        <span class="text-blue-700 font-bold">91%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Key Insights -->
+                        <div>
+                            <h4 class="font-medium text-gray-900 mb-3">Key Insights & Recommendations</h4>
+                            <div class="space-y-3">
+                                <div class="flex items-start space-x-3 bg-green-50 p-4 rounded-lg">
+                                    <i class="fas fa-thumbs-up text-green-600 mt-0.5"></i>
+                                    <div>
+                                        <p class="font-medium text-green-800">Excellent approach rhythm</p>
+                                        <p class="text-sm text-green-700">Your acceleration pattern and stride consistency are optimal for high jump approach. Maintain this technique.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-3 bg-yellow-50 p-4 rounded-lg">
+                                    <i class="fas fa-exclamation-triangle text-yellow-600 mt-0.5"></i>
+                                    <div>
+                                        <p class="font-medium text-yellow-800">Minor arm swing asymmetry</p>
+                                        <p class="text-sm text-yellow-700">Left arm position is slightly lower than right. Focus on keeping both arms at equal height during approach.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-3 bg-blue-50 p-4 rounded-lg">
+                                    <i class="fas fa-lightbulb text-blue-600 mt-0.5"></i>
+                                    <div>
+                                        <p class="font-medium text-blue-800">Optimization opportunity</p>
+                                        <p class="text-sm text-blue-700">Consider slightly increasing your penultimate step length to improve takeoff angle preparation.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Biomechanics Measurements -->
+                <div class="bg-white rounded-xl shadow-sm border">
+                    <div class="p-6 border-b">
+                        <h3 class="text-lg font-semibold">Biomechanics Measurements</h3>
+                    </div>
+                    <div class="p-6">
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <div class="text-center p-4 bg-blue-50 rounded-lg">
+                                <div class="text-2xl font-bold text-blue-600">15.2°</div>
+                                <div class="text-sm text-gray-600">Approach Angle</div>
+                                <div class="text-xs text-green-600">Optimal range</div>
+                            </div>
+                            <div class="text-center p-4 bg-green-50 rounded-lg">
+                                <div class="text-2xl font-bold text-green-600">1.85m</div>
+                                <div class="text-sm text-gray-600">Stride Length</div>
+                                <div class="text-xs text-blue-600">Above average</div>
+                            </div>
+                            <div class="text-center p-4 bg-purple-50 rounded-lg">
+                                <div class="text-2xl font-bold text-purple-600">23°</div>
+                                <div class="text-sm text-gray-600">Knee Lift</div>
+                                <div class="text-xs text-green-600">Excellent</div>
+                            </div>
+                            <div class="text-center p-4 bg-orange-50 rounded-lg">
+                                <div class="text-2xl font-bold text-orange-600">12.3°</div>
+                                <div class="text-sm text-gray-600">Lean Angle</div>
+                                <div class="text-xs text-yellow-600">Good</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="space-y-6">
+                <!-- Analysis Summary -->
+                <div class="bg-white rounded-xl shadow-sm border">
+                    <div class="p-6 border-b">
+                        <h3 class="text-lg font-semibold">Analysis Summary</h3>
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <div class="text-center">
+                            <div class="w-24 h-24 mx-auto bg-green-100 rounded-full flex items-center justify-center mb-3">
+                                <div class="text-center">
+                                    <div class="text-2xl font-bold text-green-600">92</div>
+                                    <div class="text-xs text-green-600">Score</div>
+                                </div>
+                            </div>
+                            <div class="font-medium text-gray-900">Excellent Form</div>
+                            <div class="text-sm text-gray-500">High Jump Approach</div>
+                        </div>
+
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Technique</span>
+                                <span class="font-semibold text-green-600">Excellent</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Consistency</span>
+                                <span class="font-semibold text-blue-600">Very Good</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Areas to Improve</span>
+                                <span class="font-semibold text-yellow-600">1 Minor</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Historical Comparison -->
+                <div class="bg-white rounded-xl shadow-sm border">
+                    <div class="p-6 border-b">
+                        <h3 class="text-lg font-semibold">Progress Tracking</h3>
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <div class="text-center p-3 bg-green-50 rounded-lg">
+                            <div class="text-lg font-bold text-green-600">+5 points</div>
+                            <div class="text-sm text-gray-600">vs. Last Analysis</div>
+                            <div class="text-xs text-green-600">2 weeks ago</div>
+                        </div>
+                        
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-sm">
+                                <span>This Analysis</span>
+                                <span class="font-semibold">92/100</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span>Previous</span>
+                                <span class="text-gray-600">87/100</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span>Best Score</span>
+                                <span class="text-green-600">92/100</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span>Average</span>
+                                <span class="text-blue-600">89/100</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Items -->
+                <div class="bg-white rounded-xl shadow-sm border">
+                    <div class="p-6 border-b">
+                        <h3 class="text-lg font-semibold">Action Items</h3>
+                    </div>
+                    <div class="p-6 space-y-3">
+                        <div class="p-3 bg-yellow-50 border-l-4 border-yellow-400">
+                            <div class="font-medium text-yellow-800 text-sm">Arm Symmetry Drills</div>
+                            <div class="text-xs text-yellow-700">Practice in front of mirror</div>
+                        </div>
+                        <div class="p-3 bg-blue-50 border-l-4 border-blue-400">
+                            <div class="font-medium text-blue-800 text-sm">Video Analysis</div>
+                            <div class="text-xs text-blue-700">Record side-view approach</div>
+                        </div>
+                        <div class="p-3 bg-green-50 border-l-4 border-green-400">
+                            <div class="font-medium text-green-800 text-sm">Maintain Technique</div>
+                            <div class="text-xs text-green-700">Current form is excellent</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Share & Export -->
+                <div class="bg-white rounded-xl shadow-sm border">
+                    <div class="p-6">
+                        <h3 class="text-lg font-semibold mb-4">Share Analysis</h3>
+                        <div class="space-y-3">
+                            <button class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700">
+                                <i class="fas fa-user-tie mr-2"></i>
+                                Send to Coach
+                            </button>
+                            <button class="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700">
+                                <i class="fas fa-users mr-2"></i>
+                                Share with Team
+                            </button>
+                            <button class="w-full bg-purple-600 text-white py-2 px-4 rounded-lg hover:bg-purple-700">
+                                <i class="fas fa-globe mr-2"></i>
+                                Post to Community
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

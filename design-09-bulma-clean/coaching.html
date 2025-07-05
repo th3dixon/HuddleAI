@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coaching Tools - HuddleAI</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+        }
+
+        .navbar-brand img {
+            max-height: 40px;
+        }
+
+        .sidebar {
+            min-height: calc(100vh - 52px);
+            background: #f8fafc;
+            border-right: 1px solid #e2e8f0;
+        }
+
+        .tool-panel {
+            margin-bottom: 1.5rem;
+        }
+
+        .tool-panel .panel-heading {
+            background: var(--primary-color);
+            color: white;
+            font-weight: 600;
+        }
+
+        .tool-panel .panel-block {
+            border: none;
+            padding: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .tool-panel .panel-block:hover {
+            background: #f1f5f9;
+            color: var(--primary-color);
+        }
+
+        .tool-panel .panel-block.is-active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .analysis-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            overflow: hidden;
+        }
+
+        .video-thumbnail {
+            position: relative;
+            background: #1f2937;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .video-thumbnail img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .video-overlay:hover {
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        .progress-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .progress-item:last-child {
+            border-bottom: none;
+        }
+
+        .metric-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid var(--primary-color);
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            line-height: 1;
+        }
+
+        .metric-label {
+            font-size: 0.875rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 0.5rem;
+        }
+
+        .athlete-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .athlete-card:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .athlete-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.5rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-active {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-training {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-rest {
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+        .chart-placeholder {
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 200px;
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        .notification-custom {
+            border-left: 4px solid var(--primary-color);
+            background: #f8fafc;
+        }
+
+        .tabs ul {
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .tabs li.is-active a {
+            border-bottom: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .modal-card-title {
+            color: var(--primary-color);
+        }
+
+        .breadcrumb {
+            background: transparent;
+            padding: 0;
+        }
+
+        .breadcrumb a {
+            color: var(--text-light);
+        }
+
+        .breadcrumb li.is-active a {
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar is-white" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="index.html">
+                <img src="https://via.placeholder.com/120x40/2563eb/ffffff?text=HuddleAI" alt="HuddleAI">
+            </a>
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+
+        <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item" href="index.html">Home</a>
+                <a class="navbar-item is-active" href="coaching.html">Coaching Tools</a>
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link">
+                        Analytics
+                    </a>
+                    <div class="navbar-dropdown">
+                        <a class="navbar-item">Performance Metrics</a>
+                        <a class="navbar-item">Team Statistics</a>
+                        <a class="navbar-item">Progress Reports</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <div class="buttons">
+                        <a class="button is-primary is-small">
+                            <span class="icon">
+                                <i class="fas fa-user"></i>
+                            </span>
+                            <span>Coach Profile</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb p-4" aria-label="breadcrumbs">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li class="is-active"><a href="#" aria-current="page">Coaching Tools</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="columns is-gapless">
+        <!-- Sidebar -->
+        <div class="column is-3 sidebar">
+            <div class="p-4">
+                <!-- Video Analysis Tools -->
+                <div class="panel tool-panel">
+                    <p class="panel-heading">
+                        <span class="icon">
+                            <i class="fas fa-video"></i>
+                        </span>
+                        Video Analysis
+                    </p>
+                    <a class="panel-block is-active" data-tab="video-analysis">
+                        <span class="panel-icon">
+                            <i class="fas fa-play" aria-hidden="true"></i>
+                        </span>
+                        Motion Analysis
+                    </a>
+                    <a class="panel-block" data-tab="technique-review">
+                        <span class="panel-icon">
+                            <i class="fas fa-search" aria-hidden="true"></i>
+                        </span>
+                        Technique Review
+                    </a>
+                    <a class="panel-block" data-tab="comparison">
+                        <span class="panel-icon">
+                            <i class="fas fa-columns" aria-hidden="true"></i>
+                        </span>
+                        Side-by-Side Compare
+                    </a>
+                </div>
+
+                <!-- Performance Tools -->
+                <div class="panel tool-panel">
+                    <p class="panel-heading">
+                        <span class="icon">
+                            <i class="fas fa-chart-line"></i>
+                        </span>
+                        Performance
+                    </p>
+                    <a class="panel-block" data-tab="metrics">
+                        <span class="panel-icon">
+                            <i class="fas fa-tachometer-alt" aria-hidden="true"></i>
+                        </span>
+                        Metrics Dashboard
+                    </a>
+                    <a class="panel-block" data-tab="progress">
+                        <span class="panel-icon">
+                            <i class="fas fa-chart-bar" aria-hidden="true"></i>
+                        </span>
+                        Progress Tracking
+                    </a>
+                    <a class="panel-block" data-tab="goals">
+                        <span class="panel-icon">
+                            <i class="fas fa-target" aria-hidden="true"></i>
+                        </span>
+                        Goal Setting
+                    </a>
+                </div>
+
+                <!-- Team Management -->
+                <div class="panel tool-panel">
+                    <p class="panel-heading">
+                        <span class="icon">
+                            <i class="fas fa-users"></i>
+                        </span>
+                        Team Management
+                    </p>
+                    <a class="panel-block" data-tab="athletes">
+                        <span class="panel-icon">
+                            <i class="fas fa-user-friends" aria-hidden="true"></i>
+                        </span>
+                        Athlete Roster
+                    </a>
+                    <a class="panel-block" data-tab="training-plans">
+                        <span class="panel-icon">
+                            <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                        </span>
+                        Training Plans
+                    </a>
+                    <a class="panel-block" data-tab="sessions">
+                        <span class="panel-icon">
+                            <i class="fas fa-clock" aria-hidden="true"></i>
+                        </span>
+                        Session Management
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="column is-9">
+            <div class="p-4">
+                <!-- Header -->
+                <div class="level mb-6">
+                    <div class="level-left">
+                        <div class="level-item">
+                            <div>
+                                <h1 class="title is-3">Coaching Dashboard</h1>
+                                <p class="subtitle is-6">Manage your athletes and analyze performance</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="level-right">
+                        <div class="level-item">
+                            <button class="button is-primary" onclick="openModal('upload-modal')">
+                                <span class="icon">
+                                    <i class="fas fa-upload"></i>
+                                </span>
+                                <span>Upload Video</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notifications -->
+                <div class="notification is-info notification-custom mb-5">
+                    <button class="delete"></button>
+                    <strong>AI Analysis Complete!</strong> Your latest video analysis for Sarah Johnson is ready for review.
+                    <a href="#" class="has-text-primary ml-2">View Results</a>
+                </div>
+
+                <!-- Video Analysis Tab -->
+                <div id="video-analysis" class="tab-content">
+                    <div class="tabs is-boxed">
+                        <ul>
+                            <li class="is-active"><a>Recent Analysis</a></li>
+                            <li><a>Technique Breakdowns</a></li>
+                            <li><a>Comparison Reports</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="columns is-multiline">
+                        <div class="column is-8">
+                            <div class="analysis-card">
+                                <div class="card-header">
+                                    <p class="card-header-title">
+                                        <span class="icon">
+                                            <i class="fas fa-video"></i>
+                                        </span>
+                                        Latest Video Analysis
+                                    </p>
+                                </div>
+                                <div class="card-content">
+                                    <div class="video-thumbnail">
+                                        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Training session">
+                                        <div class="video-overlay" onclick="openModal('video-modal')">
+                                            <i class="fas fa-play"></i>
+                                        </div>
+                                    </div>
+                                    <div class="content mt-4">
+                                        <h4 class="title is-5">Sarah Johnson - Sprint Technique</h4>
+                                        <p class="subtitle is-6 has-text-grey">Analyzed 2 hours ago</p>
+                                        
+                                        <div class="tags">
+                                            <span class="tag is-success">Technique Improved</span>
+                                            <span class="tag is-warning">Arm Swing</span>
+                                            <span class="tag is-info">Stride Length</span>
+                                        </div>
+
+                                        <div class="mt-4">
+                                            <h5 class="title is-6">Key Insights</h5>
+                                            <ul>
+                                                <li>✓ 15% improvement in stride consistency</li>
+                                                <li>⚠ Arm swing angle needs adjustment</li>
+                                                <li>✓ Foot strike pattern optimized</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="column is-4">
+                            <div class="analysis-card">
+                                <div class="card-header">
+                                    <p class="card-header-title">Analysis Queue</p>
+                                </div>
+                                <div class="card-content">
+                                    <div class="progress-item">
+                                        <div>
+                                            <strong>Mike Chen - Jump Analysis</strong>
+                                            <br><small class="has-text-grey">Processing...</small>
+                                        </div>
+                                        <progress class="progress is-primary is-small" value="75" max="100">75%</progress>
+                                    </div>
+                                    <div class="progress-item">
+                                        <div>
+                                            <strong>Lisa Park - Swim Stroke</strong>
+                                            <br><small class="has-text-grey">In queue</small>
+                                        </div>
+                                        <progress class="progress is-light is-small" value="0" max="100">0%</progress>
+                                    </div>
+                                    <div class="progress-item">
+                                        <div>
+                                            <strong>Team Practice Session</strong>
+                                            <br><small class="has-text-grey">Pending upload</small>
+                                        </div>
+                                        <span class="tag is-light">Waiting</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="analysis-card mt-4">
+                                <div class="card-header">
+                                    <p class="card-header-title">Quick Actions</p>
+                                </div>
+                                <div class="card-content">
+                                    <button class="button is-primary is-fullwidth mb-2">
+                                        <span class="icon">
+                                            <i class="fas fa-camera"></i>
+                                        </span>
+                                        <span>Record Session</span>
+                                    </button>
+                                    <button class="button is-light is-fullwidth mb-2">
+                                        <span class="icon">
+                                            <i class="fas fa-compare"></i>
+                                        </span>
+                                        <span>Compare Videos</span>
+                                    </button>
+                                    <button class="button is-light is-fullwidth">
+                                        <span class="icon">
+                                            <i class="fas fa-download"></i>
+                                        </span>
+                                        <span>Export Report</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Metrics Dashboard -->
+                <div id="metrics" class="tab-content" style="display: none;">
+                    <h2 class="title is-4 mb-5">Performance Metrics</h2>
+                    
+                    <div class="columns is-multiline">
+                        <div class="column is-3">
+                            <div class="metric-card">
+                                <div class="metric-value">24</div>
+                                <div class="metric-label">Active Athletes</div>
+                            </div>
+                        </div>
+                        <div class="column is-3">
+                            <div class="metric-card">
+                                <div class="metric-value">156</div>
+                                <div class="metric-label">Videos Analyzed</div>
+                            </div>
+                        </div>
+                        <div class="column is-3">
+                            <div class="metric-card">
+                                <div class="metric-value">89%</div>
+                                <div class="metric-label">Improvement Rate</div>
+                            </div>
+                        </div>
+                        <div class="column is-3">
+                            <div class="metric-card">
+                                <div class="metric-value">42</div>
+                                <div class="metric-label">Training Sessions</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="columns">
+                        <div class="column is-8">
+                            <div class="box">
+                                <h3 class="title is-5">Performance Trends</h3>
+                                <div class="chart-placeholder">
+                                    <i class="fas fa-chart-line fa-2x"></i>
+                                    <span class="ml-3">Performance chart would be displayed here</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column is-4">
+                            <div class="box">
+                                <h3 class="title is-5">Top Performers</h3>
+                                <div class="progress-item">
+                                    <div>
+                                        <strong>Sarah Johnson</strong>
+                                        <br><small>Sprint Technique</small>
+                                    </div>
+                                    <span class="tag is-success">95%</span>
+                                </div>
+                                <div class="progress-item">
+                                    <div>
+                                        <strong>Mike Chen</strong>
+                                        <br><small>Jump Analysis</small>
+                                    </div>
+                                    <span class="tag is-success">92%</span>
+                                </div>
+                                <div class="progress-item">
+                                    <div>
+                                        <strong>Lisa Park</strong>
+                                        <br><small>Swimming</small>
+                                    </div>
+                                    <span class="tag is-warning">88%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Athletes Management -->
+                <div id="athletes" class="tab-content" style="display: none;">
+                    <div class="level mb-5">
+                        <div class="level-left">
+                            <div class="level-item">
+                                <h2 class="title is-4">Athlete Roster</h2>
+                            </div>
+                        </div>
+                        <div class="level-right">
+                            <div class="level-item">
+                                <button class="button is-primary">
+                                    <span class="icon">
+                                        <i class="fas fa-plus"></i>
+                                    </span>
+                                    <span>Add Athlete</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="columns is-multiline">
+                        <div class="column is-4">
+                            <div class="athlete-card">
+                                <div class="media">
+                                    <div class="media-left">
+                                        <figure class="image is-64x64">
+                                            <img src="https://images.unsplash.com/photo-1494790108755-2616b612b890?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80" alt="Athlete" class="athlete-avatar">
+                                        </figure>
+                                    </div>
+                                    <div class="media-content">
+                                        <p class="title is-6">Sarah Johnson</p>
+                                        <p class="subtitle is-7">Sprint Specialist</p>
+                                        <span class="status-badge status-active">Active</span>
+                                    </div>
+                                </div>
+                                <div class="content">
+                                    <div class="progress-item">
+                                        <span>Progress</span>
+                                        <progress class="progress is-primary is-small" value="85" max="100">85%</progress>
+                                    </div>
+                                    <div class="buttons is-right">
+                                        <button class="button is-small is-primary">View Profile</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="column is-4">
+                            <div class="athlete-card">
+                                <div class="media">
+                                    <div class="media-left">
+                                        <figure class="image is-64x64">
+                                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80" alt="Athlete" class="athlete-avatar">
+                                        </figure>
+                                    </div>
+                                    <div class="media-content">
+                                        <p class="title is-6">Mike Chen</p>
+                                        <p class="subtitle is-7">High Jump</p>
+                                        <span class="status-badge status-training">Training</span>
+                                    </div>
+                                </div>
+                                <div class="content">
+                                    <div class="progress-item">
+                                        <span>Progress</span>
+                                        <progress class="progress is-warning is-small" value="72" max="100">72%</progress>
+                                    </div>
+                                    <div class="buttons is-right">
+                                        <button class="button is-small is-primary">View Profile</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="column is-4">
+                            <div class="athlete-card">
+                                <div class="media">
+                                    <div class="media-left">
+                                        <figure class="image is-64x64">
+                                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80" alt="Athlete" class="athlete-avatar">
+                                        </figure>
+                                    </div>
+                                    <div class="media-content">
+                                        <p class="title is-6">Lisa Park</p>
+                                        <p class="subtitle is-7">Swimming</p>
+                                        <span class="status-badge status-rest">Rest Day</span>
+                                    </div>
+                                </div>
+                                <div class="content">
+                                    <div class="progress-item">
+                                        <span>Progress</span>
+                                        <progress class="progress is-success is-small" value="91" max="100">91%</progress>
+                                    </div>
+                                    <div class="buttons is-right">
+                                        <button class="button is-small is-primary">View Profile</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Video Analysis Modal -->
+    <div id="video-modal" class="modal">
+        <div class="modal-background" onclick="closeModal('video-modal')"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">Video Analysis - Sarah Johnson</p>
+                <button class="delete" aria-label="close" onclick="closeModal('video-modal')"></button>
+            </header>
+            <section class="modal-card-body">
+                <div class="columns">
+                    <div class="column is-8">
+                        <div class="video-thumbnail">
+                            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Analysis video">
+                            <div class="video-overlay">
+                                <i class="fas fa-play"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column is-4">
+                        <h4 class="title is-5">Analysis Results</h4>
+                        <div class="content">
+                            <div class="progress-item">
+                                <span>Technique Score</span>
+                                <span class="tag is-success">92%</span>
+                            </div>
+                            <div class="progress-item">
+                                <span>Consistency</span>
+                                <span class="tag is-warning">85%</span>
+                            </div>
+                            <div class="progress-item">
+                                <span>Improvement</span>
+                                <span class="tag is-success">+15%</span>
+                            </div>
+                        </div>
+                        <h5 class="title is-6">Recommendations</h5>
+                        <ul>
+                            <li>Focus on arm swing positioning</li>
+                            <li>Maintain consistent stride length</li>
+                            <li>Work on starting block technique</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            <footer class="modal-card-foot">
+                <button class="button is-primary">Save Analysis</button>
+                <button class="button is-light">Export Report</button>
+                <button class="button" onclick="closeModal('video-modal')">Close</button>
+            </footer>
+        </div>
+    </div>
+
+    <!-- Upload Modal -->
+    <div id="upload-modal" class="modal">
+        <div class="modal-background" onclick="closeModal('upload-modal')"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">Upload Training Video</p>
+                <button class="delete" aria-label="close" onclick="closeModal('upload-modal')"></button>
+            </header>
+            <section class="modal-card-body">
+                <div class="field">
+                    <label class="label">Select Athlete</label>
+                    <div class="control">
+                        <div class="select is-fullwidth">
+                            <select>
+                                <option>Choose athlete...</option>
+                                <option>Sarah Johnson</option>
+                                <option>Mike Chen</option>
+                                <option>Lisa Park</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Training Type</label>
+                    <div class="control">
+                        <div class="select is-fullwidth">
+                            <select>
+                                <option>Select training type...</option>
+                                <option>Sprint Technique</option>
+                                <option>Jump Analysis</option>
+                                <option>Swimming Stroke</option>
+                                <option>General Training</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Video File</label>
+                    <div class="control">
+                        <div class="file is-boxed is-fullwidth">
+                            <label class="file-label">
+                                <input class="file-input" type="file" accept="video/*">
+                                <span class="file-cta">
+                                    <span class="file-icon">
+                                        <i class="fas fa-upload"></i>
+                                    </span>
+                                    <span class="file-label">
+                                        Choose video file...
+                                    </span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Notes</label>
+                    <div class="control">
+                        <textarea class="textarea" placeholder="Add any notes about this training session..."></textarea>
+                    </div>
+                </div>
+            </section>
+            <footer class="modal-card-foot">
+                <button class="button is-primary">Upload & Analyze</button>
+                <button class="button" onclick="closeModal('upload-modal')">Cancel</button>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        // Mobile menu toggle
+        document.addEventListener('DOMContentLoaded', () => {
+            const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+            
+            if ($navbarBurgers.length > 0) {
+                $navbarBurgers.forEach(el => {
+                    el.addEventListener('click', () => {
+                        const target = el.dataset.target;
+                        const $target = document.getElementById(target);
+                        
+                        el.classList.toggle('is-active');
+                        $target.classList.toggle('is-active');
+                    });
+                });
+            }
+        });
+
+        // Tab switching
+        document.querySelectorAll('.panel-block').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all panel blocks
+                document.querySelectorAll('.panel-block').forEach(block => {
+                    block.classList.remove('is-active');
+                });
+                
+                // Add active class to clicked item
+                this.classList.add('is-active');
+                
+                // Hide all tab contents
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.style.display = 'none';
+                });
+                
+                // Show selected tab content
+                const targetTab = this.getAttribute('data-tab');
+                const targetContent = document.getElementById(targetTab);
+                if (targetContent) {
+                    targetContent.style.display = 'block';
+                }
+            });
+        });
+
+        // Modal functions
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('is-active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('is-active');
+        }
+
+        // Close notification
+        document.querySelectorAll('.notification .delete').forEach(button => {
+            button.addEventListener('click', function() {
+                this.parentElement.style.display = 'none';
+            });
+        });
+
+        // File upload handling
+        document.querySelectorAll('.file-input').forEach(input => {
+            input.addEventListener('change', function() {
+                if (this.files.length > 0) {
+                    const fileName = this.files[0].name;
+                    const fileLabel = this.parentElement.querySelector('.file-label');
+                    fileLabel.textContent = fileName;
+                }
+            });
+        });
+    </script>
+</body>
+</html>

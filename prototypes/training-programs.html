@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Training Programs - HuddleAI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-gray-50" x-data="{ activeTab: 'discover' }">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-8">
+                    <div class="text-2xl font-bold text-blue-600">HuddleAI</div>
+                    <div class="hidden md:flex space-x-6">
+                        <a href="#" class="text-gray-700 hover:text-blue-600">Dashboard</a>
+                        <a href="#" class="text-gray-700 hover:text-blue-600">Analytics</a>
+                        <a href="#" class="text-blue-600 font-medium">Training</a>
+                        <a href="#" class="text-gray-700 hover:text-blue-600">Community</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="text-gray-400 hover:text-gray-600">
+                        <i class="fas fa-bell"></i>
+                    </button>
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&h=32&fit=crop&crop=face" 
+                         alt="Profile" class="w-8 h-8 rounded-full">
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-6 py-8">
+        <!-- Header -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">Training Programs</h1>
+            <p class="text-gray-600">Discover, create, and share training programs with the community</p>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div class="bg-white rounded-xl shadow-sm border mb-8">
+            <div class="px-6">
+                <nav class="flex space-x-8">
+                    <button @click="activeTab = 'discover'" 
+                            :class="activeTab === 'discover' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700'"
+                            class="py-4 px-1 border-b-2 font-medium text-sm">
+                        Discover Programs
+                    </button>
+                    <button @click="activeTab = 'myPrograms'" 
+                            :class="activeTab === 'myPrograms' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700'"
+                            class="py-4 px-1 border-b-2 font-medium text-sm">
+                        My Programs
+                    </button>
+                    <button @click="activeTab = 'create'" 
+                            :class="activeTab === 'create' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700'"
+                            class="py-4 px-1 border-b-2 font-medium text-sm">
+                        Create Program
+                    </button>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Discover Programs Tab -->
+        <div x-show="activeTab === 'discover'" class="space-y-6">
+            <!-- Filters -->
+            <div class="bg-white rounded-xl shadow-sm border p-6">
+                <div class="flex flex-wrap items-center gap-4">
+                    <div class="flex items-center space-x-2">
+                        <label class="text-sm font-medium text-gray-700">Event Type:</label>
+                        <select class="px-3 py-2 border rounded-lg text-sm">
+                            <option>All Events</option>
+                            <option>Sprints</option>
+                            <option>Distance Running</option>
+                            <option>Jumping</option>
+                            <option>Throwing</option>
+                        </select>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <label class="text-sm font-medium text-gray-700">Level:</label>
+                        <select class="px-3 py-2 border rounded-lg text-sm">
+                            <option>All Levels</option>
+                            <option>Beginner</option>
+                            <option>Intermediate</option>
+                            <option>Advanced</option>
+                            <option>Elite</option>
+                        </select>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <label class="text-sm font-medium text-gray-700">Duration:</label>
+                        <select class="px-3 py-2 border rounded-lg text-sm">
+                            <option>Any Duration</option>
+                            <option>1-2 weeks</option>
+                            <option>4 weeks</option>
+                            <option>8 weeks</option>
+                            <option>12+ weeks</option>
+                        </select>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <input type="text" placeholder="Search programs..." 
+                               class="px-4 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Featured Programs -->
+            <div>
+                <h3 class="text-xl font-semibold mb-4">Featured Programs</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Program Card 1 -->
+                    <div class="bg-white rounded-xl shadow-sm border overflow-hidden hover:shadow-md transition-shadow">
+                        <div class="h-48 bg-gradient-to-br from-blue-500 to-purple-600 relative">
+                            <div class="absolute inset-0 bg-black bg-opacity-20"></div>
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <h4 class="text-lg font-bold">Elite 400m Training</h4>
+                                <p class="text-sm opacity-90">12-week comprehensive program</p>
+                            </div>
+                            <div class="absolute top-4 right-4 bg-yellow-500 text-yellow-900 px-2 py-1 rounded-full text-xs font-medium">
+                                Featured
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center space-x-3 mb-3">
+                                <img src="https://images.unsplash.com/photo-1556474835-b0f3ac40d4d1?w=32&h=32&fit=crop&crop=face" 
+                                     alt="Coach Miller" class="w-8 h-8 rounded-full">
+                                <div>
+                                    <div class="font-medium text-sm">Coach Miller</div>
+                                    <div class="text-xs text-gray-500">Elite Coach</div>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-4">Comprehensive 400m training program focusing on speed, endurance, and race tactics. Proven results with sub-50 second athletes.</p>
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center space-x-4 text-sm text-gray-500">
+                                    <span><i class="fas fa-calendar mr-1"></i>12 weeks</span>
+                                    <span><i class="fas fa-star mr-1"></i>4.9</span>
+                                    <span><i class="fas fa-users mr-1"></i>247</span>
+                                </div>
+                                <span class="bg-red-100 text-red-800 px-2 py-1 rounded-full text-xs">Advanced</span>
+                            </div>
+                            <button class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors">
+                                View Program
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Program Card 2 -->
+                    <div class="bg-white rounded-xl shadow-sm border overflow-hidden hover:shadow-md transition-shadow">
+                        <div class="h-48 bg-gradient-to-br from-green-500 to-teal-600 relative">
+                            <div class="absolute inset-0 bg-black bg-opacity-20"></div>
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <h4 class="text-lg font-bold">Beginner Sprint Guide</h4>
+                                <p class="text-sm opacity-90">8-week foundation program</p>
+                            </div>
+                            <div class="absolute top-4 right-4 bg-green-500 text-green-900 px-2 py-1 rounded-full text-xs font-medium">
+                                Popular
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center space-x-3 mb-3">
+                                <img src="https://images.unsplash.com/photo-1494790108755-2616b332c5d2?w=32&h=32&fit=crop&crop=face" 
+                                     alt="Sarah Williams" class="w-8 h-8 rounded-full">
+                                <div>
+                                    <div class="font-medium text-sm">Sarah Williams</div>
+                                    <div class="text-xs text-gray-500">Elite Athlete</div>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-4">Perfect introduction to sprint training with focus on proper form, basic speed development, and injury prevention.</p>
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center space-x-4 text-sm text-gray-500">
+                                    <span><i class="fas fa-calendar mr-1"></i>8 weeks</span>
+                                    <span><i class="fas fa-star mr-1"></i>4.7</span>
+                                    <span><i class="fas fa-users mr-1"></i>1,234</span>
+                                </div>
+                                <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">Beginner</span>
+                            </div>
+                            <button class="w-full bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 transition-colors">
+                                Start Program
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Program Card 3 -->
+                    <div class="bg-white rounded-xl shadow-sm border overflow-hidden hover:shadow-md transition-shadow">
+                        <div class="h-48 bg-gradient-to-br from-orange-500 to-red-600 relative">
+                            <div class="absolute inset-0 bg-black bg-opacity-20"></div>
+                            <div class="absolute bottom-4 left-4 text-white">
+                                <h4 class="text-lg font-bold">High Jump Mastery</h4>
+                                <p class="text-sm opacity-90">10-week technique program</p>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center space-x-3 mb-3">
+                                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=32&h=32&fit=crop&crop=face" 
+                                     alt="Mike Chen" class="w-8 h-8 rounded-full">
+                                <div>
+                                    <div class="font-medium text-sm">Alex Thompson</div>
+                                    <div class="text-xs text-gray-500">High Jump Specialist</div>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 text-sm mb-4">Master the Fosbury Flop technique with detailed approach, takeoff, and bar clearance training.</p>
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center space-x-4 text-sm text-gray-500">
+                                    <span><i class="fas fa-calendar mr-1"></i>10 weeks</span>
+                                    <span><i class="fas fa-star mr-1"></i>4.8</span>
+                                    <span><i class="fas fa-users mr-1"></i>89</span>
+                                </div>
+                                <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded-full text-xs">Intermediate</span>
+                            </div>
+                            <button class="w-full bg-orange-600 text-white py-2 px-4 rounded-lg hover:bg-orange-700 transition-colors">
+                                View Program
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Programs -->
+            <div>
+                <h3 class="text-xl font-semibold mb-4">Recently Added</h3>
+                <div class="space-y-4">
+                    <div class="bg-white rounded-lg shadow-sm border p-4 hover:shadow-md transition-shadow">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-16 h-16 bg-purple-100 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-running text-purple-600 text-xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-start justify-between">
+                                    <div>
+                                        <h4 class="font-semibold text-lg">Marathon Base Building</h4>
+                                        <p class="text-gray-600 text-sm">16-week aerobic development program for marathon preparation</p>
+                                        <div class="flex items-center space-x-4 mt-2 text-sm text-gray-500">
+                                            <span>by Emma Rodriguez</span>
+                                            <span><i class="fas fa-calendar mr-1"></i>16 weeks</span>
+                                            <span><i class="fas fa-star mr-1"></i>4.6 (23 reviews)</span>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs">Intermediate</span>
+                                        <button class="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 text-sm">
+                                            View
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- My Programs Tab -->
+        <div x-show="activeTab === 'myPrograms'" class="space-y-6">
+            <!-- Active Programs -->
+            <div>
+                <h3 class="text-xl font-semibold mb-4">Active Programs</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white rounded-xl shadow-sm border p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div>
+                                <h4 class="font-semibold text-lg">Elite 400m Training</h4>
+                                <p class="text-gray-600 text-sm">Week 6 of 12</p>
+                            </div>
+                            <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs">In Progress</span>
+                        </div>
+                        <div class="mb-4">
+                            <div class="flex justify-between text-sm mb-1">
+                                <span>Progress</span>
+                                <span>50%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-blue-600 h-2 rounded-full" style="width: 50%"></div>
+                            </div>
+                        </div>
+                        <div class="space-y-2 mb-4">
+                            <div class="flex justify-between text-sm">
+                                <span>Next Session</span>
+                                <span class="font-medium">Speed Endurance</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span>Completion Rate</span>
+                                <span class="text-green-600 font-medium">94%</span>
+                            </div>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button class="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700">
+                                Continue
+                            </button>
+                            <button class="bg-gray-100 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-200">
+                                <i class="fas fa-pause"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Completed Programs -->
+            <div>
+                <h3 class="text-xl font-semibold mb-4">Completed Programs</h3>
+                <div class="space-y-3">
+                    <div class="bg-white rounded-lg shadow-sm border p-4">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h4 class="font-semibold">Beginner Sprint Guide</h4>
+                                <p class="text-gray-600 text-sm">Completed 2 weeks ago</p>
+                            </div>
+                            <div class="flex items-center space-x-4">
+                                <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">Completed</span>
+                                <button class="text-blue-600 hover:text-blue-700">
+                                    <i class="fas fa-redo mr-1"></i>Restart
+                                </button>
+                                <button class="text-yellow-600 hover:text-yellow-700">
+                                    <i class="fas fa-star mr-1"></i>Rate
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Saved Programs -->
+            <div>
+                <h3 class="text-xl font-semibold mb-4">Saved for Later</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="bg-white rounded-lg shadow-sm border p-4">
+                        <h4 class="font-semibold mb-2">Marathon Base Building</h4>
+                        <p class="text-gray-600 text-sm mb-3">16-week aerobic development</p>
+                        <div class="flex space-x-2">
+                            <button class="flex-1 bg-green-600 text-white py-2 px-3 rounded text-sm hover:bg-green-700">
+                                Start Program
+                            </button>
+                            <button class="text-gray-400 hover:text-gray-600">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Create Program Tab -->
+        <div x-show="activeTab === 'create'" class="space-y-6">
+            <div class="bg-white rounded-xl shadow-sm border p-6">
+                <h3 class="text-xl font-semibold mb-6">Create New Training Program</h3>
+                <form class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Program Name</label>
+                            <input type="text" placeholder="e.g., Advanced Sprint Development" 
+                                   class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Duration</label>
+                            <select class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option>4 weeks</option>
+                                <option>6 weeks</option>
+                                <option>8 weeks</option>
+                                <option>12 weeks</option>
+                                <option>16 weeks</option>
+                                <option>Custom</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Event Type</label>
+                            <select class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option>Sprints</option>
+                                <option>Distance Running</option>
+                                <option>Jumping Events</option>
+                                <option>Throwing Events</option>
+                                <option>Multi-Event</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Level</label>
+                            <select class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option>Beginner</option>
+                                <option>Intermediate</option>
+                                <option>Advanced</option>
+                                <option>Elite</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Sessions per Week</label>
+                            <select class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option>3 sessions</option>
+                                <option>4 sessions</option>
+                                <option>5 sessions</option>
+                                <option>6 sessions</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                        <textarea rows="4" placeholder="Describe your training program, goals, and methodology..." 
+                                  class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                    </div>
+
+                    <div class="flex items-center space-x-4">
+                        <label class="flex items-center">
+                            <input type="checkbox" class="mr-2">
+                            <span class="text-sm">Make program public</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="checkbox" class="mr-2">
+                            <span class="text-sm">Allow community feedback</span>
+                        </label>
+                    </div>
+
+                    <div class="flex space-x-4">
+                        <button type="submit" class="bg-blue-600 text-white py-2 px-6 rounded-lg hover:bg-blue-700">
+                            Create Program
+                        </button>
+                        <button type="button" class="bg-gray-100 text-gray-700 py-2 px-6 rounded-lg hover:bg-gray-200">
+                            Save as Draft
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

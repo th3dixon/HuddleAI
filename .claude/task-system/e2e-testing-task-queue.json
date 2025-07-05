@@ -1,0 +1,62 @@
+{
+  "metadata": {
+    "title": "E2E Testing Task Queue",
+    "totalTasks": 45,
+    "createdAt": "2025-06-21T10:00:00Z",
+    "lastUpdated": "2025-06-22T19:30:00Z",
+    "currentPhase": "PHASE-009",
+    "activeTaskLimit": 3
+  },
+  "queue": [
+    {
+      "id": "E2E-029",
+      "title": "Set up GitHub Actions CI/CD pipeline",
+      "phase": "PHASE-010",
+      "priority": "high",
+      "status": "in_progress",
+      "queuedAt": "2025-06-22T20:00:00Z",
+      "estimatedHours": 3,
+      "dependencies": ["E2E-001"]
+    },
+    {
+      "id": "E2E-032",
+      "title": "Implement accessibility testing",
+      "phase": "PHASE-009",
+      "priority": "medium",
+      "status": "in_progress",
+      "queuedAt": "2025-06-22T20:00:00Z",
+      "estimatedHours": 3,
+      "dependencies": ["E2E-001"]
+    },
+    {
+      "id": "E2E-036",
+      "title": "Implement file upload testing",
+      "phase": "PHASE-005",
+      "priority": "medium",
+      "status": "in_progress",
+      "queuedAt": "2025-06-22T20:00:00Z",
+      "estimatedHours": 3,
+      "dependencies": ["E2E-005"]
+    },
+    {
+      "id": "E2E-037",
+      "title": "Create search functionality tests",
+      "phase": "PHASE-005",
+      "priority": "medium",
+      "status": "in_progress",
+      "queuedAt": "2025-06-22T20:00:00Z",
+      "estimatedHours": 3,
+      "dependencies": ["E2E-005"]
+    }
+  ],
+  "settings": {
+    "maxParallel": 3,
+    "autoQueue": true,
+    "phaseGating": true,
+    "retryPolicy": {
+      "maxRetries": 2,
+      "retryDelay": 300
+    }
+  },
+  "nextAvailable": []
+}

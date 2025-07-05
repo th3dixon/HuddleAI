@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Video - HuddleAI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6366f1',
+                        'primary-dark': '#4f46e5',
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="font-sans text-gray-900 bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-200">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center space-x-2">
+                    <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                        <i class="fas fa-brain text-white text-sm"></i>
+                    </div>
+                    <span class="text-xl font-semibold text-gray-900">HuddleAI</span>
+                </div>
+
+                <!-- Navigation -->
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="text-gray-600 hover:text-gray-900 transition-colors duration-200">
+                        <i class="fas fa-arrow-left mr-2"></i>Back to Home
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Upload Section -->
+    <section class="py-12">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Progress Steps -->
+            <div class="mb-12">
+                <div class="flex items-center justify-center space-x-8">
+                    <div class="flex items-center space-x-2" id="step-1">
+                        <div class="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center text-sm font-semibold">
+                            1
+                        </div>
+                        <span class="text-sm font-medium text-gray-900">Upload</span>
+                    </div>
+                    <div class="w-16 h-0.5 bg-gray-300" id="progress-line-1"></div>
+                    <div class="flex items-center space-x-2" id="step-2">
+                        <div class="w-8 h-8 bg-gray-300 text-gray-600 rounded-full flex items-center justify-center text-sm font-semibold">
+                            2
+                        </div>
+                        <span class="text-sm font-medium text-gray-600">Processing</span>
+                    </div>
+                    <div class="w-16 h-0.5 bg-gray-300" id="progress-line-2"></div>
+                    <div class="flex items-center space-x-2" id="step-3">
+                        <div class="w-8 h-8 bg-gray-300 text-gray-600 rounded-full flex items-center justify-center text-sm font-semibold">
+                            3
+                        </div>
+                        <span class="text-sm font-medium text-gray-600">Results</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upload Interface -->
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+                <div class="text-center mb-8">
+                    <h1 class="text-3xl font-bold text-gray-900 mb-4">Upload Your Sports Video</h1>
+                    <p class="text-gray-600 max-w-2xl mx-auto">
+                        Upload your sports video to get AI-powered analysis and insights. Supported formats: MP4, MOV, AVI (max 500MB)
+                    </p>
+                </div>
+
+                <!-- Upload Area -->
+                <div class="mb-8">
+                    <div class="border-2 border-dashed border-gray-300 rounded-xl p-12 text-center hover:border-primary transition-colors duration-200" 
+                         id="upload-area">
+                        <div class="mb-4">
+                            <i class="fas fa-cloud-upload-alt text-4xl text-gray-400" id="upload-icon"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2" id="upload-title">
+                            Drop your video here
+                        </h3>
+                        <p class="text-gray-600 mb-6" id="upload-subtitle">
+                            or click to browse files
+                        </p>
+                        <button class="bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-lg font-medium transition-colors duration-200" 
+                                id="browse-button">
+                            Browse Files
+                        </button>
+                        <input type="file" id="file-input" class="hidden" accept="video/*">
+                    </div>
+                </div>
+
+                <!-- Video Details Form -->
+                <div class="hidden" id="video-details">
+                    <div class="border-t border-gray-200 pt-8">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-6">Video Details</h3>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Sport Type</label>
+                                <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                                    <option value="">Select Sport</option>
+                                    <option value="basketball">Basketball</option>
+                                    <option value="soccer">Soccer</option>
+                                    <option value="tennis">Tennis</option>
+                                    <option value="football">Football</option>
+                                    <option value="baseball">Baseball</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Analysis Type</label>
+                                <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                                    <option value="performance">Performance Analysis</option>
+                                    <option value="technique">Technique Review</option>
+                                    <option value="strategy">Strategy Analysis</option>
+                                    <option value="injury">Injury Prevention</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mt-6">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Additional Notes (Optional)</label>
+                            <textarea class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary" 
+                                      rows="3" 
+                                      placeholder="Any specific areas you'd like us to focus on..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Upload Progress -->
+                <div class="hidden" id="upload-progress">
+                    <div class="border-t border-gray-200 pt-8">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-sm font-medium text-gray-700">Uploading...</span>
+                            <span class="text-sm text-gray-600" id="progress-text">0%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-primary h-2 rounded-full transition-all duration-300" id="progress-bar" style="width: 0%"></div>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-2" id="upload-status">Preparing upload...</p>
+                    </div>
+                </div>
+
+                <!-- Processing Status -->
+                <div class="hidden" id="processing-status">
+                    <div class="border-t border-gray-200 pt-8">
+                        <div class="text-center">
+                            <div class="inline-flex items-center justify-center w-16 h-16 bg-primary/10 rounded-full mb-4">
+                                <i class="fas fa-cog text-2xl text-primary animate-spin"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2">Processing Your Video</h3>
+                            <p class="text-gray-600 mb-6">Our AI is analyzing your video. This usually takes 2-5 minutes.</p>
+                            
+                            <!-- Processing Steps -->
+                            <div class="space-y-3 max-w-md mx-auto">
+                                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg" id="process-step-1">
+                                    <div class="flex items-center space-x-3">
+                                        <i class="fas fa-check text-green-500"></i>
+                                        <span class="text-sm font-medium text-gray-900">Video uploaded</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg" id="process-step-2">
+                                    <div class="flex items-center space-x-3">
+                                        <i class="fas fa-spinner animate-spin text-primary"></i>
+                                        <span class="text-sm font-medium text-gray-900">Analyzing movements</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg opacity-50" id="process-step-3">
+                                    <div class="flex items-center space-x-3">
+                                        <i class="fas fa-circle text-gray-400"></i>
+                                        <span class="text-sm font-medium text-gray-900">Generating insights</span>
+                                    </div>
+                                </div>
+                                <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg opacity-50" id="process-step-4">
+                                    <div class="flex items-center space-x-3">
+                                        <i class="fas fa-circle text-gray-400"></i>
+                                        <span class="text-sm font-medium text-gray-900">Preparing results</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex justify-center space-x-4 mt-8" id="action-buttons">
+                    <button class="hidden bg-primary hover:bg-primary-dark text-white px-8 py-3 rounded-lg font-medium transition-colors duration-200" 
+                            id="start-analysis">
+                        Start Analysis
+                    </button>
+                    <button class="border border-gray-300 hover:border-gray-400 text-gray-700 px-8 py-3 rounded-lg font-medium transition-colors duration-200" 
+                            id="cancel-button">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+
+            <!-- Recent Uploads -->
+            <div class="mt-12 bg-white rounded-2xl shadow-sm border border-gray-200 p-8">
+                <h3 class="text-lg font-semibold text-gray-900 mb-6">Recent Uploads</h3>
+                <div class="space-y-4">
+                    <!-- Recent Upload Item -->
+                    <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-video text-primary"></i>
+                            </div>
+                            <div>
+                                <p class="font-medium text-gray-900">Basketball_Training_Session.mp4</p>
+                                <p class="text-sm text-gray-600">Uploaded 2 hours ago • Basketball • Performance Analysis</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="px-3 py-1 bg-green-100 text-green-800 text-sm font-medium rounded-full">
+                                Completed
+                            </span>
+                            <button class="text-primary hover:text-primary-dark transition-colors">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Recent Upload Item -->
+                    <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-video text-primary"></i>
+                            </div>
+                            <div>
+                                <p class="font-medium text-gray-900">Soccer_Match_Highlights.mp4</p>
+                                <p class="text-sm text-gray-600">Uploaded 1 day ago • Soccer • Strategy Analysis</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="px-3 py-1 bg-green-100 text-green-800 text-sm font-medium rounded-full">
+                                Completed
+                            </span>
+                            <button class="text-primary hover:text-primary-dark transition-colors">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Recent Upload Item -->
+                    <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-video text-primary"></i>
+                            </div>
+                            <div>
+                                <p class="font-medium text-gray-900">Tennis_Serve_Practice.mp4</p>
+                                <p class="text-sm text-gray-600">Uploaded 3 days ago • Tennis • Technique Review</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="px-3 py-1 bg-green-100 text-green-800 text-sm font-medium rounded-full">
+                                Completed
+                            </span>
+                            <button class="text-primary hover:text-primary-dark transition-colors">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Upload functionality
+        const uploadArea = document.getElementById('upload-area');
+        const fileInput = document.getElementById('file-input');
+        const browseButton = document.getElementById('browse-button');
+        const videoDetails = document.getElementById('video-details');
+        const uploadProgress = document.getElementById('upload-progress');
+        const processingStatus = document.getElementById('processing-status');
+        const startAnalysisButton = document.getElementById('start-analysis');
+        const cancelButton = document.getElementById('cancel-button');
+
+        let selectedFile = null;
+
+        // File input change handler
+        fileInput.addEventListener('change', function(e) {
+            if (e.target.files.length > 0) {
+                selectedFile = e.target.files[0];
+                handleFileSelect(selectedFile);
+            }
+        });
+
+        // Browse button click
+        browseButton.addEventListener('click', function() {
+            fileInput.click();
+        });
+
+        // Drag and drop handlers
+        uploadArea.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            uploadArea.classList.add('bg-primary/5', 'border-primary');
+        });
+
+        uploadArea.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            uploadArea.classList.remove('bg-primary/5', 'border-primary');
+        });
+
+        uploadArea.addEventListener('drop', function(e) {
+            e.preventDefault();
+            uploadArea.classList.remove('bg-primary/5', 'border-primary');
+            
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                selectedFile = files[0];
+                handleFileSelect(selectedFile);
+            }
+        });
+
+        // Handle file selection
+        function handleFileSelect(file) {
+            if (!file.type.startsWith('video/')) {
+                alert('Please select a video file.');
+                return;
+            }
+
+            if (file.size > 500 * 1024 * 1024) { // 500MB limit
+                alert('File size must be less than 500MB.');
+                return;
+            }
+
+            // Update upload area
+            document.getElementById('upload-icon').className = 'fas fa-check-circle text-4xl text-green-500';
+            document.getElementById('upload-title').textContent = file.name;
+            document.getElementById('upload-subtitle').textContent = `${(file.size / 1024 / 1024).toFixed(1)} MB • ${file.type}`;
+            browseButton.textContent = 'Change File';
+
+            // Show video details form
+            videoDetails.classList.remove('hidden');
+            startAnalysisButton.classList.remove('hidden');
+        }
+
+        // Start analysis
+        startAnalysisButton.addEventListener('click', function() {
+            if (!selectedFile) return;
+
+            // Hide details form and show progress
+            videoDetails.classList.add('hidden');
+            startAnalysisButton.classList.add('hidden');
+            uploadProgress.classList.remove('hidden');
+
+            // Simulate upload progress
+            simulateUpload();
+        });
+
+        // Cancel upload
+        cancelButton.addEventListener('click', function() {
+            // Reset everything
+            selectedFile = null;
+            fileInput.value = '';
+            videoDetails.classList.add('hidden');
+            uploadProgress.classList.add('hidden');
+            processingStatus.classList.add('hidden');
+            startAnalysisButton.classList.add('hidden');
+            
+            // Reset upload area
+            document.getElementById('upload-icon').className = 'fas fa-cloud-upload-alt text-4xl text-gray-400';
+            document.getElementById('upload-title').textContent = 'Drop your video here';
+            document.getElementById('upload-subtitle').textContent = 'or click to browse files';
+            browseButton.textContent = 'Browse Files';
+
+            // Reset progress steps
+            resetProgressSteps();
+        });
+
+        // Simulate upload progress
+        function simulateUpload() {
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+            const uploadStatus = document.getElementById('upload-status');
+            
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 15;
+                if (progress > 100) progress = 100;
+                
+                progressBar.style.width = progress + '%';
+                progressText.textContent = Math.round(progress) + '%';
+                
+                if (progress < 30) {
+                    uploadStatus.textContent = 'Uploading video...';
+                } else if (progress < 70) {
+                    uploadStatus.textContent = 'Processing upload...';
+                } else if (progress < 100) {
+                    uploadStatus.textContent = 'Finalizing...';
+                } else {
+                    uploadStatus.textContent = 'Upload complete!';
+                    clearInterval(interval);
+                    
+                    // Move to processing step
+                    setTimeout(() => {
+                        updateProgressStep(2);
+                        uploadProgress.classList.add('hidden');
+                        processingStatus.classList.remove('hidden');
+                        simulateProcessing();
+                    }, 1000);
+                }
+            }, 200);
+        }
+
+        // Simulate processing
+        function simulateProcessing() {
+            const steps = [
+                { id: 'process-step-2', delay: 2000 },
+                { id: 'process-step-3', delay: 4000 },
+                { id: 'process-step-4', delay: 6000 }
+            ];
+
+            steps.forEach((step, index) => {
+                setTimeout(() => {
+                    const stepElement = document.getElementById(step.id);
+                    const icon = stepElement.querySelector('i');
+                    
+                    // Complete current step
+                    icon.className = 'fas fa-check text-green-500';
+                    stepElement.classList.remove('opacity-50');
+                    
+                    // Start next step
+                    if (index < steps.length - 1) {
+                        const nextStep = document.getElementById(steps[index + 1].id);
+                        const nextIcon = nextStep.querySelector('i');
+                        nextIcon.className = 'fas fa-spinner animate-spin text-primary';
+                        nextStep.classList.remove('opacity-50');
+                    } else {
+                        // Processing complete
+                        updateProgressStep(3);
+                        setTimeout(() => {
+                            alert('Analysis complete! Results are ready.');
+                        }, 1000);
+                    }
+                }, step.delay);
+            });
+        }
+
+        // Update progress step
+        function updateProgressStep(step) {
+            for (let i = 1; i <= 3; i++) {
+                const stepElement = document.getElementById(`step-${i}`);
+                const circle = stepElement.querySelector('div');
+                const text = stepElement.querySelector('span');
+                
+                if (i <= step) {
+                    circle.className = 'w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center text-sm font-semibold';
+                    text.className = 'text-sm font-medium text-gray-900';
+                } else {
+                    circle.className = 'w-8 h-8 bg-gray-300 text-gray-600 rounded-full flex items-center justify-center text-sm font-semibold';
+                    text.className = 'text-sm font-medium text-gray-600';
+                }
+            }
+
+            // Update progress lines
+            for (let i = 1; i <= 2; i++) {
+                const line = document.getElementById(`progress-line-${i}`);
+                if (i < step) {
+                    line.className = 'w-16 h-0.5 bg-primary';
+                } else {
+                    line.className = 'w-16 h-0.5 bg-gray-300';
+                }
+            }
+        }
+
+        // Reset progress steps
+        function resetProgressSteps() {
+            updateProgressStep(1);
+            
+            // Reset processing steps
+            const processSteps = ['process-step-1', 'process-step-2', 'process-step-3', 'process-step-4'];
+            processSteps.forEach((stepId, index) => {
+                const stepElement = document.getElementById(stepId);
+                const icon = stepElement.querySelector('i');
+                
+                if (index === 0) {
+                    icon.className = 'fas fa-check text-green-500';
+                    stepElement.classList.remove('opacity-50');
+                } else {
+                    icon.className = 'fas fa-circle text-gray-400';
+                    stepElement.classList.add('opacity-50');
+                }
+            });
+        }
+    </script>
+</body>
+</html>

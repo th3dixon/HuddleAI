@@ -1,0 +1,214 @@
+{
+  "metadata": {
+    "title": "E2E Testing Task Dependencies",
+    "description": "Dependency graph for E2E testing implementation tasks",
+    "lastUpdated": "2025-06-21T10:00:00Z"
+  },
+  "dependencies": {
+    "E2E-001": {
+      "dependencies": [],
+      "dependents": ["E2E-002", "E2E-003", "E2E-029", "E2E-031", "E2E-032", "E2E-033", "E2E-034", "E2E-035"]
+    },
+    "E2E-002": {
+      "dependencies": ["E2E-001"],
+      "dependents": ["E2E-004", "E2E-005"]
+    },
+    "E2E-003": {
+      "dependencies": ["E2E-001"],
+      "dependents": ["E2E-027"]
+    },
+    "E2E-004": {
+      "dependencies": ["E2E-002"],
+      "dependents": []
+    },
+    "E2E-005": {
+      "dependencies": ["E2E-002"],
+      "dependents": ["E2E-006", "E2E-007", "E2E-008", "E2E-013", "E2E-016", "E2E-019", "E2E-022", "E2E-024", "E2E-025", "E2E-036", "E2E-037", "E2E-038", "E2E-039", "E2E-040", "E2E-043"]
+    },
+    "E2E-006": {
+      "dependencies": ["E2E-005"],
+      "dependents": ["E2E-009", "E2E-010", "E2E-011", "E2E-042"]
+    },
+    "E2E-007": {
+      "dependencies": ["E2E-005"],
+      "dependents": ["E2E-012"]
+    },
+    "E2E-008": {
+      "dependencies": ["E2E-005"],
+      "dependents": ["E2E-015"]
+    },
+    "E2E-009": {
+      "dependencies": ["E2E-006"],
+      "dependents": []
+    },
+    "E2E-010": {
+      "dependencies": ["E2E-006"],
+      "dependents": []
+    },
+    "E2E-011": {
+      "dependencies": ["E2E-006"],
+      "dependents": []
+    },
+    "E2E-012": {
+      "dependencies": ["E2E-007"],
+      "dependents": []
+    },
+    "E2E-013": {
+      "dependencies": ["E2E-005"],
+      "dependents": ["E2E-014"]
+    },
+    "E2E-014": {
+      "dependencies": ["E2E-013"],
+      "dependents": []
+    },
+    "E2E-015": {
+      "dependencies": ["E2E-008"],
+      "dependents": []
+    },
+    "E2E-016": {
+      "dependencies": ["E2E-005"],
+      "dependents": ["E2E-017", "E2E-018"]
+    },
+    "E2E-017": {
+      "dependencies": ["E2E-016"],
+      "dependents": []
+    },
+    "E2E-018": {
+      "dependencies": ["E2E-016"],
+      "dependents": []
+    },
+    "E2E-019": {
+      "dependencies": ["E2E-005"],
+      "dependents": ["E2E-020", "E2E-021"]
+    },
+    "E2E-020": {
+      "dependencies": ["E2E-019"],
+      "dependents": []
+    },
+    "E2E-021": {
+      "dependencies": ["E2E-019"],
+      "dependents": []
+    },
+    "E2E-022": {
+      "dependencies": ["E2E-005"],
+      "dependents": ["E2E-023"]
+    },
+    "E2E-023": {
+      "dependencies": ["E2E-022"],
+      "dependents": []
+    },
+    "E2E-024": {
+      "dependencies": ["E2E-005"],
+      "dependents": []
+    },
+    "E2E-025": {
+      "dependencies": ["E2E-005"],
+      "dependents": ["E2E-026", "E2E-041"]
+    },
+    "E2E-026": {
+      "dependencies": ["E2E-025"],
+      "dependents": []
+    },
+    "E2E-027": {
+      "dependencies": ["E2E-003"],
+      "dependents": ["E2E-028"]
+    },
+    "E2E-028": {
+      "dependencies": ["E2E-027"],
+      "dependents": []
+    },
+    "E2E-029": {
+      "dependencies": ["E2E-001"],
+      "dependents": ["E2E-030"]
+    },
+    "E2E-030": {
+      "dependencies": ["E2E-029"],
+      "dependents": ["E2E-044", "E2E-045"]
+    },
+    "E2E-031": {
+      "dependencies": ["E2E-001"],
+      "dependents": []
+    },
+    "E2E-032": {
+      "dependencies": ["E2E-001"],
+      "dependents": []
+    },
+    "E2E-033": {
+      "dependencies": ["E2E-001"],
+      "dependents": []
+    },
+    "E2E-034": {
+      "dependencies": ["E2E-001"],
+      "dependents": []
+    },
+    "E2E-035": {
+      "dependencies": ["E2E-001"],
+      "dependents": []
+    },
+    "E2E-036": {
+      "dependencies": ["E2E-005"],
+      "dependents": []
+    },
+    "E2E-037": {
+      "dependencies": ["E2E-005"],
+      "dependents": []
+    },
+    "E2E-038": {
+      "dependencies": ["E2E-005"],
+      "dependents": []
+    },
+    "E2E-039": {
+      "dependencies": ["E2E-005"],
+      "dependents": []
+    },
+    "E2E-040": {
+      "dependencies": ["E2E-005"],
+      "dependents": []
+    },
+    "E2E-041": {
+      "dependencies": ["E2E-025"],
+      "dependents": []
+    },
+    "E2E-042": {
+      "dependencies": ["E2E-006"],
+      "dependents": []
+    },
+    "E2E-043": {
+      "dependencies": ["E2E-005"],
+      "dependents": []
+    },
+    "E2E-044": {
+      "dependencies": ["E2E-030"],
+      "dependents": []
+    },
+    "E2E-045": {
+      "dependencies": ["E2E-030"],
+      "dependents": []
+    }
+  },
+  "criticalPath": [
+    "E2E-001",
+    "E2E-002", 
+    "E2E-005",
+    "E2E-006",
+    "E2E-009",
+    "E2E-010",
+    "E2E-019",
+    "E2E-020",
+    "E2E-018",
+    "E2E-029",
+    "E2E-030"
+  ],
+  "phases": {
+    "PHASE-001": ["E2E-001", "E2E-002", "E2E-003", "E2E-004", "E2E-031"],
+    "PHASE-002": ["E2E-005", "E2E-006", "E2E-007", "E2E-008"],
+    "PHASE-003": ["E2E-009", "E2E-010", "E2E-011", "E2E-012"],
+    "PHASE-004": ["E2E-013", "E2E-014", "E2E-015", "E2E-043"],
+    "PHASE-005": ["E2E-016", "E2E-017", "E2E-018", "E2E-036", "E2E-037", "E2E-039"],
+    "PHASE-006": ["E2E-019", "E2E-020", "E2E-021"],
+    "PHASE-007": ["E2E-022", "E2E-023", "E2E-024", "E2E-034", "E2E-038", "E2E-040"],
+    "PHASE-008": ["E2E-025", "E2E-026", "E2E-041", "E2E-042"],
+    "PHASE-009": ["E2E-027", "E2E-028", "E2E-032", "E2E-033", "E2E-035"],
+    "PHASE-010": ["E2E-029", "E2E-030", "E2E-044", "E2E-045"]
+  }
+}

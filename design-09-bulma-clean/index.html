@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HuddleAI - Professional Sports Coaching Platform</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+        }
+
+        .hero-gradient {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        }
+
+        .navbar-brand img {
+            max-height: 40px;
+        }
+
+        .feature-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            background: linear-gradient(135deg, var(--accent-color) 0%, var(--primary-color) 100%);
+            color: white;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 2rem;
+        }
+
+        .testimonial-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            line-height: 1;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
+        }
+
+        .hero-image {
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            position: relative;
+            margin-bottom: 3rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        .pricing-card {
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .pricing-card.is-popular {
+            border-color: var(--primary-color);
+            transform: scale(1.05);
+        }
+
+        .pricing-card:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar is-white is-fixed-top" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="#home">
+                <img src="https://via.placeholder.com/120x40/2563eb/ffffff?text=HuddleAI" alt="HuddleAI">
+            </a>
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+
+        <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item" href="#home">Home</a>
+                <a class="navbar-item" href="#features">Features</a>
+                <a class="navbar-item" href="#pricing">Pricing</a>
+                <a class="navbar-item" href="#testimonials">Testimonials</a>
+                <a class="navbar-item" href="coaching.html">Coaching Tools</a>
+            </div>
+
+            <div class="navbar-end">
+                <div class="navbar-item">
+                    <div class="buttons">
+                        <a class="button is-light">
+                            <strong>Sign up</strong>
+                        </a>
+                        <a class="button is-primary">
+                            <strong>Log in</strong>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero is-fullheight-with-navbar hero-gradient" id="home">
+        <div class="hero-body">
+            <div class="container">
+                <div class="columns is-vcentered">
+                    <div class="column is-6">
+                        <h1 class="title is-1 has-text-white mb-4">
+                            Revolutionize Your <span class="has-text-warning">Coaching</span> with AI
+                        </h1>
+                        <p class="subtitle is-4 has-text-white-bis mb-6">
+                            Empower your athletes with intelligent video analysis, personalized training plans, and data-driven insights that transform performance.
+                        </p>
+                        <div class="buttons">
+                            <button class="button is-large cta-button has-text-white">
+                                <span class="icon">
+                                    <i class="fas fa-play"></i>
+                                </span>
+                                <span>Start Free Trial</span>
+                            </button>
+                            <button class="button is-large is-outlined has-text-white">
+                                <span class="icon">
+                                    <i class="fas fa-video"></i>
+                                </span>
+                                <span>Watch Demo</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="column is-6">
+                        <figure class="image">
+                            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Coach analyzing performance" class="hero-image">
+                        </figure>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section" id="features">
+        <div class="container">
+            <div class="has-text-centered mb-6">
+                <h2 class="title is-2 section-title">Powerful Coaching Features</h2>
+                <p class="subtitle is-5 has-text-grey">Everything you need to elevate your coaching to the next level</p>
+            </div>
+
+            <div class="columns is-multiline">
+                <div class="column is-4">
+                    <div class="card feature-card has-text-centered p-6">
+                        <div class="feature-icon">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <h3 class="title is-4">AI Video Analysis</h3>
+                        <p class="has-text-grey">
+                            Advanced computer vision technology analyzes movement patterns, identifies technique flaws, and provides actionable feedback.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="column is-4">
+                    <div class="card feature-card has-text-centered p-6">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3 class="title is-4">Performance Analytics</h3>
+                        <p class="has-text-grey">
+                            Track progress with detailed metrics, compare performance over time, and identify areas for improvement.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="column is-4">
+                    <div class="card feature-card has-text-centered p-6">
+                        <div class="feature-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3 class="title is-4">Team Management</h3>
+                        <p class="has-text-grey">
+                            Manage multiple athletes, create custom training programs, and monitor team performance from one dashboard.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="column is-4">
+                    <div class="card feature-card has-text-centered p-6">
+                        <div class="feature-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h3 class="title is-4">Mobile First</h3>
+                        <p class="has-text-grey">
+                            Access all features on any device. Record, analyze, and coach from anywhere with our responsive platform.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="column is-4">
+                    <div class="card feature-card has-text-centered p-6">
+                        <div class="feature-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h3 class="title is-4">Smart Insights</h3>
+                        <p class="has-text-grey">
+                            AI-powered recommendations help you make data-driven decisions and optimize training strategies.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="column is-4">
+                    <div class="card feature-card has-text-centered p-6">
+                        <div class="feature-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <h3 class="title is-4">Goal Tracking</h3>
+                        <p class="has-text-grey">
+                            Set and monitor goals, celebrate achievements, and maintain motivation with progress visualization.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="section has-background-light">
+        <div class="container">
+            <div class="columns has-text-centered">
+                <div class="column">
+                    <div class="stat-number">10K+</div>
+                    <p class="title is-5">Active Coaches</p>
+                </div>
+                <div class="column">
+                    <div class="stat-number">50K+</div>
+                    <p class="title is-5">Athletes Trained</p>
+                </div>
+                <div class="column">
+                    <div class="stat-number">1M+</div>
+                    <p class="title is-5">Videos Analyzed</p>
+                </div>
+                <div class="column">
+                    <div class="stat-number">95%</div>
+                    <p class="title is-5">Satisfaction Rate</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="section" id="testimonials">
+        <div class="container">
+            <div class="has-text-centered mb-6">
+                <h2 class="title is-2 section-title">What Coaches Say</h2>
+                <p class="subtitle is-5 has-text-grey">Trusted by professionals worldwide</p>
+            </div>
+
+            <div class="columns is-multiline">
+                <div class="column is-4">
+                    <div class="testimonial-card">
+                        <div class="media">
+                            <div class="media-left">
+                                <figure class="image is-64x64">
+                                    <img class="is-rounded" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80" alt="Coach testimonial">
+                                </figure>
+                            </div>
+                            <div class="media-content">
+                                <p class="title is-6">Sarah Johnson</p>
+                                <p class="subtitle is-7 has-text-grey">Olympic Swimming Coach</p>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <p class="has-text-grey-dark">
+                                "HuddleAI has completely transformed how I analyze my swimmers' technique. The AI insights are incredibly accurate and have helped my athletes shave seconds off their times."
+                            </p>
+                            <div class="has-text-warning">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column is-4">
+                    <div class="testimonial-card">
+                        <div class="media">
+                            <div class="media-left">
+                                <figure class="image is-64x64">
+                                    <img class="is-rounded" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80" alt="Coach testimonial">
+                                </figure>
+                            </div>
+                            <div class="media-content">
+                                <p class="title is-6">Mike Rodriguez</p>
+                                <p class="subtitle is-7 has-text-grey">Basketball Coach</p>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <p class="has-text-grey-dark">
+                                "The team management features are fantastic. I can track all my players' progress and create personalized training plans efficiently. Game-changer for our program!"
+                            </p>
+                            <div class="has-text-warning">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column is-4">
+                    <div class="testimonial-card">
+                        <div class="media">
+                            <div class="media-left">
+                                <figure class="image is-64x64">
+                                    <img class="is-rounded" src="https://images.unsplash.com/photo-1494790108755-2616b612b890?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80" alt="Coach testimonial">
+                                </figure>
+                            </div>
+                            <div class="media-content">
+                                <p class="title is-6">Lisa Chen</p>
+                                <p class="subtitle is-7 has-text-grey">Tennis Academy Director</p>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <p class="has-text-grey-dark">
+                                "Our academy has seen remarkable improvements since implementing HuddleAI. The video analysis helps us identify technique issues we previously missed."
+                            </p>
+                            <div class="has-text-warning">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="section has-background-light" id="pricing">
+        <div class="container">
+            <div class="has-text-centered mb-6">
+                <h2 class="title is-2 section-title">Choose Your Plan</h2>
+                <p class="subtitle is-5 has-text-grey">Flexible pricing for coaches and organizations</p>
+            </div>
+
+            <div class="columns is-centered">
+                <div class="column is-4">
+                    <div class="card pricing-card p-6">
+                        <div class="has-text-centered">
+                            <h3 class="title is-4">Starter</h3>
+                            <div class="stat-number">$29</div>
+                            <p class="has-text-grey">per month</p>
+                            <hr>
+                            <ul class="has-text-left">
+                                <li class="mb-2"><i class="fas fa-check has-text-success"></i> Up to 5 athletes</li>
+                                <li class="mb-2"><i class="fas fa-check has-text-success"></i> Basic video analysis</li>
+                                <li class="mb-2"><i class="fas fa-check has-text-success"></i> Performance tracking</li>
+                                <li class="mb-2"><i class="fas fa-check has-text-success"></i> Mobile app access</li>
+                            </ul>
+                            <button class="button is-primary is-fullwidth mt-4">Get Started</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column is-4">
+                    <div class="card pricing-card is-popular p-6">
+                        <div class="has-text-centered">
+                            <span class="tag is-primary is-pulled-right">Most Popular</span>
+                            <h3 class="title is-4">Professional</h3>
+                            <div class="stat-number">$79</div>
+                            <p class="has-text-grey">per month</p>
+                            <hr>
+                            <ul class="has-text-left">
+                                <li class="mb-2"><i class="fas fa-check has-text-success"></i> Up to 25 athletes</li>
+                                <li class="mb-2"><i class="fas fa-check has-text-success"></i> Advanced AI analysis</li>
+                                <li class="mb-2"><i class="fas fa-check has-text-success"></i> Team management</li>
+                                <li class="mb-2"><i class="fas fa-check has-text-success"></i> Custom training plans</li>
+                                <li class="mb-2"><i class="fas fa-check has-text-success"></i> Priority support</li>
+                            </ul>
+                            <button class="button is-primary is-fullwidth mt-4">Get Started</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="column is-4">
+                    <div class="card pricing-card p-6">
+                        <div class="has-text-centered">
+                            <h3 class="title is-4">Enterprise</h3>
+                            <div class="stat-number">$199</div>
+                            <p class="has-text-grey">per month</p>
+                            <hr>
+                            <ul class="has-text-left">
+                                <li class="mb-2"><i class="fas fa-check has-text-success"></i> Unlimited athletes</li>
+                                <li class="mb-2"><i class="fas fa-check has-text-success"></i> Full AI suite</li>
+                                <li class="mb-2"><i class="fas fa-check has-text-success"></i> Multi-team management</li>
+                                <li class="mb-2"><i class="fas fa-check has-text-success"></i> API access</li>
+                                <li class="mb-2"><i class="fas fa-check has-text-success"></i> Dedicated support</li>
+                            </ul>
+                            <button class="button is-primary is-fullwidth mt-4">Contact Sales</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer has-background-dark">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-4">
+                    <img src="https://via.placeholder.com/150x50/ffffff/2563eb?text=HuddleAI" alt="HuddleAI" class="mb-4">
+                    <p class="has-text-grey-light">
+                        Empowering coaches worldwide with AI-driven insights and intelligent training solutions.
+                    </p>
+                    <div class="buttons mt-4">
+                        <a class="button is-outlined is-small">
+                            <span class="icon">
+                                <i class="fab fa-twitter"></i>
+                            </span>
+                        </a>
+                        <a class="button is-outlined is-small">
+                            <span class="icon">
+                                <i class="fab fa-facebook"></i>
+                            </span>
+                        </a>
+                        <a class="button is-outlined is-small">
+                            <span class="icon">
+                                <i class="fab fa-linkedin"></i>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+                <div class="column is-2">
+                    <h4 class="title is-6 has-text-white">Product</h4>
+                    <ul class="has-text-grey-light">
+                        <li><a href="#" class="has-text-grey-light">Features</a></li>
+                        <li><a href="#" class="has-text-grey-light">Pricing</a></li>
+                        <li><a href="#" class="has-text-grey-light">API</a></li>
+                        <li><a href="#" class="has-text-grey-light">Integrations</a></li>
+                    </ul>
+                </div>
+                <div class="column is-2">
+                    <h4 class="title is-6 has-text-white">Company</h4>
+                    <ul class="has-text-grey-light">
+                        <li><a href="#" class="has-text-grey-light">About</a></li>
+                        <li><a href="#" class="has-text-grey-light">Careers</a></li>
+                        <li><a href="#" class="has-text-grey-light">Press</a></li>
+                        <li><a href="#" class="has-text-grey-light">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="column is-2">
+                    <h4 class="title is-6 has-text-white">Support</h4>
+                    <ul class="has-text-grey-light">
+                        <li><a href="#" class="has-text-grey-light">Help Center</a></li>
+                        <li><a href="#" class="has-text-grey-light">Documentation</a></li>
+                        <li><a href="#" class="has-text-grey-light">Community</a></li>
+                        <li><a href="#" class="has-text-grey-light">Status</a></li>
+                    </ul>
+                </div>
+                <div class="column is-2">
+                    <h4 class="title is-6 has-text-white">Legal</h4>
+                    <ul class="has-text-grey-light">
+                        <li><a href="#" class="has-text-grey-light">Privacy</a></li>
+                        <li><a href="#" class="has-text-grey-light">Terms</a></li>
+                        <li><a href="#" class="has-text-grey-light">Security</a></li>
+                        <li><a href="#" class="has-text-grey-light">Cookies</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="has-background-grey-dark">
+            <div class="has-text-centered">
+                <p class="has-text-grey-light">
+                    © 2024 HuddleAI. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.addEventListener('DOMContentLoaded', () => {
+            const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+            
+            if ($navbarBurgers.length > 0) {
+                $navbarBurgers.forEach(el => {
+                    el.addEventListener('click', () => {
+                        const target = el.dataset.target;
+                        const $target = document.getElementById(target);
+                        
+                        el.classList.toggle('is-active');
+                        $target.classList.toggle('is-active');
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>

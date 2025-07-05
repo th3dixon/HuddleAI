@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Achievements & Badges - HuddleAI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-gray-50" x-data="{ activeTab: 'earned' }">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-8">
+                    <div class="text-2xl font-bold text-blue-600">HuddleAI</div>
+                    <div class="hidden md:flex space-x-6">
+                        <a href="#" class="text-gray-700 hover:text-blue-600">Dashboard</a>
+                        <a href="#" class="text-gray-700 hover:text-blue-600">Analytics</a>
+                        <a href="#" class="text-blue-600 font-medium">Achievements</a>
+                        <a href="#" class="text-gray-700 hover:text-blue-600">Community</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="text-gray-400 hover:text-gray-600">
+                        <i class="fas fa-bell"></i>
+                    </button>
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&h=32&fit=crop&crop=face" 
+                         alt="Profile" class="w-8 h-8 rounded-full">
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-6 py-8">
+        <!-- Header -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">Achievements & Badges</h1>
+            <p class="text-gray-600">Track your progress and celebrate your accomplishments</p>
+        </div>
+
+        <!-- Achievement Stats -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white rounded-xl shadow-sm border p-6 text-center">
+                <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <i class="fas fa-trophy text-yellow-600 text-2xl"></i>
+                </div>
+                <div class="text-2xl font-bold text-gray-900">24</div>
+                <div class="text-sm text-gray-600">Total Achievements</div>
+            </div>
+            <div class="bg-white rounded-xl shadow-sm border p-6 text-center">
+                <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <i class="fas fa-medal text-blue-600 text-2xl"></i>
+                </div>
+                <div class="text-2xl font-bold text-gray-900">8</div>
+                <div class="text-sm text-gray-600">Rare Badges</div>
+            </div>
+            <div class="bg-white rounded-xl shadow-sm border p-6 text-center">
+                <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <i class="fas fa-chart-line text-green-600 text-2xl"></i>
+                </div>
+                <div class="text-2xl font-bold text-gray-900">1,247</div>
+                <div class="text-sm text-gray-600">Achievement Points</div>
+            </div>
+            <div class="bg-white rounded-xl shadow-sm border p-6 text-center">
+                <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <i class="fas fa-star text-purple-600 text-2xl"></i>
+                </div>
+                <div class="text-2xl font-bold text-gray-900">47</div>
+                <div class="text-sm text-gray-600">Days Active</div>
+            </div>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div class="bg-white rounded-xl shadow-sm border mb-8">
+            <div class="px-6">
+                <nav class="flex space-x-8">
+                    <button @click="activeTab = 'earned'" 
+                            :class="activeTab === 'earned' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700'"
+                            class="py-4 px-1 border-b-2 font-medium text-sm">
+                        Earned Achievements
+                    </button>
+                    <button @click="activeTab = 'available'" 
+                            :class="activeTab === 'available' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700'"
+                            class="py-4 px-1 border-b-2 font-medium text-sm">
+                        Available Badges
+                    </button>
+                    <button @click="activeTab = 'progress'" 
+                            :class="activeTab === 'progress' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700'"
+                            class="py-4 px-1 border-b-2 font-medium text-sm">
+                        In Progress
+                    </button>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Earned Achievements Tab -->
+        <div x-show="activeTab === 'earned'" class="space-y-8">
+            <!-- Recent Achievements -->
+            <div>
+                <h3 class="text-xl font-semibold mb-4">Recent Achievements</h3>
+                <div class="space-y-4">
+                    <div class="bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-xl p-6 text-white relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-white bg-opacity-10 rounded-full -mr-16 -mt-16"></div>
+                        <div class="flex items-center space-x-4">
+                            <div class="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
+                                <i class="fas fa-trophy text-3xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold">Personal Best Champion</h4>
+                                <p class="opacity-90">Achieved personal best in 400m sprint</p>
+                                <p class="text-sm opacity-75">Earned today • 100 points</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-r from-blue-500 to-blue-700 rounded-xl p-6 text-white relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-32 h-32 bg-white bg-opacity-10 rounded-full -mr-16 -mt-16"></div>
+                        <div class="flex items-center space-x-4">
+                            <div class="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
+                                <i class="fas fa-robot text-3xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold">AI Analysis Master</h4>
+                                <p class="opacity-90">Received 90+ AI score on 10 consecutive analyses</p>
+                                <p class="text-sm opacity-75">Earned 2 days ago • 75 points</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Achievement Categories -->
+            <div>
+                <h3 class="text-xl font-semibold mb-6">Achievement Collection</h3>
+                
+                <!-- Performance Achievements -->
+                <div class="mb-8">
+                    <h4 class="text-lg font-medium mb-4 text-green-700">Performance Achievements</h4>
+                    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                        <div class="bg-white rounded-lg border p-4 text-center hover:shadow-md transition-shadow">
+                            <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                                <i class="fas fa-trophy text-green-600 text-xl"></i>
+                            </div>
+                            <div class="font-medium text-sm">Personal Best</div>
+                            <div class="text-xs text-gray-500">March 15, 2024</div>
+                        </div>
+                        
+                        <div class="bg-white rounded-lg border p-4 text-center hover:shadow-md transition-shadow">
+                            <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                                <i class="fas fa-medal text-yellow-600 text-xl"></i>
+                            </div>
+                            <div class="font-medium text-sm">Sub-50 Second</div>
+                            <div class="text-xs text-gray-500">March 15, 2024</div>
+                        </div>
+
+                        <div class="bg-white rounded-lg border p-4 text-center hover:shadow-md transition-shadow">
+                            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                                <i class="fas fa-star text-blue-600 text-xl"></i>
+                            </div>
+                            <div class="font-medium text-sm">Consistency King</div>
+                            <div class="text-xs text-gray-500">March 10, 2024</div>
+                        </div>
+
+                        <div class="bg-white rounded-lg border p-4 text-center hover:shadow-md transition-shadow">
+                            <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                                <i class="fas fa-crown text-purple-600 text-xl"></i>
+                            </div>
+                            <div class="font-medium text-sm">Regional Champion</div>
+                            <div class="text-xs text-gray-500">February 28, 2024</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Training Achievements -->
+                <div class="mb-8">
+                    <h4 class="text-lg font-medium mb-4 text-blue-700">Training Achievements</h4>
+                    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                        <div class="bg-white rounded-lg border p-4 text-center hover:shadow-md transition-shadow">
+                            <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                                <i class="fas fa-fire text-orange-600 text-xl"></i>
+                            </div>
+                            <div class="font-medium text-sm">10-Day Streak</div>
+                            <div class="text-xs text-gray-500">March 12, 2024</div>
+                        </div>
+
+                        <div class="bg-white rounded-lg border p-4 text-center hover:shadow-md transition-shadow">
+                            <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                                <i class="fas fa-dumbbell text-green-600 text-xl"></i>
+                            </div>
+                            <div class="font-medium text-sm">Training Warrior</div>
+                            <div class="text-xs text-gray-500">March 8, 2024</div>
+                        </div>
+
+                        <div class="bg-white rounded-lg border p-4 text-center hover:shadow-md transition-shadow">
+                            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                                <i class="fas fa-robot text-blue-600 text-xl"></i>
+                            </div>
+                            <div class="font-medium text-sm">AI Master</div>
+                            <div class="text-xs text-gray-500">March 13, 2024</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Social Achievements -->
+                <div class="mb-8">
+                    <h4 class="text-lg font-medium mb-4 text-purple-700">Social Achievements</h4>
+                    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                        <div class="bg-white rounded-lg border p-4 text-center hover:shadow-md transition-shadow">
+                            <div class="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                                <i class="fas fa-heart text-pink-600 text-xl"></i>
+                            </div>
+                            <div class="font-medium text-sm">Community Favorite</div>
+                            <div class="text-xs text-gray-500">March 14, 2024</div>
+                        </div>
+
+                        <div class="bg-white rounded-lg border p-4 text-center hover:shadow-md transition-shadow">
+                            <div class="w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                                <i class="fas fa-users text-indigo-600 text-xl"></i>
+                            </div>
+                            <div class="font-medium text-sm">Team Player</div>
+                            <div class="text-xs text-gray-500">March 5, 2024</div>
+                        </div>
+
+                        <div class="bg-white rounded-lg border p-4 text-center hover:shadow-md transition-shadow">
+                            <div class="w-12 h-12 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                                <i class="fas fa-share text-teal-600 text-xl"></i>
+                            </div>
+                            <div class="font-medium text-sm">Content Creator</div>
+                            <div class="text-xs text-gray-500">February 25, 2024</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Available Badges Tab -->
+        <div x-show="activeTab === 'available'" class="space-y-6">
+            <div>
+                <h3 class="text-xl font-semibold mb-4">Available Achievements</h3>
+                <p class="text-gray-600 mb-6">Work towards these achievements to earn more badges and points</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Speed Demon -->
+                    <div class="bg-white rounded-lg border p-6 hover:shadow-md transition-shadow">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-bolt text-red-600 text-xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-semibold text-lg">Speed Demon</h4>
+                                <p class="text-gray-600 text-sm mb-3">Run under 49 seconds in 400m</p>
+                                <div class="mb-3">
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span>Current: 49.23s</span>
+                                        <span>Target: 48.99s</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-red-500 h-2 rounded-full" style="width: 85%"></div>
+                                    </div>
+                                </div>
+                                <div class="text-xs text-gray-500">150 points • Rare badge</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Marathon Machine -->
+                    <div class="bg-white rounded-lg border p-6 hover:shadow-md transition-shadow">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-road text-blue-600 text-xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-semibold text-lg">Marathon Machine</h4>
+                                <p class="text-gray-600 text-sm mb-3">Complete a marathon training program</p>
+                                <div class="mb-3">
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span>0 / 1 programs</span>
+                                        <span>Not started</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-blue-500 h-2 rounded-full" style="width: 0%"></div>
+                                    </div>
+                                </div>
+                                <div class="text-xs text-gray-500">200 points • Epic badge</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Century Club -->
+                    <div class="bg-white rounded-lg border p-6 hover:shadow-md transition-shadow">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-calendar text-purple-600 text-xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-semibold text-lg">Century Club</h4>
+                                <p class="text-gray-600 text-sm mb-3">Train for 100 consecutive days</p>
+                                <div class="mb-3">
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span>47 / 100 days</span>
+                                        <span>47% complete</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-purple-500 h-2 rounded-full" style="width: 47%"></div>
+                                    </div>
+                                </div>
+                                <div class="text-xs text-gray-500">300 points • Legendary badge</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AI Perfectionist -->
+                    <div class="bg-white rounded-lg border p-6 hover:shadow-md transition-shadow">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-robot text-green-600 text-xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-semibold text-lg">AI Perfectionist</h4>
+                                <p class="text-gray-600 text-sm mb-3">Achieve 100% AI form score</p>
+                                <div class="mb-3">
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span>Best: 94%</span>
+                                        <span>Target: 100%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-green-500 h-2 rounded-full" style="width: 94%"></div>
+                                    </div>
+                                </div>
+                                <div class="text-xs text-gray-500">250 points • Legendary badge</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Social Butterfly -->
+                    <div class="bg-white rounded-lg border p-6 hover:shadow-md transition-shadow">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-users text-pink-600 text-xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-semibold text-lg">Social Butterfly</h4>
+                                <p class="text-gray-600 text-sm mb-3">Connect with 50 athletes</p>
+                                <div class="mb-3">
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span>23 / 50 connections</span>
+                                        <span>46% complete</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-pink-500 h-2 rounded-full" style="width: 46%"></div>
+                                    </div>
+                                </div>
+                                <div class="text-xs text-gray-500">100 points • Common badge</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Video Star -->
+                    <div class="bg-white rounded-lg border p-6 hover:shadow-md transition-shadow">
+                        <div class="flex items-start space-x-4">
+                            <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-video text-orange-600 text-xl"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="font-semibold text-lg">Video Star</h4>
+                                <p class="text-gray-600 text-sm mb-3">Upload 25 training videos</p>
+                                <div class="mb-3">
+                                    <div class="flex justify-between text-sm mb-1">
+                                        <span>18 / 25 videos</span>
+                                        <span>72% complete</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-orange-500 h-2 rounded-full" style="width: 72%"></div>
+                                    </div>
+                                </div>
+                                <div class="text-xs text-gray-500">75 points • Uncommon badge</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- In Progress Tab -->
+        <div x-show="activeTab === 'progress'" class="space-y-6">
+            <div>
+                <h3 class="text-xl font-semibold mb-4">Achievements In Progress</h3>
+                <p class="text-gray-600 mb-6">Track your current progress towards these achievements</p>
+
+                <div class="space-y-4">
+                    <div class="bg-white rounded-lg border p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-calendar text-purple-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-lg">Century Club</h4>
+                                    <p class="text-gray-600 text-sm">Train for 100 consecutive days</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-2xl font-bold text-purple-600">47%</div>
+                                <div class="text-sm text-gray-500">53 days to go</div>
+                            </div>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-3 mb-2">
+                            <div class="bg-purple-500 h-3 rounded-full" style="width: 47%"></div>
+                        </div>
+                        <div class="flex justify-between text-sm text-gray-600">
+                            <span>47 days completed</span>
+                            <span>300 points available</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg border p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-video text-orange-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-lg">Video Star</h4>
+                                    <p class="text-gray-600 text-sm">Upload 25 training videos</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-2xl font-bold text-orange-600">72%</div>
+                                <div class="text-sm text-gray-500">7 videos to go</div>
+                            </div>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-3 mb-2">
+                            <div class="bg-orange-500 h-3 rounded-full" style="width: 72%"></div>
+                        </div>
+                        <div class="flex justify-between text-sm text-gray-600">
+                            <span>18 videos uploaded</span>
+                            <span>75 points available</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-lg border p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-bolt text-red-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-lg">Speed Demon</h4>
+                                    <p class="text-gray-600 text-sm">Run under 49 seconds in 400m</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-2xl font-bold text-red-600">85%</div>
+                                <div class="text-sm text-gray-500">0.24s to go</div>
+                            </div>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-3 mb-2">
+                            <div class="bg-red-500 h-3 rounded-full" style="width: 85%"></div>
+                        </div>
+                        <div class="flex justify-between text-sm text-gray-600">
+                            <span>Current PB: 49.23s</span>
+                            <span>150 points available</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

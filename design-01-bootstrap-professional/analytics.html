@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics Dashboard - HuddleAI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary-navy: #1e3a8a;
+            --secondary-blue: #3b82f6;
+            --accent-light: #60a5fa;
+            --dark-gray: #374151;
+            --light-gray: #f8fafc;
+            --success-green: #10b981;
+            --warning-orange: #f59e0b;
+            --danger-red: #ef4444;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-gray);
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary-navy) !important;
+        }
+
+        .navbar-nav .nav-link {
+            font-weight: 500;
+            color: var(--dark-gray) !important;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: var(--secondary-blue) !important;
+        }
+
+        .dashboard-header {
+            background: linear-gradient(135deg, var(--primary-navy) 0%, var(--secondary-blue) 100%);
+            color: white;
+            padding: 2rem 0;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+            height: 100%;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .stat-icon.success { background-color: var(--success-green); }
+        .stat-icon.warning { background-color: var(--warning-orange); }
+        .stat-icon.primary { background-color: var(--secondary-blue); }
+        .stat-icon.danger { background-color: var(--danger-red); }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-navy);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--dark-gray);
+            font-weight: 500;
+        }
+
+        .chart-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+            margin-bottom: 2rem;
+        }
+
+        .chart-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary-navy);
+            margin-bottom: 1rem;
+        }
+
+        .upload-area {
+            background: white;
+            border: 2px dashed var(--accent-light);
+            border-radius: 12px;
+            padding: 3rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .upload-area:hover {
+            border-color: var(--secondary-blue);
+            background-color: #f8faff;
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            color: var(--accent-light);
+            margin-bottom: 1rem;
+        }
+
+        .recent-analysis {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+        }
+
+        .analysis-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+            transition: background-color 0.3s ease;
+        }
+
+        .analysis-item:hover {
+            background-color: var(--light-gray);
+        }
+
+        .analysis-item:last-child {
+            border-bottom: none;
+        }
+
+        .analysis-thumbnail {
+            width: 60px;
+            height: 40px;
+            background-color: var(--light-gray);
+            border-radius: 4px;
+            margin-right: 1rem;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .analysis-details h6 {
+            margin: 0 0 0.25rem 0;
+            color: var(--primary-navy);
+            font-weight: 600;
+        }
+
+        .analysis-details small {
+            color: var(--dark-gray);
+        }
+
+        .status-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-completed {
+            background-color: #dcfce7;
+            color: var(--success-green);
+        }
+
+        .status-processing {
+            background-color: #fef3c7;
+            color: var(--warning-orange);
+        }
+
+        .btn-primary-custom {
+            background-color: var(--secondary-blue);
+            border-color: var(--secondary-blue);
+            font-weight: 600;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary-custom:hover {
+            background-color: var(--primary-navy);
+            border-color: var(--primary-navy);
+            transform: translateY(-1px);
+        }
+
+        .performance-meter {
+            height: 8px;
+            background-color: #e5e7eb;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .performance-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .sidebar {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e5e7eb;
+            position: sticky;
+            top: 100px;
+        }
+
+        .sidebar-item {
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            color: var(--dark-gray);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-item:hover,
+        .sidebar-item.active {
+            background-color: var(--secondary-blue);
+            color: white;
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-header {
+                padding: 1rem 0;
+            }
+            
+            .upload-area {
+                padding: 2rem;
+            }
+            
+            .sidebar {
+                position: static;
+                margin-bottom: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-brain me-2"></i>HuddleAI
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#features">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="analytics.html">Analytics</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#testimonials">Testimonials</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#contact">Contact</a>
+                    </li>
+                    <li class="nav-item ms-2">
+                        <a class="btn btn-primary-custom" href="#upload">Upload Video</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Header -->
+    <section class="dashboard-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h1 class="display-5 fw-bold mb-3">Performance Analytics Dashboard</h1>
+                    <p class="lead mb-0">Monitor your team's performance, track player statistics, and gain insights from AI-powered analysis.</p>
+                </div>
+                <div class="col-lg-4 text-lg-end">
+                    <div class="d-flex justify-content-lg-end justify-content-start mt-3 mt-lg-0 gap-2">
+                        <button class="btn btn-outline-light">
+                            <i class="fas fa-download me-2"></i>Export Data
+                        </button>
+                        <button class="btn btn-light">
+                            <i class="fas fa-cog me-2"></i>Settings
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Dashboard Content -->
+    <div class="container py-4">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-lg-3 mb-4">
+                <div class="sidebar">
+                    <h6 class="fw-bold mb-3 text-uppercase text-muted">Navigation</h6>
+                    <a href="#overview" class="sidebar-item active">
+                        <i class="fas fa-chart-line me-2"></i>Overview
+                    </a>
+                    <a href="#players" class="sidebar-item">
+                        <i class="fas fa-users me-2"></i>Player Stats
+                    </a>
+                    <a href="#games" class="sidebar-item">
+                        <i class="fas fa-futbol me-2"></i>Game Analysis
+                    </a>
+                    <a href="#upload" class="sidebar-item">
+                        <i class="fas fa-upload me-2"></i>Upload Video
+                    </a>
+                    <a href="#reports" class="sidebar-item">
+                        <i class="fas fa-file-alt me-2"></i>Reports
+                    </a>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-lg-9">
+                <!-- Stats Cards -->
+                <div class="row g-3 mb-4">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="stat-card">
+                            <div class="stat-icon success">
+                                <i class="fas fa-video"></i>
+                            </div>
+                            <div class="stat-value">47</div>
+                            <div class="stat-label">Videos Analyzed</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="stat-card">
+                            <div class="stat-icon primary">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-value">23</div>
+                            <div class="stat-label">Active Players</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="stat-card">
+                            <div class="stat-icon warning">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <div class="stat-value">78%</div>
+                            <div class="stat-label">Win Rate</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="stat-card">
+                            <div class="stat-icon danger">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-value">142</div>
+                            <div class="stat-label">Hours Analyzed</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Row -->
+                <div class="row g-4 mb-4">
+                    <div class="col-lg-8">
+                        <div class="chart-card">
+                            <h3 class="chart-title">Team Performance Trends</h3>
+                            <canvas id="performanceChart" height="300"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="chart-card">
+                            <h3 class="chart-title">Player Position Analysis</h3>
+                            <canvas id="positionChart" height="300"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Upload Section -->
+                <div class="row g-4 mb-4" id="upload">
+                    <div class="col-lg-8">
+                        <div class="chart-card">
+                            <h3 class="chart-title">Upload New Game Video</h3>
+                            <div class="upload-area" onclick="document.getElementById('videoUpload').click()">
+                                <div class="upload-icon">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                </div>
+                                <h5 class="mb-2">Drag & Drop Your Video Here</h5>
+                                <p class="text-muted mb-3">or click to browse files</p>
+                                <p class="small text-muted">Supported formats: MP4, AVI, MOV (Max 2GB)</p>
+                                <input type="file" id="videoUpload" accept="video/*" style="display: none;">
+                            </div>
+                            <div class="mt-3">
+                                <button class="btn btn-primary-custom me-2">
+                                    <i class="fas fa-play me-2"></i>Start Analysis
+                                </button>
+                                <button class="btn btn-outline-secondary">
+                                    <i class="fas fa-cog me-2"></i>Advanced Settings
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="chart-card">
+                            <h3 class="chart-title">Processing Queue</h3>
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span class="small">Championship Final.mp4</span>
+                                    <span class="small">85%</span>
+                                </div>
+                                <div class="performance-meter">
+                                    <div class="performance-fill bg-success" style="width: 85%"></div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span class="small">Practice Session 03.mp4</span>
+                                    <span class="small">45%</span>
+                                </div>
+                                <div class="performance-meter">
+                                    <div class="performance-fill bg-warning" style="width: 45%"></div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span class="small">Scrimmage vs Rivals.mp4</span>
+                                    <span class="small">Queue</span>
+                                </div>
+                                <div class="performance-meter">
+                                    <div class="performance-fill bg-secondary" style="width: 0%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Analysis -->
+                <div class="recent-analysis">
+                    <h3 class="chart-title">Recent Analysis Results</h3>
+                    <div class="analysis-item">
+                        <div class="analysis-thumbnail" style="background-image: url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80');"></div>
+                        <div class="analysis-details flex-grow-1">
+                            <h6>Championship Game vs Eagles</h6>
+                            <small class="text-muted">Analyzed 2 hours ago • 90 min duration</small>
+                        </div>
+                        <div class="me-3">
+                            <span class="status-badge status-completed">Completed</span>
+                        </div>
+                        <div>
+                            <button class="btn btn-sm btn-outline-primary">
+                                <i class="fas fa-eye me-1"></i>View
+                            </button>
+                        </div>
+                    </div>
+                    <div class="analysis-item">
+                        <div class="analysis-thumbnail" style="background-image: url('https://images.unsplash.com/photo-1579952363873-27d3bfad9c0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80');"></div>
+                        <div class="analysis-details flex-grow-1">
+                            <h6>Training Session - Defensive Drills</h6>
+                            <small class="text-muted">Analyzing now • 45 min duration</small>
+                        </div>
+                        <div class="me-3">
+                            <span class="status-badge status-processing">Processing</span>
+                        </div>
+                        <div>
+                            <button class="btn btn-sm btn-outline-secondary" disabled>
+                                <i class="fas fa-spinner fa-spin me-1"></i>Wait
+                            </button>
+                        </div>
+                    </div>
+                    <div class="analysis-item">
+                        <div class="analysis-thumbnail" style="background-image: url('https://images.unsplash.com/photo-1546519638-68e109498ffc?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80');"></div>
+                        <div class="analysis-details flex-grow-1">
+                            <h6>Scrimmage vs Thunder Bolts</h6>
+                            <small class="text-muted">Analyzed yesterday • 75 min duration</small>
+                        </div>
+                        <div class="me-3">
+                            <span class="status-badge status-completed">Completed</span>
+                        </div>
+                        <div>
+                            <button class="btn btn-sm btn-outline-primary">
+                                <i class="fas fa-eye me-1"></i>View
+                            </button>
+                        </div>
+                    </div>
+                    <div class="analysis-item">
+                        <div class="analysis-thumbnail" style="background-image: url('https://images.unsplash.com/photo-1551698618-1dfe5d97d256?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80');"></div>
+                        <div class="analysis-details flex-grow-1">
+                            <h6>Practice - Passing Combinations</h6>
+                            <small class="text-muted">Analyzed 3 days ago • 60 min duration</small>
+                        </div>
+                        <div class="me-3">
+                            <span class="status-badge status-completed">Completed</span>
+                        </div>
+                        <div>
+                            <button class="btn btn-sm btn-outline-primary">
+                                <i class="fas fa-eye me-1"></i>View
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Performance Trends Chart
+        const performanceCtx = document.getElementById('performanceChart').getContext('2d');
+        new Chart(performanceCtx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'Win Rate %',
+                    data: [65, 72, 68, 78, 85, 78],
+                    borderColor: '#3b82f6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }, {
+                    label: 'Performance Score',
+                    data: [70, 75, 73, 82, 88, 85],
+                    borderColor: '#10b981',
+                    backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100
+                    }
+                }
+            }
+        });
+
+        // Position Analysis Chart
+        const positionCtx = document.getElementById('positionChart').getContext('2d');
+        new Chart(positionCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Forwards', 'Midfielders', 'Defenders', 'Goalkeepers'],
+                datasets: [{
+                    data: [30, 35, 25, 10],
+                    backgroundColor: [
+                        '#3b82f6',
+                        '#10b981',
+                        '#f59e0b',
+                        '#ef4444'
+                    ],
+                    borderWidth: 2,
+                    borderColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                    }
+                }
+            }
+        });
+
+        // File upload handling
+        document.getElementById('videoUpload').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const uploadArea = document.querySelector('.upload-area');
+                uploadArea.innerHTML = `
+                    <div class="upload-icon text-success">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h5 class="mb-2">File Selected: ${file.name}</h5>
+                    <p class="text-muted mb-3">Size: ${(file.size / (1024*1024)).toFixed(2)} MB</p>
+                    <p class="small text-success">Ready for analysis</p>
+                `;
+            }
+        });
+
+        // Smooth scrolling for sidebar links
+        document.querySelectorAll('.sidebar-item').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all items
+                document.querySelectorAll('.sidebar-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // Add active class to clicked item
+                this.classList.add('active');
+                
+                // Scroll to target if exists
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Simulate processing updates
+        setInterval(() => {
+            const progressBars = document.querySelectorAll('.performance-fill');
+            progressBars.forEach(bar => {
+                const currentWidth = parseInt(bar.style.width);
+                if (currentWidth < 100 && currentWidth > 0) {
+                    bar.style.width = Math.min(currentWidth + Math.random() * 5, 100) + '%';
+                }
+            });
+        }, 3000);
+    </script>
+</body>
+</html>

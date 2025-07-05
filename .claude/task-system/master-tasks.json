@@ -1,0 +1,1265 @@
+{
+  "metadata": {
+    "projectName": "Provider CMS System",
+    "specification": "PROVIDER-CMS-SPECIFICATION.md",
+    "totalTasks": 65,
+    "phases": 3,
+    "estimatedWeeks": 8,
+    "createdAt": "2025-01-13T15:30:00Z",
+    "lastUpdated": "2025-01-13T15:30:00Z",
+    "version": "1.0"
+  },
+  "phases": [
+    {
+      "phaseId": "PHASE-1",
+      "name": "Foundation (Weeks 1-3)",
+      "description": "Database schema, backend services, and GrapesJS integration",
+      "estimatedWeeks": 3,
+      "priority": "critical",
+      "taskCount": 30
+    },
+    {
+      "phaseId": "PHASE-2", 
+      "name": "Advanced Features (Weeks 4-6)",
+      "description": "Theme system, public rendering, analytics, and premium features",
+      "estimatedWeeks": 3,
+      "priority": "high",
+      "taskCount": 22
+    },
+    {
+      "phaseId": "PHASE-3",
+      "name": "Polish and Launch (Weeks 7-8)", 
+      "description": "Testing, optimization, documentation, and launch preparation",
+      "estimatedWeeks": 2,
+      "priority": "medium",
+      "taskCount": 13
+    }
+  ],
+  "tasks": [
+    {
+      "taskId": "CMS-001",
+      "phase": "PHASE-1",
+      "week": 1,
+      "title": "Create CmsPages database migration",
+      "description": "Create Entity Framework migration for CmsPages table with all indexes and constraints",
+      "priority": "critical",
+      "estimatedHours": 2,
+      "dependencies": [],
+      "files": [
+        "src/API/MeAndMyDog.API/Data/Migrations/*_CreateCmsPagesTable.cs"
+      ],
+      "category": "database",
+      "acceptance": [
+        "CmsPages table created with all fields",
+        "Foreign key to PetServiceProfiles",
+        "Unique constraint on UrlTag",
+        "All indexes created",
+        "Migration applies successfully"
+      ]
+    },
+    {
+      "taskId": "CMS-002",
+      "phase": "PHASE-1",
+      "week": 1,
+      "title": "Create CmsWidgets database migration",
+      "description": "Create Entity Framework migration for CmsWidgets table with cascade delete",
+      "priority": "critical",
+      "estimatedHours": 2,
+      "dependencies": ["CMS-001"],
+      "files": [
+        "src/API/MeAndMyDog.API/Data/Migrations/*_CreateCmsWidgetsTable.cs"
+      ],
+      "category": "database",
+      "acceptance": [
+        "CmsWidgets table created",
+        "Foreign key to CmsPages with CASCADE DELETE",
+        "Position index created",
+        "JSON columns for configuration/content/style"
+      ]
+    },
+    {
+      "taskId": "CMS-003",
+      "phase": "PHASE-1",
+      "week": 1,
+      "title": "Create CmsWidgetTypes database migration",
+      "description": "Create reference table for widget types with seed data",
+      "priority": "critical",
+      "estimatedHours": 2,
+      "dependencies": [],
+      "files": [
+        "src/API/MeAndMyDog.API/Data/Migrations/*_CreateCmsWidgetTypesTable.cs"
+      ],
+      "category": "database",
+      "acceptance": [
+        "CmsWidgetTypes table created",
+        "Seed data for 6 core widget types",
+        "Unique constraint on TypeName"
+      ]
+    },
+    {
+      "taskId": "CMS-004",
+      "phase": "PHASE-1",
+      "week": 1,
+      "title": "Create CmsPageViews database migration",
+      "description": "Create analytics table for tracking page views",
+      "priority": "high",
+      "estimatedHours": 1,
+      "dependencies": ["CMS-001"],
+      "files": [
+        "src/API/MeAndMyDog.API/Data/Migrations/*_CreateCmsPageViewsTable.cs"
+      ],
+      "category": "database",
+      "acceptance": [
+        "CmsPageViews table created",
+        "Indexes for analytics queries",
+        "Optional user tracking"
+      ]
+    },
+    {
+      "taskId": "CMS-005",
+      "phase": "PHASE-1",
+      "week": 1,
+      "title": "Create CmsPageBookings database migration",
+      "description": "Create table linking CMS pages to booking conversions",
+      "priority": "high",
+      "estimatedHours": 1,
+      "dependencies": ["CMS-001"],
+      "files": [
+        "src/API/MeAndMyDog.API/Data/Migrations/*_CreateCmsPageBookingsTable.cs"
+      ],
+      "category": "database",
+      "acceptance": [
+        "CmsPageBookings table created",
+        "Foreign keys to CmsPages and PetSittingOpportunities",
+        "Conversion tracking ready"
+      ]
+    },
+    {
+      "taskId": "CMS-006",
+      "phase": "PHASE-1",
+      "week": 1,
+      "title": "Create CmsPage entity model",
+      "description": "Create Entity Framework entity for CmsPage with navigation properties",
+      "priority": "critical",
+      "estimatedHours": 2,
+      "dependencies": ["CMS-001"],
+      "files": [
+        "src/API/MeAndMyDog.API/Entities/CmsPage.cs"
+      ],
+      "category": "entities",
+      "acceptance": [
+        "CmsPage entity with all properties",
+        "Navigation to CmsWidgets collection",
+        "JSON property handling for theme/SEO config",
+        "Audit fields (Created/Modified dates)"
+      ]
+    },
+    {
+      "taskId": "CMS-007",
+      "phase": "PHASE-1",
+      "week": 1,
+      "title": "Create CmsWidget entity model",
+      "description": "Create Entity Framework entity for CmsWidget with JSON handling",
+      "priority": "critical",
+      "estimatedHours": 2,
+      "dependencies": ["CMS-002"],
+      "files": [
+        "src/API/MeAndMyDog.API/Entities/CmsWidget.cs"
+      ],
+      "category": "entities",
+      "acceptance": [
+        "CmsWidget entity with JSON properties",
+        "Navigation to CmsPage",
+        "Enum for WidgetType",
+        "Position ordering support"
+      ]
+    },
+    {
+      "taskId": "CMS-008",
+      "phase": "PHASE-1",
+      "week": 1,
+      "title": "Create CmsWidgetType entity model",
+      "description": "Create reference entity for widget type definitions",
+      "priority": "high",
+      "estimatedHours": 1,
+      "dependencies": ["CMS-003"],
+      "files": [
+        "src/API/MeAndMyDog.API/Entities/CmsWidgetType.cs"
+      ],
+      "category": "entities",
+      "acceptance": [
+        "CmsWidgetType entity",
+        "Default configuration JSON",
+        "Premium-only flag support"
+      ]
+    },
+    {
+      "taskId": "CMS-009",
+      "phase": "PHASE-1",
+      "week": 1,
+      "title": "Update DbContext with CMS entities",
+      "description": "Add CMS entities to ApplicationDbContext with proper configuration",
+      "priority": "critical",
+      "estimatedHours": 2,
+      "dependencies": ["CMS-006", "CMS-007", "CMS-008"],
+      "files": [
+        "src/API/MeAndMyDog.API/Data/ApplicationDbContext.cs"
+      ],
+      "category": "data-context",
+      "acceptance": [
+        "DbSets for all CMS entities",
+        "Entity configurations in OnModelCreating",
+        "JSON column configurations",
+        "Index definitions"
+      ]
+    },
+    {
+      "taskId": "CMS-010",
+      "phase": "PHASE-1",
+      "week": 1,
+      "title": "Create CMS DTOs",
+      "description": "Create data transfer objects for CMS API operations",
+      "priority": "critical",
+      "estimatedHours": 3,
+      "dependencies": [],
+      "files": [
+        "src/API/MeAndMyDog.API/Models/Cms/CmsPageDto.cs",
+        "src/API/MeAndMyDog.API/Models/Cms/CmsWidgetDto.cs",
+        "src/API/MeAndMyDog.API/Models/Cms/CreateCmsPageRequest.cs",
+        "src/API/MeAndMyDog.API/Models/Cms/UpdateCmsPageRequest.cs"
+      ],
+      "category": "models",
+      "acceptance": [
+        "Complete DTO set for all CMS operations",
+        "Validation attributes on request models",
+        "AutoMapper-ready properties",
+        "JSON schema definitions for widget configs"
+      ]
+    },
+    {
+      "taskId": "CMS-011",
+      "phase": "PHASE-1",
+      "week": 1,
+      "title": "Create ICmsPageService interface",
+      "description": "Define service interface for CMS page operations",
+      "priority": "critical",
+      "estimatedHours": 1,
+      "dependencies": ["CMS-010"],
+      "files": [
+        "src/API/MeAndMyDog.API/Services/Cms/ICmsPageService.cs"
+      ],
+      "category": "interfaces",
+      "acceptance": [
+        "CRUD operations for CMS pages",
+        "Tag validation method",
+        "Publishing workflow methods",
+        "Page rendering methods"
+      ]
+    },
+    {
+      "taskId": "CMS-012",
+      "phase": "PHASE-1",
+      "week": 1,
+      "title": "Implement CmsPageService",
+      "description": "Implement core CMS page service with business logic",
+      "priority": "critical",
+      "estimatedHours": 4,
+      "dependencies": ["CMS-011", "CMS-009"],
+      "files": [
+        "src/API/MeAndMyDog.API/Services/Cms/CmsPageService.cs"
+      ],
+      "category": "services",
+      "acceptance": [
+        "Complete CRUD implementation",
+        "URL tag uniqueness validation",
+        "Premium user access validation",
+        "Page publishing workflow",
+        "Error handling and logging"
+      ]
+    },
+    {
+      "taskId": "CMS-013",
+      "phase": "PHASE-1",
+      "week": 1,
+      "title": "Create IWidgetService interface",
+      "description": "Define service interface for widget operations",
+      "priority": "critical",
+      "estimatedHours": 1,
+      "dependencies": ["CMS-010"],
+      "files": [
+        "src/API/MeAndMyDog.API/Services/Cms/IWidgetService.cs"
+      ],
+      "category": "interfaces",
+      "acceptance": [
+        "Widget CRUD operations",
+        "Widget positioning methods",
+        "Configuration validation",
+        "Widget type management"
+      ]
+    },
+    {
+      "taskId": "CMS-014",
+      "phase": "PHASE-1",
+      "week": 1,
+      "title": "Implement WidgetService",
+      "description": "Implement widget service with configuration validation",
+      "priority": "critical",
+      "estimatedHours": 3,
+      "dependencies": ["CMS-013", "CMS-009"],
+      "files": [
+        "src/API/MeAndMyDog.API/Services/Cms/WidgetService.cs"
+      ],
+      "category": "services",
+      "acceptance": [
+        "Widget management implementation",
+        "JSON configuration validation",
+        "Position reordering logic",
+        "Widget type constraints"
+      ]
+    },
+    {
+      "taskId": "CMS-015",
+      "phase": "PHASE-1",
+      "week": 1,
+      "title": "Create CmsController API endpoints",
+      "description": "Create REST API controller for CMS operations",
+      "priority": "critical",
+      "estimatedHours": 4,
+      "dependencies": ["CMS-012", "CMS-014"],
+      "files": [
+        "src/API/MeAndMyDog.API/Controllers/CmsController.cs"
+      ],
+      "category": "controllers",
+      "acceptance": [
+        "Complete REST API for CMS pages",
+        "Premium subscription authorization",
+        "Proper HTTP status codes",
+        "OpenAPI documentation",
+        "Async operations throughout"
+      ]
+    },
+    {
+      "taskId": "CMS-016",
+      "phase": "PHASE-1",
+      "week": 1,
+      "title": "Create tag validation API endpoint",
+      "description": "Create real-time tag uniqueness validation endpoint",
+      "priority": "high",
+      "estimatedHours": 2,
+      "dependencies": ["CMS-012"],
+      "files": [
+        "src/API/MeAndMyDog.API/Controllers/CmsController.cs"
+      ],
+      "category": "controllers",
+      "acceptance": [
+        "GET /api/cms/validate-tag/{tag} endpoint",
+        "Real-time validation response",
+        "Debounced for performance",
+        "Proper caching headers"
+      ]
+    },
+    {
+      "taskId": "CMS-017",
+      "phase": "PHASE-1",
+      "week": 1,
+      "title": "Register CMS services in DI container",
+      "description": "Configure dependency injection for CMS services",
+      "priority": "critical",
+      "estimatedHours": 1,
+      "dependencies": ["CMS-012", "CMS-014"],
+      "files": [
+        "src/API/MeAndMyDog.API/Extensions/ServiceCollectionExtensions.cs"
+      ],
+      "category": "configuration",
+      "acceptance": [
+        "All CMS services registered",
+        "Proper service lifetimes",
+        "Interface-to-implementation mappings"
+      ]
+    },
+    {
+      "taskId": "CMS-018",
+      "phase": "PHASE-1",
+      "week": 2,
+      "title": "Install and configure GrapesJS packages",
+      "description": "Set up GrapesJS and Vue.js integration packages",
+      "priority": "critical",
+      "estimatedHours": 2,
+      "dependencies": [],
+      "files": [
+        "src/Web/MeAndMyDog.WebApp/package.json",
+        "src/Web/MeAndMyDog.WebApp/vite.config.js"
+      ],
+      "category": "frontend-setup",
+      "acceptance": [
+        "GrapesJS 0.21.x installed",
+        "Vue.js 3.4+ configured",
+        "Vite build configuration",
+        "TailwindCSS integration maintained"
+      ]
+    },
+    {
+      "taskId": "CMS-019",
+      "phase": "PHASE-1",
+      "week": 2,
+      "title": "Create GrapesJS Vue component wrapper",
+      "description": "Create Vue component that wraps GrapesJS editor",
+      "priority": "critical",
+      "estimatedHours": 4,
+      "dependencies": ["CMS-018"],
+      "files": [
+        "src/Web/MeAndMyDog.WebApp/Components/Cms/GrapesJSEditor.vue"
+      ],
+      "category": "frontend-components",
+      "acceptance": [
+        "GrapesJS editor initialization",
+        "Vue reactive data binding",
+        "Save/load functionality",
+        "Plugin system foundation"
+      ]
+    },
+    {
+      "taskId": "CMS-020",
+      "phase": "PHASE-1",
+      "week": 2,
+      "title": "Create CMS dashboard layout component",
+      "description": "Create main dashboard layout for CMS editor",
+      "priority": "critical",
+      "estimatedHours": 3,
+      "dependencies": ["CMS-019"],
+      "files": [
+        "src/Web/MeAndMyDog.WebApp/Components/Cms/CmsDashboard.vue"
+      ],
+      "category": "frontend-components",
+      "acceptance": [
+        "Header with save/preview/publish actions",
+        "URL tag validation UI",
+        "Editor container",
+        "Widget library sidebar",
+        "Responsive layout"
+      ]
+    },
+    {
+      "taskId": "CMS-021",
+      "phase": "PHASE-1",
+      "week": 2,
+      "title": "Create tag validation composable",
+      "description": "Create Vue composable for real-time tag validation",
+      "priority": "high",
+      "estimatedHours": 2,
+      "dependencies": ["CMS-016"],
+      "files": [
+        "src/Web/MeAndMyDog.WebApp/Composables/useTagValidation.js"
+      ],
+      "category": "frontend-composables",
+      "acceptance": [
+        "Real-time validation with debouncing",
+        "API integration",
+        "Reactive validation state",
+        "Error handling"
+      ]
+    },
+    {
+      "taskId": "CMS-022",
+      "phase": "PHASE-1",
+      "week": 2,
+      "title": "Create CMS API service",
+      "description": "Create frontend service for CMS API communication",
+      "priority": "critical",
+      "estimatedHours": 3,
+      "dependencies": ["CMS-015"],
+      "files": [
+        "src/Web/MeAndMyDog.WebApp/Services/CmsApiService.js"
+      ],
+      "category": "frontend-services",
+      "acceptance": [
+        "Complete API integration",
+        "Axios-based HTTP client",
+        "Error handling",
+        "TypeScript definitions"
+      ]
+    },
+    {
+      "taskId": "CMS-023",
+      "phase": "PHASE-1",
+      "week": 2,
+      "title": "Create widget registration system",
+      "description": "Create system for registering custom widgets in GrapesJS",
+      "priority": "critical",
+      "estimatedHours": 4,
+      "dependencies": ["CMS-019"],
+      "files": [
+        "src/Web/MeAndMyDog.WebApp/Services/WidgetRegistration.js",
+        "src/Web/MeAndMyDog.WebApp/Widgets/BaseWidget.js"
+      ],
+      "category": "frontend-architecture",
+      "acceptance": [
+        "Widget plugin architecture",
+        "Dynamic widget loading",
+        "Configuration UI system",
+        "Preview rendering system"
+      ]
+    },
+    {
+      "taskId": "CMS-024",
+      "phase": "PHASE-1",
+      "week": 2,
+      "title": "Implement page save/load functionality",
+      "description": "Connect GrapesJS editor to API for persistence",
+      "priority": "critical",
+      "estimatedHours": 3,
+      "dependencies": ["CMS-019", "CMS-022"],
+      "files": [
+        "src/Web/MeAndMyDog.WebApp/Components/Cms/GrapesJSEditor.vue"
+      ],
+      "category": "frontend-integration",
+      "acceptance": [
+        "Save page content to API",
+        "Load existing page content",
+        "Auto-save functionality",
+        "Version conflict handling"
+      ]
+    },
+    {
+      "taskId": "CMS-025",
+      "phase": "PHASE-1",
+      "week": 2,
+      "title": "Create CMS routes and navigation",
+      "description": "Set up routing for CMS dashboard and editor",
+      "priority": "high",
+      "estimatedHours": 2,
+      "dependencies": ["CMS-020"],
+      "files": [
+        "src/Web/MeAndMyDog.WebApp/Controllers/CmsController.cs",
+        "src/Web/MeAndMyDog.WebApp/Views/Cms/Dashboard.cshtml"
+      ],
+      "category": "routing",
+      "acceptance": [
+        "CMS dashboard route",
+        "Premium user access control",
+        "SEO-friendly URLs",
+        "Breadcrumb navigation"
+      ]
+    },
+    {
+      "taskId": "CMS-026",
+      "phase": "PHASE-1",
+      "week": 3,
+      "title": "Create booking widget component",
+      "description": "Implement booking widget for GrapesJS with service integration",
+      "priority": "critical",
+      "estimatedHours": 5,
+      "dependencies": ["CMS-023"],
+      "files": [
+        "src/Web/MeAndMyDog.WebApp/Widgets/BookingWidget.vue",
+        "src/Web/MeAndMyDog.WebApp/Widgets/BookingWidget.js"
+      ],
+      "category": "widgets",
+      "acceptance": [
+        "Service selection interface",
+        "Date/time picker integration",
+        "Pricing display",
+        "Form validation",
+        "Integration with existing booking system"
+      ]
+    },
+    {
+      "taskId": "CMS-027",
+      "phase": "PHASE-1",
+      "week": 3,
+      "title": "Create HTML content widget component",
+      "description": "Implement rich text editor widget with image support",
+      "priority": "critical",
+      "estimatedHours": 4,
+      "dependencies": ["CMS-023"],
+      "files": [
+        "src/Web/MeAndMyDog.WebApp/Widgets/ContentWidget.vue",
+        "src/Web/MeAndMyDog.WebApp/Widgets/ContentWidget.js"
+      ],
+      "category": "widgets",
+      "acceptance": [
+        "WYSIWYG editor integration",
+        "Image upload and embedding",
+        "HTML sanitization",
+        "Typography controls",
+        "Content preview"
+      ]
+    },
+    {
+      "taskId": "CMS-028",
+      "phase": "PHASE-1",
+      "week": 3,
+      "title": "Create image gallery widget component",
+      "description": "Implement gallery widget with drag-drop upload",
+      "priority": "high",
+      "estimatedHours": 4,
+      "dependencies": ["CMS-023"],
+      "files": [
+        "src/Web/MeAndMyDog.WebApp/Widgets/GalleryWidget.vue",
+        "src/Web/MeAndMyDog.WebApp/Widgets/GalleryWidget.js"
+      ],
+      "category": "widgets",
+      "acceptance": [
+        "Drag-and-drop image upload",
+        "Image optimization",
+        "Gallery layout options",
+        "Lightbox integration",
+        "Image categorization"
+      ]
+    },
+    {
+      "taskId": "CMS-029",
+      "phase": "PHASE-1",
+      "week": 3,
+      "title": "Create review showcase widget component",
+      "description": "Implement review widget with carousel display",
+      "priority": "high",
+      "estimatedHours": 4,
+      "dependencies": ["CMS-023"],
+      "files": [
+        "src/Web/MeAndMyDog.WebApp/Widgets/ReviewWidget.vue",
+        "src/Web/MeAndMyDog.WebApp/Widgets/ReviewWidget.js"
+      ],
+      "category": "widgets",
+      "acceptance": [
+        "Review selection interface",
+        "Star rating display",
+        "Carousel/grid layouts",
+        "Custom testimonial support",
+        "Photo integration"
+      ]
+    },
+    {
+      "taskId": "CMS-030",
+      "phase": "PHASE-1",
+      "week": 3,
+      "title": "Create widget configuration system",
+      "description": "Implement configuration UI for all widgets",
+      "priority": "critical",
+      "estimatedHours": 4,
+      "dependencies": ["CMS-026", "CMS-027", "CMS-028", "CMS-029"],
+      "files": [
+        "src/Web/MeAndMyDog.WebApp/Components/Cms/WidgetConfigurator.vue",
+        "src/Web/MeAndMyDog.WebApp/Services/WidgetConfigSchema.js"
+      ],
+      "category": "frontend-architecture",
+      "acceptance": [
+        "Dynamic configuration forms",
+        "Real-time preview updates",
+        "Configuration validation",
+        "Schema-driven UI generation"
+      ]
+    },
+    {
+      "taskId": "CMS-031",
+      "phase": "PHASE-2",
+      "week": 4,
+      "title": "Create theme configuration system",
+      "description": "Implement color scheme and font customization",
+      "priority": "critical",
+      "estimatedHours": 4,
+      "dependencies": ["CMS-030"],
+      "files": [
+        "src/Web/MeAndMyDog.WebApp/Services/ThemeManager.js",
+        "src/Web/MeAndMyDog.WebApp/Components/Cms/ThemeCustomizer.vue"
+      ],
+      "category": "theming",
+      "acceptance": [
+        "Color picker integration",
+        "Font selection system",
+        "CSS custom properties generation",
+        "Real-time theme preview",
+        "Theme persistence"
+      ]
+    },
+    {
+      "taskId": "CMS-032",
+      "phase": "PHASE-2",
+      "week": 4,
+      "title": "Create layout template system",
+      "description": "Implement pre-built layout templates",
+      "priority": "high",
+      "estimatedHours": 4,
+      "dependencies": ["CMS-031"],
+      "files": [
+        "src/Web/MeAndMyDog.WebApp/Templates/LayoutTemplates.js",
+        "src/Web/MeAndMyDog.WebApp/Components/Cms/TemplateSelector.vue"
+      ],
+      "category": "templates",
+      "acceptance": [
+        "5+ pre-built templates",
+        "Template preview system",
+        "One-click template application",
+        "Template customization support"
+      ]
+    },
+    {
+      "taskId": "CMS-033",
+      "phase": "PHASE-2",
+      "week": 4,
+      "title": "Implement CSS custom properties system",
+      "description": "Create dynamic CSS variable generation for themes",
+      "priority": "critical",
+      "estimatedHours": 3,
+      "dependencies": ["CMS-031"],
+      "files": [
+        "src/Web/MeAndMyDog.WebApp/Services/CssVariableGenerator.js"
+      ],
+      "category": "styling",
+      "acceptance": [
+        "Dynamic CSS variable injection",
+        "Theme variable compilation",
+        "Fallback color system",
+        "Performance optimization"
+      ]
+    },
+    {
+      "taskId": "CMS-034",
+      "phase": "PHASE-2",
+      "week": 4,
+      "title": "Create theme preview functionality",
+      "description": "Implement real-time theme preview in editor",
+      "priority": "high",
+      "estimatedHours": 3,
+      "dependencies": ["CMS-033"],
+      "files": [
+        "src/Web/MeAndMyDog.WebApp/Components/Cms/ThemePreview.vue"
+      ],
+      "category": "frontend-features",
+      "acceptance": [
+        "Real-time preview updates",
+        "Multiple device previews",
+        "Theme switching without reload",
+        "Preview performance optimization"
+      ]
+    },
+    {
+      "taskId": "CMS-035",
+      "phase": "PHASE-2",
+      "week": 5,
+      "title": "Create public page controller",
+      "description": "Implement controller for rendering public CMS pages",
+      "priority": "critical",
+      "estimatedHours": 3,
+      "dependencies": ["CMS-012"],
+      "files": [
+        "src/Web/MeAndMyDog.WebApp/Controllers/PublicCmsController.cs"
+      ],
+      "category": "controllers",
+      "acceptance": [
+        "Dynamic route handling for custom URLs",
+        "Page not found handling",
+        "SEO-friendly rendering",
+        "Performance optimizations"
+      ]
+    },
+    {
+      "taskId": "CMS-036",
+      "phase": "PHASE-2",
+      "week": 5,
+      "title": "Create public page view template",
+      "description": "Create Razor view for rendering public CMS pages",
+      "priority": "critical",
+      "estimatedHours": 4,
+      "dependencies": ["CMS-035"],
+      "files": [
+        "src/Web/MeAndMyDog.WebApp/Views/PublicCms/Page.cshtml"
+      ],
+      "category": "views",
+      "acceptance": [
+        "Dynamic widget rendering",
+        "SEO meta tag injection",
+        "Responsive layout",
+        "Social media integration",
+        "Schema.org markup"
+      ]
+    },
+    {
+      "taskId": "CMS-037",
+      "phase": "PHASE-2",
+      "week": 5,
+      "title": "Implement SEO optimization features",
+      "description": "Add comprehensive SEO support for CMS pages",
+      "priority": "high",
+      "estimatedHours": 4,
+      "dependencies": ["CMS-036"],
+      "files": [
+        "src/Web/MeAndMyDog.WebApp/Services/SeoOptimizer.cs",
+        "src/Web/MeAndMyDog.WebApp/Components/Cms/SeoEditor.vue"
+      ],
+      "category": "seo",
+      "acceptance": [
+        "Meta title and description",
+        "Open Graph tags",
+        "Twitter Card support",
+        "Schema.org structured data",
+        "SEO score analysis"
+      ]
+    },
+    {
+      "taskId": "CMS-038",
+      "phase": "PHASE-2",
+      "week": 5,
+      "title": "Implement page caching system",
+      "description": "Create caching layer for public CMS pages",
+      "priority": "critical",
+      "estimatedHours": 3,
+      "dependencies": ["CMS-035"],
+      "files": [
+        "src/API/MeAndMyDog.API/Services/Cms/CmsPageCacheService.cs"
+      ],
+      "category": "performance",
+      "acceptance": [
+        "Memory caching with expiration",
+        "Cache invalidation on updates",
+        "Performance monitoring",
+        "Cache warming strategies"
+      ]
+    },
+    {
+      "taskId": "CMS-039",
+      "phase": "PHASE-2",
+      "week": 5,
+      "title": "Create sitemap generation",
+      "description": "Automatically generate XML sitemaps for CMS pages",
+      "priority": "medium",
+      "estimatedHours": 2,
+      "dependencies": ["CMS-035"],
+      "files": [
+        "src/Web/MeAndMyDog.WebApp/Services/SitemapGenerator.cs",
+        "src/Web/MeAndMyDog.WebApp/Controllers/SitemapController.cs"
+      ],
+      "category": "seo",
+      "acceptance": [
+        "XML sitemap generation",
+        "Automatic updates on publish",
+        "Search engine submission",
+        "Sitemap index support"
+      ]
+    },
+    {
+      "taskId": "CMS-040",
+      "phase": "PHASE-2",
+      "week": 6,
+      "title": "Implement page view tracking",
+      "description": "Track and analyze CMS page views for analytics",
+      "priority": "high",
+      "estimatedHours": 3,
+      "dependencies": ["CMS-035"],
+      "files": [
+        "src/API/MeAndMyDog.API/Services/Analytics/PageViewTracker.cs"
+      ],
+      "category": "analytics",
+      "acceptance": [
+        "Anonymous view tracking",
+        "User session tracking",
+        "Referrer analysis",
+        "Geographic data collection",
+        "Privacy compliance"
+      ]
+    },
+    {
+      "taskId": "CMS-041",
+      "phase": "PHASE-2",
+      "week": 6,
+      "title": "Create booking conversion tracking",
+      "description": "Track booking conversions from CMS pages",
+      "priority": "high",
+      "estimatedHours": 3,
+      "dependencies": ["CMS-040", "CMS-026"],
+      "files": [
+        "src/API/MeAndMyDog.API/Services/Analytics/ConversionTracker.cs"
+      ],
+      "category": "analytics",
+      "acceptance": [
+        "Booking conversion attribution",
+        "Widget-level tracking",
+        "Conversion funnel analysis",
+        "Revenue tracking"
+      ]
+    },
+    {
+      "taskId": "CMS-042",
+      "phase": "PHASE-2",
+      "week": 6,
+      "title": "Create admin analytics dashboard",
+      "description": "Build comprehensive analytics dashboard for admins",
+      "priority": "high",
+      "estimatedHours": 5,
+      "dependencies": ["CMS-040", "CMS-041"],
+      "files": [
+        "src/Web/MeAndMyDog.WebApp/Views/Admin/CmsAnalytics.cshtml",
+        "src/Web/MeAndMyDog.WebApp/Components/Analytics/CmsDashboard.vue"
+      ],
+      "category": "admin-features",
+      "acceptance": [
+        "Page view analytics",
+        "Conversion metrics",
+        "Provider performance rankings",
+        "Interactive charts and graphs",
+        "Export functionality"
+      ]
+    },
+    {
+      "taskId": "CMS-043",
+      "phase": "PHASE-2",
+      "week": 6,
+      "title": "Implement premium feature gates",
+      "description": "Add subscription validation throughout CMS system",
+      "priority": "critical",
+      "estimatedHours": 3,
+      "dependencies": ["CMS-015"],
+      "files": [
+        "src/API/MeAndMyDog.API/Attributes/RequirePremiumSubscriptionAttribute.cs",
+        "src/Web/MeAndMyDog.WebApp/Services/SubscriptionValidator.js"
+      ],
+      "category": "security",
+      "acceptance": [
+        "Premium-only widget restrictions",
+        "Feature usage limits",
+        "Subscription upgrade prompts",
+        "Grace period handling"
+      ]
+    },
+    {
+      "taskId": "CMS-044",
+      "phase": "PHASE-2",
+      "week": 6,
+      "title": "Create subscription validation service",
+      "description": "Implement backend service for subscription checking",
+      "priority": "critical",
+      "estimatedHours": 3,
+      "dependencies": ["CMS-043"],
+      "files": [
+        "src/API/MeAndMyDog.API/Services/Subscription/CmsSubscriptionService.cs"
+      ],
+      "category": "services",
+      "acceptance": [
+        "Real-time subscription validation",
+        "Feature access control",
+        "Usage limit enforcement",
+        "Billing integration"
+      ]
+    },
+    {
+      "taskId": "CMS-045",
+      "phase": "PHASE-2",
+      "week": 6,
+      "title": "Implement performance monitoring",
+      "description": "Add performance tracking and monitoring for CMS",
+      "priority": "medium",
+      "estimatedHours": 3,
+      "dependencies": ["CMS-038"],
+      "files": [
+        "src/API/MeAndMyDog.API/Services/Monitoring/CmsPerformanceMonitor.cs"
+      ],
+      "category": "monitoring",
+      "acceptance": [
+        "Page load time tracking",
+        "Editor performance metrics",
+        "Resource usage monitoring",
+        "Alert system integration"
+      ]
+    },
+    {
+      "taskId": "CMS-046",
+      "phase": "PHASE-2",
+      "week": 6,
+      "title": "Create provider analytics views",
+      "description": "Give providers access to their page analytics",
+      "priority": "medium",
+      "estimatedHours": 4,
+      "dependencies": ["CMS-040"],
+      "files": [
+        "src/Web/MeAndMyDog.WebApp/Views/Provider/Analytics.cshtml",
+        "src/Web/MeAndMyDog.WebApp/Components/Provider/AnalyticsSummary.vue"
+      ],
+      "category": "provider-features",
+      "acceptance": [
+        "Page view summaries",
+        "Booking conversion rates",
+        "Popular content insights",
+        "Performance recommendations"
+      ]
+    },
+    {
+      "taskId": "CMS-047",
+      "phase": "PHASE-3",
+      "week": 7,
+      "title": "Create comprehensive test suite",
+      "description": "Implement full test coverage for CMS system",
+      "priority": "critical",
+      "estimatedHours": 6,
+      "dependencies": ["CMS-030"],
+      "files": [
+        "tests/MeAndMyDog.WebApp.Tests/Components/Cms/",
+        "tests/MeAndMyDog.API.Tests/Integration/CmsIntegrationTests.cs"
+      ],
+      "category": "testing",
+      "acceptance": [
+        "90%+ test coverage",
+        "End-to-end testing",
+        "Performance testing",
+        "Security testing",
+        "Cross-browser testing"
+      ]
+    },
+    {
+      "taskId": "CMS-048",
+      "phase": "PHASE-3",
+      "week": 7,
+      "title": "Implement performance optimizations",
+      "description": "Optimize CMS system for production performance",
+      "priority": "high",
+      "estimatedHours": 4,
+      "dependencies": ["CMS-045"],
+      "files": [
+        "src/Web/MeAndMyDog.WebApp/Services/PerformanceOptimizer.js",
+        "src/API/MeAndMyDog.API/Services/Cms/OptimizedCmsPageService.cs"
+      ],
+      "category": "performance",
+      "acceptance": [
+        "< 2 second page load times",
+        "< 500ms editor interactions",
+        "Optimized database queries",
+        "CDN integration ready"
+      ]
+    },
+    {
+      "taskId": "CMS-049",
+      "phase": "PHASE-3",
+      "week": 7,
+      "title": "Complete mobile responsiveness testing",
+      "description": "Ensure full mobile compatibility across all devices",
+      "priority": "high",
+      "estimatedHours": 4,
+      "dependencies": ["CMS-030"],
+      "files": [
+        "tests/MeAndMyDog.WebApp.Tests/Mobile/ResponsiveTests.cs"
+      ],
+      "category": "testing",
+      "acceptance": [
+        "Touch-friendly editor interface",
+        "Mobile widget previews",
+        "Responsive public pages",
+        "Cross-device testing"
+      ]
+    },
+    {
+      "taskId": "CMS-050",
+      "phase": "PHASE-3",
+      "week": 7,
+      "title": "Implement cross-browser compatibility",
+      "description": "Ensure CMS works across all major browsers",
+      "priority": "high",
+      "estimatedHours": 3,
+      "dependencies": ["CMS-047"],
+      "files": [
+        "src/Web/MeAndMyDog.WebApp/Services/BrowserCompatibility.js"
+      ],
+      "category": "compatibility",
+      "acceptance": [
+        "Chrome, Firefox, Safari, Edge support",
+        "Polyfill integration",
+        "Feature detection",
+        "Graceful degradation"
+      ]
+    },
+    {
+      "taskId": "CMS-051",
+      "phase": "PHASE-3",
+      "week": 7,
+      "title": "Implement accessibility compliance",
+      "description": "Ensure WCAG 2.1 AA compliance for CMS system",
+      "priority": "high",
+      "estimatedHours": 4,
+      "dependencies": ["CMS-049"],
+      "files": [
+        "src/Web/MeAndMyDog.WebApp/Services/AccessibilityEnhancer.js",
+        "src/Web/MeAndMyDog.WebApp/Styles/accessibility.css"
+      ],
+      "category": "accessibility",
+      "acceptance": [
+        "Screen reader compatibility",
+        "Keyboard navigation support",
+        "High contrast themes",
+        "Focus management",
+        "ARIA labels throughout"
+      ]
+    },
+    {
+      "taskId": "CMS-052",
+      "phase": "PHASE-3",
+      "week": 7,
+      "title": "Create security hardening",
+      "description": "Implement comprehensive security measures",
+      "priority": "critical",
+      "estimatedHours": 4,
+      "dependencies": ["CMS-043"],
+      "files": [
+        "src/API/MeAndMyDog.API/Security/CmsSecurityService.cs",
+        "src/Web/MeAndMyDog.WebApp/Security/CsrfProtection.js"
+      ],
+      "category": "security",
+      "acceptance": [
+        "Input sanitization",
+        "CSRF protection",
+        "XSS prevention",
+        "File upload security",
+        "Rate limiting"
+      ]
+    },
+    {
+      "taskId": "CMS-053",
+      "phase": "PHASE-3",
+      "week": 8,
+      "title": "Create user documentation",
+      "description": "Write comprehensive user guide for CMS system",
+      "priority": "high",
+      "estimatedHours": 4,
+      "dependencies": ["CMS-051"],
+      "files": [
+        "docs/cms-user-guide.md",
+        "src/Web/MeAndMyDog.WebApp/wwwroot/docs/cms-help.html"
+      ],
+      "category": "documentation",
+      "acceptance": [
+        "Step-by-step tutorials",
+        "Widget configuration guides",
+        "Troubleshooting section",
+        "Best practices guide",
+        "FAQ section"
+      ]
+    },
+    {
+      "taskId": "CMS-054",
+      "phase": "PHASE-3",
+      "week": 8,
+      "title": "Create video tutorials",
+      "description": "Produce video tutorials for CMS features",
+      "priority": "medium",
+      "estimatedHours": 6,
+      "dependencies": ["CMS-053"],
+      "files": [
+        "src/Web/MeAndMyDog.WebApp/wwwroot/videos/cms-tutorials/"
+      ],
+      "category": "documentation",
+      "acceptance": [
+        "Getting started video",
+        "Widget usage tutorials",
+        "Advanced features guide",
+        "Troubleshooting videos",
+        "Embedded help system"
+      ]
+    },
+    {
+      "taskId": "CMS-055",
+      "phase": "PHASE-3",
+      "week": 8,
+      "title": "Create developer API documentation",
+      "description": "Document all CMS APIs for future development",
+      "priority": "medium",
+      "estimatedHours": 3,
+      "dependencies": ["CMS-015"],
+      "files": [
+        "docs/cms-api-documentation.md",
+        "src/API/MeAndMyDog.API/Controllers/CmsController.cs"
+      ],
+      "category": "documentation",
+      "acceptance": [
+        "OpenAPI/Swagger documentation",
+        "Code examples",
+        "Authentication guides",
+        "Integration examples",
+        "Widget development guide"
+      ]
+    },
+    {
+      "taskId": "CMS-056",
+      "phase": "PHASE-3",
+      "week": 8,
+      "title": "Create admin training materials",
+      "description": "Develop training materials for platform administrators",
+      "priority": "medium",
+      "estimatedHours": 3,
+      "dependencies": ["CMS-042"],
+      "files": [
+        "docs/cms-admin-guide.md",
+        "src/Web/MeAndMyDog.WebApp/Views/Admin/CmsTraining.cshtml"
+      ],
+      "category": "documentation",
+      "acceptance": [
+        "Admin dashboard guide",
+        "Analytics interpretation",
+        "Support procedures",
+        "System maintenance guide",
+        "Troubleshooting workflows"
+      ]
+    },
+    {
+      "taskId": "CMS-057",
+      "phase": "PHASE-3",
+      "week": 8,
+      "title": "Prepare launch infrastructure",
+      "description": "Set up production infrastructure for CMS launch",
+      "priority": "critical",
+      "estimatedHours": 4,
+      "dependencies": ["CMS-048"],
+      "files": [
+        "infrastructure/cms-deployment.yml",
+        "scripts/cms-database-migration.sql"
+      ],
+      "category": "deployment",
+      "acceptance": [
+        "Production database scripts",
+        "CDN configuration",
+        "Monitoring setup",
+        "Backup procedures",
+        "Rollback plans"
+      ]
+    },
+    {
+      "taskId": "CMS-058",
+      "phase": "PHASE-3",
+      "week": 8,
+      "title": "Create marketing materials",
+      "description": "Develop promotional materials for CMS feature launch",
+      "priority": "low",
+      "estimatedHours": 3,
+      "dependencies": ["CMS-054"],
+      "files": [
+        "marketing/cms-feature-announcement.md",
+        "src/Web/MeAndMyDog.WebApp/wwwroot/images/cms-promotional/"
+      ],
+      "category": "marketing",
+      "acceptance": [
+        "Feature announcement copy",
+        "Promotional images",
+        "Demo videos",
+        "Social media content",
+        "Email campaign materials"
+      ]
+    },
+    {
+      "taskId": "CMS-059",
+      "phase": "PHASE-3",
+      "week": 8,
+      "title": "Conduct final system validation",
+      "description": "Perform comprehensive system validation before launch",
+      "priority": "critical",
+      "estimatedHours": 4,
+      "dependencies": ["CMS-057"],
+      "files": [
+        "tests/validation/cms-system-validation.md"
+      ],
+      "category": "validation",
+      "acceptance": [
+        "End-to-end testing passed",
+        "Performance benchmarks met",
+        "Security audit completed",
+        "Accessibility compliance verified",
+        "Documentation review completed"
+      ]
+    }
+  ]
+}

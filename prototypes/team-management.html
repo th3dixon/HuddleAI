@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Management - HuddleAI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-gray-50" x-data="{ activeTab: 'overview' }">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-8">
+                    <div class="text-2xl font-bold text-blue-600">HuddleAI</div>
+                    <div class="hidden md:flex space-x-6">
+                        <a href="#" class="text-gray-700 hover:text-blue-600">Dashboard</a>
+                        <a href="#" class="text-gray-700 hover:text-blue-600">Analytics</a>
+                        <a href="#" class="text-blue-600 font-medium">Community</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="text-gray-400 hover:text-gray-600">
+                        <i class="fas fa-bell"></i>
+                    </button>
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&h=32&fit=crop&crop=face" 
+                         alt="Profile" class="w-8 h-8 rounded-full">
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto px-6 py-8">
+        <!-- Team Header -->
+        <div class="bg-white rounded-xl shadow-sm border mb-8">
+            <div class="relative h-48 bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 rounded-t-xl">
+                <div class="absolute inset-0 bg-black bg-opacity-30 rounded-t-xl"></div>
+                <div class="absolute bottom-6 left-6 right-6">
+                    <div class="flex items-end justify-between">
+                        <div class="text-white">
+                            <h1 class="text-3xl font-bold mb-2">LA Track Club Elite</h1>
+                            <p class="text-blue-100">Founded 2019 • 47 Active Members • Track & Field</p>
+                        </div>
+                        <button class="bg-white text-blue-600 px-6 py-2 rounded-lg font-medium hover:bg-gray-50">
+                            <i class="fas fa-cog mr-2"></i>Settings
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="p-6">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-6">
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-gray-900">47</div>
+                            <div class="text-sm text-gray-600">Members</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-green-600">12</div>
+                            <div class="text-sm text-gray-600">Active This Week</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-blue-600">234</div>
+                            <div class="text-sm text-gray-600">Total Workouts</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-purple-600">89.2</div>
+                            <div class="text-sm text-gray-600">Avg AI Score</div>
+                        </div>
+                    </div>
+                    <div class="flex space-x-3">
+                        <button class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                            <i class="fas fa-user-plus mr-2"></i>Invite Members
+                        </button>
+                        <button class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">
+                            <i class="fas fa-calendar-plus mr-2"></i>Schedule Event
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div class="bg-white rounded-xl shadow-sm border mb-8">
+            <div class="px-6">
+                <nav class="flex space-x-8">
+                    <button @click="activeTab = 'overview'" 
+                            :class="activeTab === 'overview' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
+                            class="py-4 px-1 border-b-2 font-medium text-sm">
+                        Overview
+                    </button>
+                    <button @click="activeTab = 'members'" 
+                            :class="activeTab === 'members' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
+                            class="py-4 px-1 border-b-2 font-medium text-sm">
+                        Members
+                    </button>
+                    <button @click="activeTab = 'events'" 
+                            :class="activeTab === 'events' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
+                            class="py-4 px-1 border-b-2 font-medium text-sm">
+                        Events
+                    </button>
+                    <button @click="activeTab = 'performance'" 
+                            :class="activeTab === 'performance' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
+                            class="py-4 px-1 border-b-2 font-medium text-sm">
+                        Performance
+                    </button>
+                    <button @click="activeTab = 'discussions'" 
+                            :class="activeTab === 'discussions' ? 'border-blue-500 text-blue-600' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'"
+                            class="py-4 px-1 border-b-2 font-medium text-sm">
+                        Discussions
+                    </button>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Tab Content -->
+        <div x-show="activeTab === 'overview'" class="space-y-6">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Recent Activity -->
+                <div class="lg:col-span-2 bg-white rounded-xl shadow-sm border">
+                    <div class="p-6 border-b">
+                        <h3 class="text-lg font-semibold">Recent Team Activity</h3>
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <div class="flex items-start space-x-4">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face" 
+                                 alt="Marcus" class="w-10 h-10 rounded-full">
+                            <div class="flex-1">
+                                <p class="text-gray-900"><span class="font-medium">Marcus Johnson</span> posted a new training video</p>
+                                <p class="text-sm text-gray-500">2 hours ago</p>
+                                <div class="mt-2 bg-blue-50 p-3 rounded-lg">
+                                    <p class="text-sm text-blue-800">Sprint technique session - 94% AI form score!</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <img src="https://images.unsplash.com/photo-1494790108755-2616b332c5d2?w=40&h=40&fit=crop&crop=face" 
+                                 alt="Sarah" class="w-10 h-10 rounded-full">
+                            <div class="flex-1">
+                                <p class="text-gray-900"><span class="font-medium">Sarah Williams</span> achieved a personal best</p>
+                                <p class="text-sm text-gray-500">4 hours ago</p>
+                                <div class="mt-2 bg-green-50 p-3 rounded-lg">
+                                    <p class="text-sm text-green-800">Long Jump - 6.85m (New PB!)</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-4">
+                            <div class="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
+                                <i class="fas fa-calendar text-purple-600"></i>
+                            </div>
+                            <div class="flex-1">
+                                <p class="text-gray-900">Weekly team training scheduled</p>
+                                <p class="text-sm text-gray-500">6 hours ago</p>
+                                <div class="mt-2 bg-purple-50 p-3 rounded-lg">
+                                    <p class="text-sm text-purple-800">Saturday 9:00 AM - Speed & Endurance Session</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Stats -->
+                <div class="space-y-6">
+                    <div class="bg-white rounded-xl shadow-sm border">
+                        <div class="p-6 border-b">
+                            <h3 class="text-lg font-semibold">Team Performance</h3>
+                        </div>
+                        <div class="p-6 space-y-4">
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600">Avg Training Sessions</span>
+                                <span class="font-semibold">4.2/week</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600">Team AI Score</span>
+                                <span class="font-semibold text-green-600">89.2</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600">Active Members</span>
+                                <span class="font-semibold text-blue-600">12/47</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-600">Personal Bests</span>
+                                <span class="font-semibold text-purple-600">8 this month</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-sm border">
+                        <div class="p-6 border-b">
+                            <h3 class="text-lg font-semibold">Upcoming Events</h3>
+                        </div>
+                        <div class="p-6 space-y-3">
+                            <div class="flex items-center space-x-3 p-3 bg-blue-50 rounded-lg">
+                                <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-running text-blue-600 text-sm"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="font-medium text-sm">Team Training</div>
+                                    <div class="text-xs text-gray-500">Tomorrow 9:00 AM</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-3 p-3 hover:bg-gray-50 rounded-lg">
+                                <div class="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-trophy text-green-600 text-sm"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <div class="font-medium text-sm">Regional Meet</div>
+                                    <div class="text-xs text-gray-500">March 25</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Members Tab -->
+        <div x-show="activeTab === 'members'" class="space-y-6">
+            <div class="bg-white rounded-xl shadow-sm border">
+                <div class="p-6 border-b flex justify-between items-center">
+                    <h3 class="text-lg font-semibold">Team Members (47)</h3>
+                    <div class="flex space-x-3">
+                        <input type="text" placeholder="Search members..." 
+                               class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <select class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <option>All Events</option>
+                            <option>Sprints</option>
+                            <option>Distance</option>
+                            <option>Field</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Member Cards -->
+                        <div class="border rounded-lg p-4 hover:shadow-md transition-shadow">
+                            <div class="flex items-center space-x-3 mb-3">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=50&h=50&fit=crop&crop=face" 
+                                     alt="Marcus Johnson" class="w-12 h-12 rounded-full">
+                                <div class="flex-1">
+                                    <div class="font-medium">Marcus Johnson</div>
+                                    <div class="text-sm text-gray-500">400m Sprint</div>
+                                </div>
+                                <div class="text-green-500">
+                                    <i class="fas fa-circle text-xs"></i>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-3 text-sm">
+                                <div class="text-center bg-blue-50 rounded p-2">
+                                    <div class="font-bold text-blue-600">49.23s</div>
+                                    <div class="text-xs text-gray-500">PB</div>
+                                </div>
+                                <div class="text-center bg-green-50 rounded p-2">
+                                    <div class="font-bold text-green-600">94</div>
+                                    <div class="text-xs text-gray-500">AI Score</div>
+                                </div>
+                            </div>
+                            <div class="mt-3 flex space-x-2">
+                                <button class="flex-1 bg-blue-100 text-blue-700 py-1 px-3 rounded text-sm hover:bg-blue-200">
+                                    View Profile
+                                </button>
+                                <button class="bg-gray-100 text-gray-700 py-1 px-3 rounded text-sm hover:bg-gray-200">
+                                    <i class="fas fa-comment"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="border rounded-lg p-4 hover:shadow-md transition-shadow">
+                            <div class="flex items-center space-x-3 mb-3">
+                                <img src="https://images.unsplash.com/photo-1494790108755-2616b332c5d2?w=50&h=50&fit=crop&crop=face" 
+                                     alt="Sarah Williams" class="w-12 h-12 rounded-full">
+                                <div class="flex-1">
+                                    <div class="font-medium">Sarah Williams</div>
+                                    <div class="text-sm text-gray-500">Long Jump</div>
+                                </div>
+                                <div class="text-green-500">
+                                    <i class="fas fa-circle text-xs"></i>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-3 text-sm">
+                                <div class="text-center bg-blue-50 rounded p-2">
+                                    <div class="font-bold text-blue-600">6.85m</div>
+                                    <div class="text-xs text-gray-500">PB</div>
+                                </div>
+                                <div class="text-center bg-green-50 rounded p-2">
+                                    <div class="font-bold text-green-600">91</div>
+                                    <div class="text-xs text-gray-500">AI Score</div>
+                                </div>
+                            </div>
+                            <div class="mt-3 flex space-x-2">
+                                <button class="flex-1 bg-blue-100 text-blue-700 py-1 px-3 rounded text-sm hover:bg-blue-200">
+                                    View Profile
+                                </button>
+                                <button class="bg-gray-100 text-gray-700 py-1 px-3 rounded text-sm hover:bg-gray-200">
+                                    <i class="fas fa-comment"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="border rounded-lg p-4 hover:shadow-md transition-shadow">
+                            <div class="flex items-center space-x-3 mb-3">
+                                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=50&h=50&fit=crop&crop=face" 
+                                     alt="Mike Chen" class="w-12 h-12 rounded-full">
+                                <div class="flex-1">
+                                    <div class="font-medium">Mike Chen</div>
+                                    <div class="text-sm text-gray-500">Shot Put</div>
+                                </div>
+                                <div class="text-gray-400">
+                                    <i class="fas fa-circle text-xs"></i>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-3 text-sm">
+                                <div class="text-center bg-blue-50 rounded p-2">
+                                    <div class="font-bold text-blue-600">18.5m</div>
+                                    <div class="text-xs text-gray-500">PB</div>
+                                </div>
+                                <div class="text-center bg-orange-50 rounded p-2">
+                                    <div class="font-bold text-orange-600">85</div>
+                                    <div class="text-xs text-gray-500">AI Score</div>
+                                </div>
+                            </div>
+                            <div class="mt-3 flex space-x-2">
+                                <button class="flex-1 bg-blue-100 text-blue-700 py-1 px-3 rounded text-sm hover:bg-blue-200">
+                                    View Profile
+                                </button>
+                                <button class="bg-gray-100 text-gray-700 py-1 px-3 rounded text-sm hover:bg-gray-200">
+                                    <i class="fas fa-comment"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Add more member cards as needed -->
+                        <div class="border-2 border-dashed border-gray-300 rounded-lg p-4 flex flex-col items-center justify-center text-gray-500 hover:border-blue-400 hover:text-blue-600 cursor-pointer transition-colors">
+                            <i class="fas fa-user-plus text-2xl mb-2"></i>
+                            <span class="font-medium">Invite New Member</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Other tabs would be similar structures -->
+        <div x-show="activeTab === 'events'" class="bg-white rounded-xl shadow-sm border p-6">
+            <h3 class="text-lg font-semibold mb-4">Team Events</h3>
+            <p class="text-gray-600">Events management interface would go here...</p>
+        </div>
+
+        <div x-show="activeTab === 'performance'" class="bg-white rounded-xl shadow-sm border p-6">
+            <h3 class="text-lg font-semibold mb-4">Team Performance Analytics</h3>
+            <p class="text-gray-600">Performance analytics dashboard would go here...</p>
+        </div>
+
+        <div x-show="activeTab === 'discussions'" class="bg-white rounded-xl shadow-sm border p-6">
+            <h3 class="text-lg font-semibold mb-4">Team Discussions</h3>
+            <p class="text-gray-600">Team discussion forum would go here...</p>
+        </div>
+    </div>
+</body>
+</html>
