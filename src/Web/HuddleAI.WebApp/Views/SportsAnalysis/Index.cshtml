@@ -1,5 +1,5 @@
 @{
-    ViewData["Title"] = "Sports Performance Analysis";
+    ViewData["Title"] = "AI Sports Performance Analysis";
 }
 
 <!DOCTYPE html>
@@ -16,12 +16,12 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#3B82F6',
-                        secondary: '#10B981',
-                        accent: '#F59E0B',
-                        social: '#1DA1F2',
-                        success: '#06D6A0',
-                        warm: '#FF6B6B'
+                        primary: '#3B82F6', // Blue
+                        secondary: '#10B981', // Green
+                        accent: '#F59E0B', // Amber
+                        social: '#1DA1F2', // Twitter-like blue
+                        success: '#06D6A0', // Success green
+                        warm: '#FF6B6B' // Warm red for hearts/likes
                     }
                 }
             }
@@ -43,10 +43,11 @@
                 <!-- Desktop Navigation -->
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-4">
-                        <a href="#" class="text-gray-600 hover:bg-primary hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
-                        <a href="#" class="text-primary hover:bg-primary hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Analysis</a>
+                        <a href="/" class="text-gray-600 hover:bg-primary hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
+                        <a href="/SportsAnalysis" class="text-primary hover:bg-primary hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Analysis</a>
                         <a href="#" class="text-gray-600 hover:bg-primary hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Community</a>
                         <a href="#" class="text-gray-600 hover:bg-primary hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Training</a>
+                        <a href="#" class="text-gray-600 hover:bg-primary hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors">Groups</a>
                     </div>
                 </div>
 
@@ -57,6 +58,10 @@
                     </button>
                     <button class="text-gray-600 hover:text-primary transition-colors relative">
                         <i class="fas fa-bell text-lg"></i>
+                        <span class="absolute -top-1 -right-1 bg-warm text-white text-xs rounded-full h-4 w-4 flex items-center justify-center">3</span>
+                    </button>
+                    <button class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-colors">
+                        Join Community
                     </button>
                 </div>
 
@@ -68,16 +73,40 @@
                 </div>
             </div>
         </div>
+
+        <!-- Mobile menu -->
+        <div x-show="mobileMenuOpen" class="md:hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white shadow-lg">
+                <a href="/" class="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                <a href="/SportsAnalysis" class="text-primary block px-3 py-2 rounded-md text-base font-medium">Analysis</a>
+                <a href="#" class="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium">Community</a>
+                <a href="#" class="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium">Training</a>
+                <a href="#" class="text-gray-600 hover:text-primary block px-3 py-2 rounded-md text-base font-medium">Groups</a>
+            </div>
+        </div>
     </nav>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-br from-primary to-secondary text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-6xl font-bold mb-6">
+                    AI Sports <span class="text-accent">Performance Analysis</span>
+                </h1>
+                <p class="text-xl mb-8 text-blue-100 max-w-3xl mx-auto">
+                    Upload your training video or image and get detailed AI-powered insights to improve your technique, form, and overall performance.
+                </p>
+                <div class="flex items-center justify-center space-x-2 text-blue-100">
+                    <i class="fas fa-chart-line text-accent"></i>
+                    <span>Powered by Advanced AI • Real-time Analysis • Personalized Feedback</span>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Main Content -->
     <div class="min-h-screen bg-gray-50 py-12" x-data="sportsAnalysis()">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- Header -->
-            <div class="text-center mb-12">
-                <h1 class="text-4xl font-bold text-gray-900 mb-4">AI Sports Performance Analysis</h1>
-                <p class="text-xl text-gray-600">Upload your training video or image for detailed AI-powered analysis</p>
-            </div>
 
             <!-- Upload Form -->
             <div class="bg-white rounded-2xl shadow-lg p-8 mb-8">
@@ -151,12 +180,17 @@
                     </div>
 
                     <!-- Progress Bar -->
-                    <div x-show="isUploading" class="w-full bg-gray-200 rounded-full h-2">
-                        <div class="bg-primary h-2 rounded-full transition-all duration-300" 
-                             :style="`width: ${uploadProgress}%`"></div>
+                    <div x-show="isUploading || isAnalyzing" class="w-full bg-gray-200 rounded-full h-3 mb-4">
+                        <div class="bg-gradient-to-r from-primary to-secondary h-3 rounded-full transition-all duration-500" 
+                             :style="`width: ${analysisProgress}%`"></div>
                     </div>
-                    <div x-show="isUploading" class="text-center text-sm text-gray-600">
-                        <span x-text="`Uploading... ${uploadProgress}%`"></span>
+                    <div x-show="isUploading || isAnalyzing" class="text-center">
+                        <div class="text-sm text-gray-600 mb-2">
+                            <span x-text="progressMessage"></span>
+                        </div>
+                        <div class="text-lg font-semibold text-primary">
+                            <span x-text="`${analysisProgress}%`"></span>
+                        </div>
                     </div>
 
                     <!-- Submit Button -->
@@ -175,10 +209,15 @@
             </div>
 
             <!-- Results Section -->
-            <div x-show="analysisResult" class="bg-white rounded-2xl shadow-lg p-8">
-                <h2 class="text-2xl font-bold text-gray-900 mb-6">
-                    <i class="fas fa-chart-bar text-primary mr-2"></i>Analysis Results
-                </h2>
+            <div x-show="analysisResult" id="results-section" class="bg-white rounded-2xl shadow-lg p-8 border-l-4 border-primary">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900">
+                        <i class="fas fa-chart-bar text-primary mr-2"></i>Analysis Results
+                    </h2>
+                    <button @@click="resetForm()" class="text-sm text-gray-600 hover:text-primary transition-colors">
+                        <i class="fas fa-redo mr-1"></i>New Analysis
+                    </button>
+                </div>
 
                 <!-- Overall Score -->
                 <div class="mb-8">
@@ -235,8 +274,98 @@
                     <span class="text-red-700" x-text="errorMessage"></span>
                 </div>
             </div>
+
+            <!-- Features Section -->
+            <div class="bg-white rounded-2xl shadow-lg p-8 mb-8">
+                <h3 class="text-2xl font-bold text-gray-900 mb-6 text-center">
+                    <i class="fas fa-magic text-accent mr-2"></i>What Our AI Analyzes
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="text-center p-4">
+                        <div class="bg-primary bg-opacity-10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-running text-primary text-2xl"></i>
+                        </div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Movement Analysis</h4>
+                        <p class="text-gray-600 text-sm">Detailed breakdown of body mechanics, form, and technique</p>
+                    </div>
+                    <div class="text-center p-4">
+                        <div class="bg-secondary bg-opacity-10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-chart-line text-secondary text-2xl"></i>
+                        </div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Performance Metrics</h4>
+                        <p class="text-gray-600 text-sm">Speed, timing, consistency, and efficiency measurements</p>
+                    </div>
+                    <div class="text-center p-4">
+                        <div class="bg-accent bg-opacity-10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-lightbulb text-accent text-2xl"></i>
+                        </div>
+                        <h4 class="font-semibold text-gray-900 mb-2">Improvement Tips</h4>
+                        <p class="text-gray-600 text-sm">Personalized recommendations and training suggestions</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-2xl font-bold mb-4">HuddleAI</h3>
+                    <p class="text-gray-400 mb-4">Connecting athletes worldwide through AI-powered training and community support.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Analysis</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Performance Analysis</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Video Analysis</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Form Correction</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Progress Tracking</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Community</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Feed</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Groups</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Challenges</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Events</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Support</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Help Center</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Guidelines</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Privacy</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 HuddleAI. All rights reserved. Built for athletes, by athletes.</p>
+            </div>
+        </div>
+    </footer>
 
     <script>
         function sportsAnalysis() {
@@ -249,20 +378,20 @@
                 selectedFile: null,
                 isDragOver: false,
                 isUploading: false,
-                uploadProgress: 0,
                 isAnalyzing: false,
+                analysisProgress: 0,
+                progressMessage: '',
                 analysisResult: null,
                 errorMessage: '',
 
                 get canSubmit() {
-                    return this.formData.sport && this.formData.analysisTopic && this.selectedFile && !this.isAnalyzing;
+                    return this.formData.sport && this.formData.analysisTopic && this.selectedFile && !this.isAnalyzing && !this.isUploading;
                 },
 
                 handleFileSelect(event) {
                     const file = event.target.files[0];
                     if (file) {
-                        this.selectedFile = file;
-                        this.formData.file = file;
+                        this.validateAndSetFile(file);
                     }
                 },
 
@@ -270,42 +399,57 @@
                     this.isDragOver = false;
                     const file = event.dataTransfer.files[0];
                     if (file) {
-                        this.selectedFile = file;
-                        this.formData.file = file;
+                        this.validateAndSetFile(file);
                     }
+                },
+
+                validateAndSetFile(file) {
+                    // Check file size (max 50MB)
+                    if (file.size > 50 * 1024 * 1024) {
+                        this.errorMessage = 'File size must be less than 50MB';
+                        return;
+                    }
+
+                    // Check file type
+                    const allowedTypes = ['mp4', 'avi', 'mov', 'jpg', 'jpeg', 'png', 'gif'];
+                    const fileExtension = file.name.split('.').pop().toLowerCase();
+                    if (!allowedTypes.includes(fileExtension)) {
+                        this.errorMessage = 'Please upload a video (MP4, AVI, MOV) or image (JPG, PNG, GIF) file';
+                        return;
+                    }
+
+                    this.selectedFile = file;
+                    this.formData.file = file;
+                    this.errorMessage = '';
                 },
 
                 removeFile() {
                     this.selectedFile = null;
                     this.formData.file = null;
                     this.$refs.fileInput.value = '';
+                    this.errorMessage = '';
                 },
 
                 async analyzePerformance() {
                     if (!this.canSubmit) return;
 
-                    this.isAnalyzing = true;
                     this.isUploading = true;
-                    this.uploadProgress = 0;
+                    this.analysisProgress = 0;
+                    this.progressMessage = 'Preparing file...';
                     this.errorMessage = '';
                     this.analysisResult = null;
 
                     try {
-                        // Simulate upload progress
-                        const progressInterval = setInterval(() => {
-                            if (this.uploadProgress < 90) {
-                                this.uploadProgress += Math.random() * 10;
-                            }
-                        }, 200);
+                        // Step 1: Convert file to base64
+                        this.progressMessage = 'Processing file...';
+                        this.analysisProgress = 10;
 
-                        // Convert file to base64
                         const fileBase64 = await this.fileToBase64(this.formData.file);
                         
-                        this.uploadProgress = 100;
-                        this.isUploading = false;
-                        clearInterval(progressInterval);
+                        this.analysisProgress = 30;
+                        this.progressMessage = 'Uploading to AI service...';
 
-                        // Prepare request
+                        // Step 2: Prepare request
                         const requestData = {
                             sport: this.formData.sport,
                             analysisTopic: this.formData.analysisTopic,
@@ -314,33 +458,63 @@
                             fileType: this.selectedFile.name.split('.').pop()
                         };
 
-                        // Call API
-                        const response = await fetch('https://localhost:7010/api/SportsAnalysis/analyze', {
+                        this.isUploading = false;
+                        this.isAnalyzing = true;
+                        this.analysisProgress = 50;
+                        this.progressMessage = 'AI is analyzing your performance...';
+
+                        // Step 3: Call API (try both local dev and production URLs)
+                        const apiUrl = window.location.hostname === 'localhost' 
+                            ? 'https://localhost:7010/api/SportsAnalysis/analyze'
+                            : '/api/SportsAnalysis/analyze';
+                        
+                        const response = await fetch(apiUrl, {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
+                                'Accept': 'application/json'
                             },
                             body: JSON.stringify(requestData)
                         });
 
+                        this.analysisProgress = 80;
+                        this.progressMessage = 'Processing results...';
+
                         if (!response.ok) {
-                            throw new Error(`HTTP error! status: ${response.status}`);
+                            const errorText = await response.text();
+                            throw new Error(`Server error (${response.status}): ${errorText}`);
                         }
 
                         const result = await response.json();
                         
+                        this.analysisProgress = 100;
+                        this.progressMessage = 'Analysis complete!';
+
                         if (result.isSuccess) {
                             this.analysisResult = result;
+                            // Scroll to results
+                            setTimeout(() => {
+                                document.querySelector('#results-section')?.scrollIntoView({ 
+                                    behavior: 'smooth' 
+                                });
+                            }, 1000);
                         } else {
-                            this.errorMessage = result.errorMessage || 'Analysis failed';
+                            this.errorMessage = result.errorMessage || 'Analysis failed. Please try again.';
                         }
 
                     } catch (error) {
                         console.error('Analysis error:', error);
-                        this.errorMessage = 'Failed to analyze performance. Please try again.';
+                        this.errorMessage = `Failed to analyze performance: ${error.message}. Please check your connection and try again.`;
                     } finally {
                         this.isAnalyzing = false;
                         this.isUploading = false;
+                        // Reset progress after a delay
+                        setTimeout(() => {
+                            if (!this.isAnalyzing && !this.isUploading) {
+                                this.analysisProgress = 0;
+                                this.progressMessage = '';
+                            }
+                        }, 3000);
                     }
                 },
 
@@ -351,6 +525,14 @@
                         reader.onload = () => resolve(reader.result);
                         reader.onerror = error => reject(error);
                     });
+                },
+
+                resetForm() {
+                    this.formData.sport = '';
+                    this.formData.analysisTopic = '';
+                    this.removeFile();
+                    this.analysisResult = null;
+                    this.errorMessage = '';
                 }
             }
         }
